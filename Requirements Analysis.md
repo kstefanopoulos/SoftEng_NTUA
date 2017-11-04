@@ -3,7 +3,7 @@
 ## Ομάδα : **Little** **Cherries** 
 ## **Little** **Cherries** **Project** 
 
-![](https://goo.gl/images/YZksb8 "Little Cherries")
+![](C:\Users\vasil\Desktop\LittleCherries3 "LittleCherries")
 
 
 ### **Kατάλογος Περιεχομένων**
