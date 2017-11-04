@@ -1,6 +1,9 @@
 # **Ανάλυση** **Απαιτήσεων**  
 
 ## Ομάδα : **Little** **Cherries** 
+## **Little** **Cherries** **Project** 
+
+![Little Cherries](https://goo.gl/images/YZksb8)
 
 
 ### **Kατάλογος Περιεχομένων**
