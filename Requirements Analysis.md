@@ -1,6 +1,6 @@
 # **Ανάλυση** **Απαιτήσεων**  
 
-## Ομάδα : **Little** **Cherries** 
+## Ομάδα : :cherries: **Little** **Cherries**  :cherries:
 ## **Little** **Cherries** **Project** 
 
 ![](C:\Users\vasil\Desktop\LittleCherries3 "LittleCherries")
