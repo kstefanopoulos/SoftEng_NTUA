@@ -3,7 +3,7 @@
 ## Ομάδα : **Little** **Cherries** 
 ## **Little** **Cherries** **Project** 
 
-![Little Cherries](https://goo.gl/images/YZksb8)
+![](https://goo.gl/images/YZksb8 "Little Cherries")
 
 
 ### **Kατάλογος Περιεχομένων**
