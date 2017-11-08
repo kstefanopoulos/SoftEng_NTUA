@@ -112,7 +112,7 @@
 
 <h> **2.3. Διάγραμμα κλάσεων Δραστών** </h>
     <p> Η σχέση μεταξύ των δραστών αναπαρίσταται στο παρακάτω σχήμα: 
-    ![Actors Overniew](Class_diagramm.png)
+    ![Actors Overniew|small](Class_diagramm.png)
     </p>
 <h> **2.4. Περιγραφή σεναρίων χρήσης** </h>
     <p> This is a paragraph </p>
