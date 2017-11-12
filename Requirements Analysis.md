@@ -112,7 +112,7 @@
 
 <h> **2.3. Διάγραμμα κλάσεων Δραστών** </h>
     <p> Η σχέση μεταξύ των δραστών αναπαρίσταται στο παρακάτω σχήμα: 
-    ![Actors Overview](Class_diagramm.png)
+    ![Actors Overview](Class_diagramm.png){:height="6px" width="6px"}.
     </p>
     
 <h> **2.4. Περιγραφή σεναρίων χρήσης** </h>
