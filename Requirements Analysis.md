@@ -113,7 +113,7 @@
 <h> **2.3. Διάγραμμα κλάσεων Δραστών** </h>
     <p> Η σχέση μεταξύ των δραστών αναπαρίσταται στο παρακάτω σχήμα:</p> 
     
-<p> <a href="url"><img src="Class_diagramm.png" align="middle" height="600" width="600" ></a>
+<p> <a href="url"><img src="Class_diagramm.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
