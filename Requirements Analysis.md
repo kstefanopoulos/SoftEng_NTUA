@@ -241,9 +241,9 @@
 <h> **2.5. Συγκεντρωτικά διαγράμματα σεναρίων χρήσης** </h>   
     <p> Σε αυτό το κεφάλαιο παρουσιάζουμε τα Σενάρια Χρήσης που αναλύσαμε παραπάνω σε γραφική μορφή:
     
-    ![Parent Subscription](Parent_subscription.png)
+![Parent Subscription](Parent_subscription.png)
     
-    </p>
+</p>
     
 <h> **2.6. Παραδοχές** </h> 
 
