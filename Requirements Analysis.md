@@ -315,15 +315,55 @@
 <h> **2.5. Συγκεντρωτικά διαγράμματα σεναρίων χρήσης** </h>   
     <p> Σε αυτό το κεφάλαιο θα παρουσιάσουμε τα παραπάνω Σενάρια Χρήσης σε γραφική μορφή:</p>
     
-<p> **1.** <a href="url"><img src="UC_diagramms_ch2/Parent_subscription.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Parent_subscription.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> **2.** <a href="url"><img src="UC_diagramms_ch2/Company_subscription.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Company_subscription.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> **3.** <a href="url"><img src="UC_diagramms_ch2/Add_admin.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Add_admin.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="UC_diagramms_ch2/Parent_ewallet.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="UC_diagramms_ch2/Company_payment.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="UC_diagramms_ch2/Profile_processing.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="UC_diagramms_ch2/Profile_lock.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="UC_diagramms_ch2/Password_change.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="UC_diagramms_ch2/Add_event.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="UC_diagramms_ch2/Delete_event.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="UC_diagramms_ch2/Buy_ticket.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="UC_diagramms_ch2/Event_evaluation.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="UC_diagramms_ch2/Add_favourites.png" align="middle" height="500" width="500" ></a>
 
 </p>
     
