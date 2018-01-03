@@ -16,7 +16,6 @@ public class ParentController {
 	private ParentRepository pRepository;
 
 	@GetMapping(path = "/add")
-	// Map ONLY GET Requests
 	public @ResponseBody
 	String addNewUser(@RequestParam String pem, @RequestParam String fn,
 			@RequestParam String ln, @RequestParam String un,
