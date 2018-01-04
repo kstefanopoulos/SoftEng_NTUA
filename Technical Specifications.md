@@ -212,79 +212,79 @@ css για την δημιουργία ενός αρχικού στατικού 
 <p>Στη συνέχεια, παρατίθενται τα Wireframes μέσω των οποίων αλληλεπιδρούν οι Χρήστες με την πλατφόρμα Little Cherries.</p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**About Us**</h>
-<p> <a href="url"><img src="Wireframes/Aboutus_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Aboutus_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Contact Us**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Events**</h>
-<p> <a href="url"><img src="Wireframes/Events_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Events_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Registration**</h>
-<p> <a href="url"><img src="Wireframes/Registration.jpg" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Registration.jpg" align="middle" height="400" width="400" ></a></p>
 
 <h>**Add an Admin**</h>
-<p> <a href="url"><img src="Wireframes/Add_Admin_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Add_Admin_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Admin Login**</h>
-<p> <a href="url"><img src="Wireframes/Admin_login_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Admin_login_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Admin Profile**</h>
-<p> <a href="url"><img src="Wireframes/Admin_profile_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Admin_profile_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Admin Views Events**</h>
-<p> <a href="url"><img src="Wireframes/View_events_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/View_events_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Admin Views Admins**</h>
-<p> <a href="url"><img src="Wireframes/View_admins_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/View_admins_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Company Registration**</h>
-<p> <a href="url"><img src="Wireframes/Company_registration.jpg" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Company_registration.jpg" align="middle" height="400" width="400" ></a></p>
 
 <h>**Company Profile**</h>
-<p> <a href="url"><img src="Wireframes/Company_profile.jpg" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Company_profile.jpg" align="middle" height="400" width="400" ></a></p>
 
 <h>**Company Profile Edit**</h>
-<p> <a href="url"><img src="Wireframes/Company_profile_edit.jpg" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Company_profile_edit.jpg" align="middle" height="400" width="400" ></a></p>
 
 <h>**Company's Events**</h>
-<p> <a href="url"><img src="Wireframes/Company_events_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Company_events_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Event Creation**</h>
-<p> <a href="url"><img src="Wireframes/Event_creation_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Event_creation_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
 
 
 
