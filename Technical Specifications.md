@@ -83,19 +83,132 @@ css για την δημιουργία ενός αρχικού στατικού 
 <h> **Σχέσεις και Πεδία** </h> 
 
 + Parent 
+    + pemail (pk)
+    + firstname
+    + lastname
+    + username
+    + password
+    + phone number
+    + balance
+    + last transaction date 
+    + street name
+    + street number
+    + town 
+    + postal code
+    + bucketId 
 + Organizer 
+    + oemail (pk)
+    + company name 
+    + bank account 
+    + first name 
+    + last name
+    + username 
+    + password
+    + phone number 
+    + balance
+    + street name
+    + street number
+    + town 
+    + postal code
+    + afm 
+    + registration date
+    + evaluation 
 + Event 
-+ Administrator 
+    + eventId (pk)
+    + organizer email (fk)
+    + organizer name
+    + event name
+    + event date
+    + start time
+    + available tickets
+    + event cost 
+    + street name 
+    + street number
+    + town 
+    + postal code
+    + ages
+    + event class
+    + event description 
+    + evaluation 
+    + isdone 
++ Administrator
+    + email (pk)
+    + first name 
+    + last name
+    + username
+    + password
+    + phone number
+    + street name
+    + street number
+    + town 
+    + postal code
+    + account
 + bucket 
-+ restrictions 
+    + bucketId (pk)
+    + pemail (fk)
+    + event cardinality
+    + overal cost
++ restrictions
+    + rid (pk)
+    + description
++ users 
+    + email (pk)
 + willAttend 
+    + id (pk)
+    + pemail (fk)
+    + eventId (fk)
+    + finaldate 
 + hasAttended 
+    + id (pk)
+    + pemail (fk)
+    + eventId (fk)
 + ConsistsOf
+    + id (pk)
+    + eventId (fk)
+    + bucketId (fk)
 + hasrestrictions
+    + id (pk) 
+    + email (fk)
 
 <h> **Η χρησιμότητα των foreing keys** </h> 
 
+<p> Στην ανάπτυξη της βάσης μας έγινε χρήση των foreign keys προκειμένου να επιτύχουμε αναφορική ακεραιότητα 
+και συνέπεια των δεδομένων μας </p> 
+
+<p> Χρησιμοποιήθηκαν τα παρακάτω foreign keys:</p> 
+
++ Στον πίνακα event χρησιμοποιήθηκε ως foreign key to organizer email.Ο περιορισμός του foreign key επιλέχθηκε να είναι ON DELETE CASCADE έτσι ώστε άν κάποιος πάροχος διαγραφεί απο το site τότε αυτομάτως να διαγραφούν και όλα τα event που έχει διοργανώσει.
++ Στον πίνακα bucket χρησιμοποιήθηκε ως foreign key to pemail.Ο περιορισμός του foreign key επιλέχθηκε να είναι ON DELETE CASCADE έτσι ώστε άν κάποιος γονέας διαγραφεί απο το site τότε αυτομάτως να διαγραφεί και το bucket του. 
++ Στον πίνακα willAttend χρησιμοποιήθηκαν ως foreign keys το pemail και το eventId.Οι περιορισμοί και στα δύο foreign keys επιλέχθηκαν να είναι ON DELETE CASCADE έτσι ώστε άν κάποιος γονέας διαγραφεί απο το site τότε αυτομάτως να διαγραφούν και οι μελλοντικές του εκδηλώσεις.
+  Event δεν μπορεί να διαγραφεί αλλά για συνέπεια βάζουμε τον ίδιο περιορισμό και σε αυτό.
++ Στον πίνακα hasAttended χρησιμοποιήθηκαν ως foreign keys το pemail και το eventId.Οι περιορισμοί και στα δύο foreign keys επιλέχθηκαν να είναι ON DELETE CASCADE έτσι ώστε άν κάποιος γονέας διαγραφεί απο το site τότε αυτομάτως να διαγραφούν και οι παρελθοντικές του εκδηλώσεις.
+  Event δεν μπορεί να διαγραφεί αλλά για συνέπεια βάζουμε τον ίδιο περιορισμό και σε αυτό.
++ Στον πίνακα consistsof χρησιμοποιήθηκαν ως foreign keys το bucketId και το eventId. Οι περιορισμοί και στα δύο foreign keys επιλέχθηκαν να είναι ON DELETE CASCADE έτσι ώστε άν κάποιο bucket διαγραφεί λόγω διαγραφής του γονέα, να διαγραφούν και τα περιεχόμενα αυτού.
++ Στον πίνακα hasrestrictions χρησιμοποιήθηκαν ως foreign keys το email του χρήστη και το rid. Οι περιορισμοί και στα δύο foreign keys επιλέχθηκαν να είναι ON DELETE CASCADE έτσι ώστε άν κάποιος χρήστης διαγραφεί,να διαγραφούν και τα αντιστοιχά entries περιορισμών που τον αφορούν. 
+   Οι περιορισμοί είναι καθιερωμένοι και δεν μπορούν να διαγραφούν. Παρ'αυτα χρησιμοποιούμε για συνέπεια το rid ως foreign key. 
+
+
+
 <h> **Επεξήγηση των views που χρησιμοποιήθηκαν**  </h> 
+
+<p> Κατά την διάρκεια ανάπτυξης της βάσης μας, αναπτύχθηκαν και κάποια views ώστε να εμφανίζουμε επιλεκτικά κάποια πεδία των πινάκων στους χρήστες 
+και όχι κάθε πληροφορία που περιλαμβάνεται σε αυτούς. </p> 
+
+<p> Υλοποιήθηκαν τα παρακάτω views : </p> 
+
++ administrator_view
++ parent_view 
++ organizer_view 
++ restrictions_view 
++ event view 
+
+<p> Αυτά τα views πρόκειται να χρησιμοποιηθούν έτσι ώστε να προσφέρουν εποπτεία στον διαχειριστή κατά τη διαχείριση του site </p> 
+
+
+<p> Σημειώνεται οτι σε πιο προχωρημένο στάδιο ανάπτυξης κώδικά είναι πιθανό είτε κάποια από τα παραπάνω να τροποποιηθούν είτε να προστεθούν περισσότερα (Triggres, Queries).
+</p> 
+
+
 
 
 
