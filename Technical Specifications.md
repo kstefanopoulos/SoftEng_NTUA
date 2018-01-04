@@ -206,6 +206,13 @@ css για την δημιουργία ενός αρχικού στατικού 
 
 
 
+<h> **3. Αλληλεπίδραση Συστήματος με Χρήστες** </h>
+
+<h>**3.2. Wireframes**</h>
+<p>Στη συνέχεια, παρατίθενται τα Wireframes μέσω των οποίων αλληλεπιδρούν οι Χρήστες με την πλατφόρμα Little Cherries.</p>
+
+<h>**Home**</h>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
 
 
 
