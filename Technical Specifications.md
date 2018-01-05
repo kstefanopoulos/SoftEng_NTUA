@@ -265,7 +265,7 @@ css για την δημιουργία ενός αρχικού στατικού 
 <p> <a href="url"><img src="Wireframes/Event_creation_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Company Views Events' Statistics**</h>
-<p> <a href="url"><img src="Wireframes/Company_view_statistics_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Company_view_statisticts_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Parent Registration**</h>
 <p> <a href="url"><img src="Wireframes/ParentRegistration.jpg" align="middle" height="400" width="400" ></a></p>
@@ -286,10 +286,10 @@ css για την δημιουργία ενός αρχικού στατικού 
 <p> <a href="url"><img src="Wireframes/Reservation_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**After Reservation Failure**</h>
-<p> <a href="url"><img src="Wireframes/After_reservation_failure_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/After_reservation_failure.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**After Reservation Success**</h>
-<p> <a href="url"><img src="Wireframes/After_reservation_success_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/After_reservation_success.png" align="middle" height="400" width="400" ></a></p>
 
 
 
