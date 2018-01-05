@@ -79,7 +79,7 @@ css για την δημιουργία ενός αρχικού στατικού 
 <h> **2.2.2.1 Περιγραφή Βάσης Δεδομένων** </h> 
 <h> **Σχέσεις και Πεδία** </h>
 <p> 
-+ Parent 
++ 1. Parent 
     + pemail (pk)
     + firstname
     + lastname
@@ -93,7 +93,7 @@ css για την δημιουργία ενός αρχικού στατικού 
     + town 
     + postal code
     + bucketId 
-+ Organizer 
++ 2. Organizer 
     + oemail (pk)
     + company name 
     + bank account 
@@ -110,7 +110,7 @@ css για την δημιουργία ενός αρχικού στατικού 
     + afm 
     + registration date
     + evaluation 
-+ Event 
++ 3. Event 
     + eventId (pk)
     + organizer email (fk)
     + organizer name
@@ -128,7 +128,7 @@ css για την δημιουργία ενός αρχικού στατικού 
     + event description 
     + evaluation 
     + isdone 
-+ Administrator
++ 4. Administrator
     + email (pk)
     + first name 
     + last name
