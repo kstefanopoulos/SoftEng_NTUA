@@ -79,7 +79,7 @@ css για την δημιουργία ενός αρχικού στατικού 
 <h> **2.2.2.1 Περιγραφή Βάσης Δεδομένων** </h> 
 <h> **Σχέσεις και Πεδία** </h>
 <p> 
-+ 1. Parent 
++ Parent 
     + pemail (pk)
     + firstname
     + lastname
@@ -93,7 +93,7 @@ css για την δημιουργία ενός αρχικού στατικού 
     + town 
     + postal code
     + bucketId 
-+ 2. Organizer 
++ Organizer 
     + oemail (pk)
     + company name 
     + bank account 
@@ -110,7 +110,7 @@ css για την δημιουργία ενός αρχικού στατικού 
     + afm 
     + registration date
     + evaluation 
-+ 3. Event 
++ Event 
     + eventId (pk)
     + organizer email (fk)
     + organizer name
@@ -128,7 +128,7 @@ css για την δημιουργία ενός αρχικού στατικού 
     + event description 
     + evaluation 
     + isdone 
-+ 4. Administrator
++ Administrator
     + email (pk)
     + first name 
     + last name
@@ -166,7 +166,6 @@ css για την δημιουργία ενός αρχικού στατικού 
 + hasrestrictions
     + id (pk) 
     + email (fk)
-
 </p> 
 
 <h> **Η χρησιμότητα των foreing keys** </h> 
@@ -192,7 +191,6 @@ css για την δημιουργία ενός αρχικού στατικού 
 και όχι κάθε πληροφορία που περιλαμβάνεται σε αυτούς. </p> 
 
 <p> Υλοποιήθηκαν τα παρακάτω views : </p> 
-
 + administrator_view
 + parent_view 
 + organizer_view 
