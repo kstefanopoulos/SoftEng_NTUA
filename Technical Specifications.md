@@ -206,7 +206,7 @@ css για την δημιουργία ενός αρχικού στατικού 
 
 <h> **2.2.2.2 Διάγραμμα ER** </h>
 
-<p> <a href="url"><img src="Database Setup/littlecherriesER.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="littlecherriesER.png" align="middle" height="400" width="400" ></a></p>
 
 
 
