@@ -223,10 +223,13 @@ css για την δημιουργία ενός αρχικού στατικού 
 <p> <a href="url"><img src="Wireframes/Aboutus_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Contact Us**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Contact_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Events**</h>
 <p> <a href="url"><img src="Wireframes/Events_page.png" align="middle" height="400" width="400" ></a></p>
+
+<h>**Single Event Page**</h>
+<p> <a href="url"><img src="Wireframes/SingleEvent_page.png" align="middle" height="400" width="400" ></a></p>
 
 <h>**Registration**</h>
 <p> <a href="url"><img src="Wireframes/Registration.jpg" align="middle" height="400" width="400" ></a></p>
@@ -261,35 +264,34 @@ css για την δημιουργία ενός αρχικού στατικού 
 <h>**Event Creation**</h>
 <p> <a href="url"><img src="Wireframes/Event_creation_page.png" align="middle" height="400" width="400" ></a></p>
 
-<h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<h>**Company Views Events' Statistics**</h>
+<p> <a href="url"><img src="Wireframes/Company_view_statistics_page.png" align="middle" height="400" width="400" ></a></p>
 
-<h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<h>**Parent Registration**</h>
+<p> <a href="url"><img src="Wireframes/ParentRegistration.jpg" align="middle" height="400" width="400" ></a></p>
 
-<h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<h>**Parent Profile**</h>
+<p> <a href="url"><img src="Wireframes/Parent_profile.jpg" align="middle" height="400" width="400" ></a></p>
 
-<h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<h>**Parent Profile Edit**</h>
+<p> <a href="url"><img src="Wireframes/Parent_profile_edit.jpg" align="middle" height="400" width="400" ></a></p>
 
-<h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<h>**Search Events**</h>
+<p> <a href="url"><img src="Wireframes/Search_page1.png" align="middle" height="400" width="400" ></a></p>
 
-<h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<h>**Parent Loads Credits**</h>
+<p> <a href="url"><img src="Wireframes/Loadcredits_page.png" align="middle" height="400" width="400" ></a></p>
 
-<h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<h>**Reservation**</h>
+<p> <a href="url"><img src="Wireframes/Reservation_page.png" align="middle" height="400" width="400" ></a></p>
 
-<h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<h>**After Reservation Failure**</h>
+<p> <a href="url"><img src="Wireframes/After_reservation_failure_page.png" align="middle" height="400" width="400" ></a></p>
 
-<h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<h>**After Reservation Success**</h>
+<p> <a href="url"><img src="Wireframes/After_reservation_success_page.png" align="middle" height="400" width="400" ></a></p>
 
-<h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+
 
 
 
