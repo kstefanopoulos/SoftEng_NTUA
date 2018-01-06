@@ -380,55 +380,55 @@
 <h> **3.2. Ακολουθιακά Διαγράμματα Σεναρίων Χρήσης** </h>
     <p> Σε αυτό το κεφάλαιο θα παρουσιάσουμε τα παραπάνω Σενάρια Χρήσης σε μορφή UML Sequence Diagramms:</p>
     
-<p> <a href="url"><img src="Seq_diagramms/Parent_subscription.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Parent_subscription.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Company_subscription.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Company_subscription.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Add_admin.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Add_admin.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Create_ewallet.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Create_ewallet.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Company_payment.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Company_payment.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Profile_processing.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Profile_processing.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Profile_lock.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Profile_lock.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Password_change.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Password_change.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Add_event.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Add_event.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms_ch2/Delete_event.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams_ch2/Delete_event.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Buy_ticket.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Buy_ticket.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Event_evaluation.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Event_evaluation.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="Seq_diagramms/Add_favourites.png" align="middle" height="500" width="500" ></a>
+<p> <a href="url"><img src="Seq_diagrams/Add_favourites.png" align="middle" height="500" width="500" ></a>
 
 </p>
     
