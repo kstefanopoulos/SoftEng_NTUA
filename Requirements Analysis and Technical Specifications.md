@@ -379,9 +379,61 @@
 
 <h> **3.2. Ακολουθιακά Διαγράμματα Σεναρίων Χρήσης** </h>
     <p> Σε αυτό το κεφάλαιο θα παρουσιάσουμε τα παραπάνω Σενάρια Χρήσης σε μορφή UML Sequence Diagramms:</p>
+    
+<p> <a href="url"><img src="Seq_diagramms/Parent_subscription.png" align="middle" height="500" width="500" ></a>
 
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Company_subscription.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Add_admin.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Create_ewallet.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Company_payment.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Profile_processing.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Profile_lock.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Password_change.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Add_event.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms_ch2/Delete_event.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Buy_ticket.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Event_evaluation.png" align="middle" height="500" width="500" ></a>
+
+</p>
+
+<p> <a href="url"><img src="Seq_diagramms/Add_favourites.png" align="middle" height="500" width="500" ></a>
+
+</p>
+    
 <h>**3.3. Wireframes**</h>
-<p>Στη συνέχεια, παρατίθενται τα Wireframes μέσω των οποίων αλληλεπιδρούν οι Χρήστες με την πλατφόρμα Little Cherries.</p>
+<p>Στη συνέχεια, παρατίθενται κάποια από τα Wireframes μέσω των οποίων αλληλεπιδρούν οι Χρήστες με την πλατφόρμα Little Cherries.</p>
 
 <h>**Home**</h>
 <p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
