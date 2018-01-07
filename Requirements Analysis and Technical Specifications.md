@@ -365,39 +365,39 @@
 <h> **3.2. Σενάρια Χρήσης** </h>
 <p> Σε αυτό το κεφάλαιο θα παρουσιάσουμε τα παραπάνω Σενάρια Χρήσης σε γραφική μορφή:</p>
     
-<p> <a href="url"><img src="UC_diagramms_ch2/Parent_subscription.png" align="middle" height="400" width="400" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Parent_subscription.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="UC_diagramms_ch2/Company_subscription.png" align="middle" height="400" width="400" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Company_subscription.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="UC_diagramms_ch2/Add_admin.png" align="middle" height="400" width="400" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Add_admin.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="UC_diagramms_ch2/Parent_ewallet.png" align="middle" height="400" width="400" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Parent_ewallet.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="UC_diagramms_ch2/Company_payment.png" align="middle" height="400" width="400" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Company_payment.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="UC_diagramms_ch2/Profile_processing.png" align="middle" height="400" width="400" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Profile_processing.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="UC_diagramms_ch2/Profile_lock.png" align="middle" height="400" width="400" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Profile_lock.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="UC_diagramms_ch2/Password_change.png" align="middle" height="400" width="400" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Password_change.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
-<p> <a href="url"><img src="UC_diagramms_ch2/Add_event.png" align="middle" height="400" width="400" ></a>
+<p> <a href="url"><img src="UC_diagramms_ch2/Add_event.png" align="middle" height="500" width="500" ></a>
 
 </p>
 
@@ -468,79 +468,79 @@
 <p>Στη συνέχεια, παρατίθενται κάποια από τα Wireframes μέσω των οποίων αλληλεπιδρούν οι Χρήστες με την πλατφόρμα Little Cherries.</p>
 
 <h>**Home**</h>
-<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Home_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**About Us**</h>
-<p> <a href="url"><img src="Wireframes/Aboutus_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Aboutus_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Contact Us**</h>
-<p> <a href="url"><img src="Wireframes/Contact_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Contact_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Events**</h>
-<p> <a href="url"><img src="Wireframes/Events_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Events_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Single Event Page**</h>
-<p> <a href="url"><img src="Wireframes/SingleEvent_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/SingleEvent_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Registration**</h>
-<p> <a href="url"><img src="Wireframes/Registration.jpg" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Registration.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Add an Admin**</h>
-<p> <a href="url"><img src="Wireframes/Add_Admin_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Add_Admin_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Admin Login**</h>
-<p> <a href="url"><img src="Wireframes/Admin_login_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Admin_login_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Admin Profile**</h>
-<p> <a href="url"><img src="Wireframes/Admin_profile_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Admin_profile_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Admin Views Events**</h>
-<p> <a href="url"><img src="Wireframes/View_events_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/View_events_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Admin Views Admins**</h>
-<p> <a href="url"><img src="Wireframes/View_admins_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/View_admins_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Company Registration**</h>
-<p> <a href="url"><img src="Wireframes/Company_registration.jpg" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Company_registration.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Company Profile**</h>
-<p> <a href="url"><img src="Wireframes/Company_profile.jpg" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Company_profile.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Company Profile Edit**</h>
-<p> <a href="url"><img src="Wireframes/Company_profile_edit.jpg" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Company_profile_edit.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Company's Events**</h>
-<p> <a href="url"><img src="Wireframes/Company_events_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Company_events_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Event Creation**</h>
-<p> <a href="url"><img src="Wireframes/Event_creation_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Event_creation_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Company Views Events' Statistics**</h>
-<p> <a href="url"><img src="Wireframes/Company_view_statisticts_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Company_view_statisticts_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Parent Registration**</h>
-<p> <a href="url"><img src="Wireframes/ParentRegistration.jpg" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/ParentRegistration.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Parent Profile**</h>
-<p> <a href="url"><img src="Wireframes/Parent_profile.jpg" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Parent_profile.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Parent Profile Edit**</h>
-<p> <a href="url"><img src="Wireframes/Parent_profile_edit.jpg" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Parent_profile_edit.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Search Events**</h>
-<p> <a href="url"><img src="Wireframes/Search_page1.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Search_page1.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Parent Loads Credits**</h>
-<p> <a href="url"><img src="Wireframes/Loadcredits_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Loadcredits_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**Reservation**</h>
-<p> <a href="url"><img src="Wireframes/Reservation_page.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/Reservation_page.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**After Reservation Failure**</h>
-<p> <a href="url"><img src="Wireframes/After_reservation_failure.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/After_reservation_failure.png" align="middle" height="500" width="500" ></a></p>
 
 <h>**After Reservation Success**</h>
-<p> <a href="url"><img src="Wireframes/After_reservation_success.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="Wireframes/After_reservation_success.png" align="middle" height="500" width="500" ></a></p>
 
 
 ## 4. Αρχιτεκτονική Συστήματος 
