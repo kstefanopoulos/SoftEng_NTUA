@@ -427,13 +427,8 @@
 
 </p>    
 
-<h> **Διάγραμμα δραστηριότητας ανώνυμου χρήστη** </h>
-<p> <a href="url"><img src="UMLs/UMLs/Unregistered_user_activity(1).png" align="middle" height="500" width="500" ></a>
-
-</p>   
-
 <h> **Διάγραμμα δραστηριότητας οργανωτή** </h>
-<p> <a href="url"><img src="UMLs/UMLs/organiser_activity(1).png" align="middle" height="600" width="700" ></a>
+<p> <a href="url"><img src="UMLs/organiser_activity(1).png" align="middle" height="600" width="700" ></a>
 
 </p>    
     
@@ -441,13 +436,17 @@
 <p> <a href="url"><img src="UMLs/admin_activity.png" align="middle" height="500" width="600" ></a>
 
 </p>    
-    
+
+<h> **Διάγραμμα δραστηριότητας ανώνυμου χρήστη** </h>
+<p> <a href="url"><img src="UMLs/Unregistered_user_activity(1).png" align="middle" height="400" width="600" ></a>
+
+</p>      
     
 <h> **3.1.4. Διαγράμματα μηχανών κατάστασης** </h>
 
 <p>Στο παρακάτω διάγραμμα περιγράφονται οι καταστάσεις του πορτοφολιού ενός γονέα κατά τη διάρκεια των οποιωνδήποτε δραστηριοτήτων του.</p>
 
-<p> <a href="url"><img src="UMLs/UMLs/MachineStateparentWallet.png" align="middle" height="700" width="700" ></a>
+<p> <a href="url"><img src="UMLs/MachineStateparentWallet.png" align="middle" height="700" width="700" ></a>
 
 </p>
 
