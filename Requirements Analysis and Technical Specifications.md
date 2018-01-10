@@ -504,10 +504,10 @@
 <p> <a href="url"><img src="Wireframes/Company_registration.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Company Profile**</h>
-<p> <a href="url"><img src="Wireframes/Company_profile.jpg" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/profil-paroxou-new.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Company Profile Edit**</h>
-<p> <a href="url"><img src="Wireframes/Company_profile_edit.jpg" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/epeksergasia-profil-paroxou-new.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Company's Events**</h>
 <p> <a href="url"><img src="Wireframes/Company_events_page.png" align="middle" height="500" width="500" ></a></p>
@@ -525,7 +525,7 @@
 <p> <a href="url"><img src="Wireframes/Parent_profile.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Parent Profile Edit**</h>
-<p> <a href="url"><img src="Wireframes/Parent_profile_edit.jpg" align="middle" height="500" width="500" ></a></p>
+<p> <a href="url"><img src="Wireframes/epeksergasia-profil-gonea.jpg" align="middle" height="500" width="500" ></a></p>
 
 <h>**Search Events**</h>
 <p> <a href="url"><img src="Wireframes/Search_page1.png" align="middle" height="500" width="500" ></a></p>
