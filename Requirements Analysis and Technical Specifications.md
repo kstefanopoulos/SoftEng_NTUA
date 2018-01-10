@@ -600,10 +600,10 @@
     Με τη χρήση των γραμμών συμβολίζουμε τις αλληλεπιδράσεις μεταξύ των κλάσεων. 
     Τέλος, σημειώνεται ότι το πορτοφόλι wallet υλοποιείται στα πλαίσια των κλάσεων parent και organiser και όχι ως ξεχωριστή οντότητα.
     <a href="url"><img src="UMLs/LittleCherriesUML_Class(1).png" align="middle" height="1000" width="1000" ></a>
-    
-    
-    
     </p>
+<Enter>
+<Enter>
+<Enter>
 
 <h> **4.3.2. Διάγραμμα συστατικών** </h> 
     <p> <a href="url"><img src="UMLs/Component_final.png" align="middle" height="800" width="1000" ></a>
@@ -743,7 +743,7 @@
 <h> **4.3.2.2 Διάγραμμα ER** </h>
 
 <h> **Διάγραμμα ER της βάσης little cherries** </h> 
-<p> <a href="url"><img src="littlecherriesER.png" align="middle" height="400" width="400" ></a></p>
+<p> <a href="url"><img src="littlecherriesER.png" align="middle" height="1000" width="1000" ></a></p>
 
 <h> **4.4 To πρόσθετο Module** </h> 
 
