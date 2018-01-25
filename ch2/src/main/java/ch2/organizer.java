@@ -1,4 +1,5 @@
 package ch2;
+import java.util.Date;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,16 +16,16 @@ public class organizer {
 	private String first_name;
 	private String last_name;
 	private String username;
-	private int password;
+	private String password;
 	private String phone_number;
-	private int balance;
+	private int balance;  //starts from 0
 	private String street_name;
 	private int street_number;
 	private String postal_code;
 	private String town;
-	private int afm;
-	private String registration_date;
-	private int evaluation;
+	private String afm;
+	private Date registration_date;
+	private int evaluation; //starts from 0
 	//private int proffoto;
 	
     @OneToMany(mappedBy = "myorganizer", cascade = CascadeType.ALL)
@@ -32,7 +33,7 @@ public class organizer {
 	
 	public organizer() {}
 	
-	public organizer(String oem, String cn, String ba, String fn, String ln, String u, int p, String pn, int b, String sname, int snumber, String pc, String t, int afm, String rd, int ev) {
+	public organizer(String oem, String cn, String ba, String fn, String ln, String u, String p, String pn, String sname, int snumber, String pc, String t, String afm) {
 		
 		this.oemail=oem;
 		this.company_name=cn;
@@ -42,14 +43,14 @@ public class organizer {
 		this.username=u;
 		this.password=p;
 		this.phone_number=pn;
-		this.balance=b;
+		this.balance=0;
 		this.street_name=sname;
 		this.street_number=snumber;
 		this.postal_code=pc;
 		this.town=t;
 		this.afm=afm;
-		this.registration_date=rd;
-		this.evaluation=ev;
+		this.registration_date=new Date();
+		this.evaluation=0;
 		//this.proffoto=foto;
 	}
 	
@@ -101,11 +102,11 @@ public class organizer {
 		this.username = username;
 	}
 
-	public int getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(int password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -157,19 +158,19 @@ public class organizer {
 		this.town = town;
 	}
 
-	public int getAfm() {
+	public String getAfm() {
 		return afm;
 	}
 
-	public void setAfm(int afm) {
+	public void setAfm(String afm) {
 		this.afm = afm;
 	}
 
-	public String getRegistration_date() {
+	public Date getRegistration_date() {
 		return registration_date;
 	}
 
-	public void setRegistration_date(String registration_date) {
+	public void setRegistration_date(Date registration_date) {
 		this.registration_date = registration_date;
 	}
 

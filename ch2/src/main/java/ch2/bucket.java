@@ -14,12 +14,13 @@ public class bucket {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "bucketid")
 	public int bucketid;
 	
 	public int event_card;
 	public int overall_cost;
 	
-    @OneToOne(mappedBy = "parentbucket",fetch=FetchType.LAZY)
+    @OneToOne(mappedBy = "parentbucket")
     @JsonIgnore
     public parent myparent;
 	public String pemail;
@@ -27,7 +28,7 @@ public class bucket {
     @OneToMany(mappedBy = "abucket")
     private Set<consistsof> contains;
 
-	
+    
 	public bucket() {}
 	
 	public bucket(parent mp, int ec, int oc) {

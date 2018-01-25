@@ -13,9 +13,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class event {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "eventid")
 	public int eventid;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "organizer_email")
     @JsonIgnore
 	public organizer myorganizer;
@@ -48,10 +50,9 @@ public class event {
 
 	public event() {}
 	
-	public event (int id, organizer o, String en, String ed, String st, String at, int ec, String sname, int snumber, String pc, String t, String a, String edescr, int ev, int d  ) {
+	public event (String en, String ed, String st, String at, int ec, String sname, int snumber, String pc, String t, String a) {
 		
-		this.eventid= id;
-		this.myorganizer =o;
+		//this.myorganizer =o;
 		this.event_name=en;
 		this.event_date=ed;
 		this.start_time=st;
@@ -63,9 +64,9 @@ public class event {
 		this.town=t;
 		this.ages=a;
 		//this.event_class=eclass; 
-		this.event_description=edescr;
-		this.evaluation=ev;
-		this.isdone=d;
+		//this.event_description=edescr;
+		this.evaluation=0;
+		this.isdone=0;
 	}
 
 	public int getEventId() {

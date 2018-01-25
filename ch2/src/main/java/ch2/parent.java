@@ -26,7 +26,7 @@ public class parent {
 	private String postal_code;
 	
 
-	@OneToOne(fetch=FetchType.LAZY,cascade = {CascadeType.ALL})
+	@OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "bucketid")
 	private bucket parentbucket;
 	
@@ -156,14 +156,6 @@ public class parent {
 	public void setParentbucket(bucket parentbucket) {
 		this.parentbucket = parentbucket;
 	}
-/*
-	public int getProffoto() {
-		return proffoto;
-	}
-
-	public void setProffoto(int proffoto) {
-		this.proffoto = proffoto;
-	} */
 
 	public Set<willattend> getWillattend() {
 		return willattend;

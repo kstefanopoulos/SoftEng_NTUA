@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.Date;
 
 //to do: insert with some of the fields, update with some of the fields, try-catch
 
@@ -23,12 +24,19 @@ public class ParentController {
 			@RequestParam String sname, @RequestParam int snumber,
 			@RequestParam String t, @RequestParam String pc) {
 
-		parent np = new parent(pem, fn, ln, un, pas, pn, sname, snumber, t, pc);
-		bucket b= new bucket(np,0,0);
-		b.setPemail(pem);
-		np.setParentbucket(b);
-		pRepository.save(np);
-		return "New Parent Saved";
+		if (pRepository.findOne(pem)!=null) 
+			return "Parent with this Email already exists!";
+		else {
+			parent np = new parent(pem, fn, ln, un, pas, pn, sname, snumber, t, pc);
+			pRepository.save(np);
+			bucket b= new bucket(np,0,0);
+			b.setPemail(pem);
+			//b.setBucketId(12);
+		    np.setParentbucket(b);
+			pRepository.save(np);
+			return "New Parent Saved";
+			//everything else with setters
+		}
 	}
 
 	@GetMapping(path = "/all")
@@ -41,22 +49,31 @@ public class ParentController {
 	@GetMapping(path = "findOne")
 	public @ResponseBody
 	parent getΑParent(@RequestParam String pem) {
-		// This returns a JSON or XML with the users
+		// This returns a JSON or XML with the user
+		if (pRepository.findOne(pem)==null) 
+			return null; //something else here
 		return pRepository.findOne(pem);
 	}
 	
 	@GetMapping(path = "/delete")
 	public @ResponseBody
 	String DeleteUser(@RequestParam String pem) {
-		pRepository.delete(pem);
+		parent p = pRepository.findOne(pem);
+	    if (p==null) 
+			return "Parent not found!";
+	    int id=p.getParentbucket().bucketid;
+	    p.setParentbucket(null);
+	    pRepository.delete(pem);
 		return "Delete this";
 	}
 
 	@GetMapping(path = "/update")
 	public @ResponseBody
-	String UpdateUser(@RequestParam String pem, @RequestParam String street) {
+	String UpdateUser(@RequestParam String pem, @RequestParam Date ltd) {
 		parent p = pRepository.findOne(pem);
-		p.setStreet_name(street);
+		if (p==null)
+			return "Parent not found!";
+		p.setLast_transaction_date(ltd);
 		pRepository.save(p);
 		return "Update this";
 	}

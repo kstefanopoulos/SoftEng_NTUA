@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class hasattended implements Serializable {
 	
 	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	public int id;
 	
 	@ManyToOne

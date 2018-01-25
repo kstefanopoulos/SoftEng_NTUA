@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class consistsof implements Serializable {
 
 	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	public int id;
 	@ManyToOne
     @JoinColumn(name = "bucketid")

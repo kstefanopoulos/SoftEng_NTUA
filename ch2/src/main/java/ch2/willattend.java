@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class willattend implements Serializable {
 	
 	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	public int id;
 	
 	@ManyToOne
