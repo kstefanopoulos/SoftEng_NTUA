@@ -9,6 +9,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.Set;
+
 @Entity
 public class event {
 	
@@ -18,9 +20,12 @@ public class event {
 	public int eventid;
 	
 	@ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "organizer_email")
+    @JoinColumn(name = "oemail")
     @JsonIgnore
 	public organizer myorganizer;
+    //public String organizer_email;
+    
+	public String organizer_name;
 	public String event_name;
 	public String event_date;
 	public String start_time;
@@ -50,7 +55,7 @@ public class event {
 
 	public event() {}
 	
-	public event (String en, String ed, String st, String at, int ec, String sname, int snumber, String pc, String t, String a) {
+	public event (String en, String ed, String st, String at, int ec, String sname, int snumber, String pc, String t, String a, String eclass, String edescr) {
 		
 		//this.myorganizer =o;
 		this.event_name=en;
@@ -63,8 +68,8 @@ public class event {
 		this.postal_code=pc;
 		this.town=t;
 		this.ages=a;
-		//this.event_class=eclass; 
-		//this.event_description=edescr;
+		this.event_class=eclass; 
+		this.event_description=edescr;
 		this.evaluation=0;
 		this.isdone=0;
 	}
@@ -223,6 +228,12 @@ public class event {
 		this.hasattended = hasattended;
 	}
 	
-	
+	public String getOrganizer_name() {
+		return organizer_name;
+	}
+
+	public void setOrganizer_name(String organizer_name) {
+		this.organizer_name = organizer_name;
+	} 
 
 }

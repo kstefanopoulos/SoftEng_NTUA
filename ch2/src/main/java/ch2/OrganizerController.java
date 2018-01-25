@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Date;
 
 //to do: update with some of the fields, try-catch
+import java.util.Set;
 
 @Controller
 @RequestMapping(path = "/organizers")
@@ -67,6 +68,8 @@ public class OrganizerController {
 	    oRepository.delete(oem);
 	    return "Delete this";
 	}
+	
+	
 
 	@GetMapping(path = "/update")
 	public @ResponseBody
@@ -78,6 +81,51 @@ public class OrganizerController {
 		oRepository.save(o);
 		return "Update this";
 	}
+	
+	@GetMapping(path = "/addevent")
+	public @ResponseBody
+
+	
+	String addNewEvent(@RequestParam String oem, @RequestParam String en, @RequestParam String ed, @RequestParam String st, @RequestParam String at,
+			@RequestParam int ec, @RequestParam String sname, @RequestParam int snumber,
+			@RequestParam String pc, @RequestParam String t, @RequestParam String a,  @RequestParam String eclass,  @RequestParam String edescr) {
+
+			event ne = new event(en, ed, st, at, ec,sname, snumber,pc,t,a,eclass,edescr);
+			organizer org=oRepository.findOne(oem);
+			if (org==null)
+				return "this organizer does not exist!";
+			ne.setMyorganizer(org);
+			ne.setOrganizer_name(org.getCompany_name());
+			Set<event> MyEvents=org.getEvents();
+			MyEvents.add(ne);
+			org.setEvents(MyEvents); 
+			oRepository.save(org);
+			return "New Event Saved";
+		}
+	
+	@GetMapping(path = "/myevents")
+	public @ResponseBody Iterable<event> getAllEvents(@RequestParam String oem) {
+		// This returns a JSON or XML with the users
+		organizer org=oRepository.findOne(oem);
+		if (org!=null)
+			return org.getEvents();
+		else return null;
+	}
+	
+	@GetMapping(path = "/myevents/single")
+	public @ResponseBody event getAnEvent(@RequestParam String oem,@RequestParam Integer evid) {
+		// This returns a JSON or XML with the users
+		organizer org=oRepository.findOne(oem);
+		if (org!=null) {
+			Set<event> MyEvents=org.getEvents(); 
+			for (event e: MyEvents) {
+				if (e.getEventId()==evid)
+						return e;
+			}
+		}
+		return null;
+	}
+
 }
 
 
