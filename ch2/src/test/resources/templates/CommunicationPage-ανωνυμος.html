@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Little Cherries</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
+  <link rel="stylesheet" href="style.css"> 
+  
+  </head>
+
+  
+<body>
+
+
+<!-- roz Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img src= "logo.png"  width="200" height="100" >
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+
+<!-- Navigation Menu --> 
+
+<nav class="navbar navbar-reversed  roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li><a href="#">Αρχική</a></li>
+		<li><a href="#">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a href="#">Ποιοί Είμαστε</a>
+				<a href="#">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li  class="active"><a href="#">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+    </ul>		
+  </div>
+</nav>
+
+<!-- Content of Each Page --> 
+
+<div class="container info" align="center"> 
+<h2 align="center"> Επικοινωνία <h2> 
+
+<div class="container-fluid info" >
+<h4 align ="center"> 
+Για οποιαδήποτε απορία μη διστάσετε να επικοινωνήσετε μαζί μας.
+<h4 align ="center"> 
+ <span class="glyphicon glyphicon-phone-alt"> Τηλέφωνο: 2109656891</span>
+ <span class="glyphicon glyphicon-envelope"> Email: contact@littlecherries.com </span>  
+</h4> 
+</h4> 
+
+<h3 align ="center">
+Μπορείτε να μας βρείτε και στα γραφεία μας.
+</h3>
+<h4 align ="center"> 
+ <span class="glyphicon glyphicon-map-marker"> Μενελάου 5, Άγιος Δημήτριος 17343</span>
+</h4> 
+
+</div>
+
+<div class="container info" align ="center"> 
+
+	<div class="info">
+		<div id = "map" class ="info" style="width:400px;height:400px;background-color:#ffffff;border-radius: 10px;" </div>
+	</div> 
+
+<script>
+function myMap() {
+  var mapCanvas = document.getElementById("map");
+  var mapOptions = {
+    center: new google.maps.LatLng(37.965748, 23.708142), zoom: 10
+  };
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+}
+</script>
+
+<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaUbDLWOas_hXAs3BopNMxLJhgqW56dZU&callback=myMap"></script>
+
+</div>
+</div>
+  
+ 
+
+
+<!-- FootNote -->
+
+
+<div class="container-fluid info"  align="center"> 
+ <footer>&copy; Copyright 2017 Little Cherries</footer>
+</div> 
+
+</body>
+
+
+
+
+
+</html>
