@@ -15,6 +15,9 @@ public class ParentController {
 	@Autowired
 	private ParentRepository pRepository;
 
+	
+	
+	// This is for parent logging //
 	@GetMapping(path = "/add")
 	// Map ONLY GET Requests
 	public @ResponseBody
