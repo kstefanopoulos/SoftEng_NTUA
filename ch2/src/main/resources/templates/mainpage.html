@@ -8,42 +8,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
-  <link rel="stylesheet" href="style.css"> </link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
   
   </head>
 
   
 <body>
 
-
-<!-- Head Content. Logo - Company Name -->
-<!--
-<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-2">
-				<img src= "littleCherries1.png"  width="100" height="100" >
-			</div>
-			<div class="col-sm-2">
-				<img src= "littleCherries1.png"  width="100" height="100" >
-			</div>			
-			<div class="col-sm-4" style="color:grey;font-size:46px;">
-				<h1 align="center"> Little Cherries </h1> 
-			</div>
-			<div class="col-sm-2">
-				<img src= "littleCherries1.png"  width="100" height="100" >
-			</div>
-			<div class="col-sm-2">
-				<img src= "littleCherries1.png"  width="100" height="100" >
-			</div>
-		
-		</div> 
-</div>
--->
-
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
-				<img src= "logo.png"  width="200" height="100" ></img>
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
 	
 			</div>
 			<div class="col-sm-6">
@@ -64,18 +39,25 @@
   
     <ul class="nav navbar-nav roz">
 		<li class="active"><a th:href="@{/littlecherries}">Αρχική</a></li>
-		<li><a th:href="@{/events}">Εκδηλώσεις</a></li>
+		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
 		<li class="dropdown roz">
 			<a href="javascript:void(0)" class="dropbtn">H Εταιρία μας</a>
 			<div class="dropdown-content roz">
-				<a th:href="@{/aboutus}">Ποιοί Είμαστε</a>
-				<a th:href="@{/aboutus}">Το Όραμά μας</a>
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Όραμά μας</a>
 			</div>
 		</li>
-      <li><a th:href="@{/contactus}">Επικοινωνία</a></li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:href="@{/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+   <div th:if="${user==null}">
+         <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+   </div>
+    <div th:unless="${user==null}">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+      
+   </div>
     </ul>
 		
   </div>

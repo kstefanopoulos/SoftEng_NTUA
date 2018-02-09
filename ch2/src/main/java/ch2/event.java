@@ -10,6 +10,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class event {
@@ -25,6 +26,7 @@ public class event {
 	public organizer myorganizer;
     //public String organizer_email;
     
+	
 	public String organizer_name;
 	public String event_name;
 	public String event_date;

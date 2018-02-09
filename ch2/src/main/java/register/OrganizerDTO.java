@@ -8,6 +8,10 @@ public class OrganizerDTO {
 
 	  @NotNull
 	  @NotEmpty
+	  private String companyname ;
+	
+	  @NotNull
+	  @NotEmpty
 	  private String firstname ;
 
 
@@ -25,7 +29,6 @@ public class OrganizerDTO {
 	  private String town;
 	  
 	  @NotNull
-	  @NotEmpty
 	  private int streetnumber;
 	  
 	  @NotNull
@@ -61,8 +64,18 @@ public class OrganizerDTO {
 	  // Getters - Setters 
 	  
 	  
+	  
 	public String getFirstname() {
 		return firstname;
+	}
+
+	public String getCompanyname() {
+		return companyname;
+	}
+	  
+
+	public void setCompanyname(String companyname) {
+		this.companyname = companyname;
 	}
 
 	public void setFirstname(String firstname) {

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Little Cherries</title>
+  <title>Events Page</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
-  <link rel="stylesheet" href="style.css"></link> 
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
   
   </head>
 
@@ -20,7 +20,8 @@
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
-				<img src= "logo.png"  width="200" height="100" ></img>
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
+				
 	
 			</div>
 			<div class="col-sm-6">
@@ -42,18 +43,25 @@
   
     <ul class="nav navbar-nav roz">
 		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
-		<li class="active"><a th:href="@{/events}">Εκδηλώσεις</a></li>
+		<li class="active"><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
 		<li class="dropdown roz">
 			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
 			<div class="dropdown-content roz">
-				<a th:href="@{/aboutus}">Ποιοί Είμαστε</a>
-				<a th:href="@{/aboutus}">Το Οραμά μας</a>
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
 			</div>
 		</li>
-      <li><a href="@{/contactus}">Επικοινωνία</a></li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:href="@{/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+ 	<div th:if="${user==null}">
+         <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+   </div>
+    <div th:unless="${user==null}">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+      
+   </div>
     </ul>		
   </div>
 </nav>
@@ -64,20 +72,31 @@
 <!-- Content of Each Page --> 
 
 <div class="container info"  align="center">
+<h2 align="center"> Οι Εκδηλώσεις μας </h2> 
 
-<p> Page Content Here </p> 
+<div class="row info">
+<div  class="col-sm-1 info">
+			</div> 
+			<th:block  th:each= "event : ${events}">
+				<div class="col-sm-2 info" style="color:grey;font-size:46px;">
+				
+				<img th:src="@{'/' + event_images + '/' + ${event.eventid} + .png}" width="140" height="140" />
+				<a th:text="${event.event_name}" th:href="@{/littlecherries/events}"></a>				
+				</div>
+			</th:block>
+		
 
+</div>
 
+<!--
 <table border="1">
             <tr>
                <th>Event Name</th>
-               <th>Organizer Name</th>
             </tr>
             <tr th:each ="event : ${events}">
                <td th:text="${event.event_name}"></td>
-               <td th:text="${event.organizer_name}"></td>
             </tr>
-      </table>
+      </table> -->
 
 
 </div> 

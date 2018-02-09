@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Little Cherries</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <title>Communication Page</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
-  <link rel="stylesheet" href="style.css"> 
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
   
   </head>
 
@@ -20,7 +20,7 @@
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
-				<img src= "logo.png"  width="200" height="100" >
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
 	
 			</div>
 			<div class="col-sm-6">
@@ -39,19 +39,26 @@
   <div class="container-fluid roz">
   
     <ul class="nav navbar-nav roz">
-		<li><a href="mainpage.html">Αρχική</a></li>
-		<li><a href="EventPage.html">Εκδηλώσεις</a></li>
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
 		<li class="dropdown roz">
 			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
 			<div class="dropdown-content roz">
-				<a href="OurCompanyPage.html">Ποιοί Είμαστε</a>
-				<a href="OurCompanyPage.html">Το Οραμά μας</a>
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
 			</div>
 		</li>
-      <li  class="active"><a href="CommunicationPage.html">Επικοινωνία</a></li>
+      <li  class="active"><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
-      <li><a href="registration.html"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+   <div th:if="${user==null}">
+         <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+   </div>
+    <div th:unless="${user==null}">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+      
+   </div>
     </ul>		
   </div>
 </nav>
@@ -59,7 +66,7 @@
 <!-- Content of Each Page --> 
 
 <div class="container info" align="center"> 
-<h2 align="center"> Επικοινωνία <h2> 
+<h2 align="center"> Επικοινωνία </h2> 
 
 <div class="container-fluid info" >
 <h4 align ="center"> 
@@ -82,7 +89,7 @@
 <div class="container info" align ="center"> 
 
 	<div class="info">
-		<div id = "map" class ="info" style="width:400px;height:400px;background-color:#ffffff;border-radius: 10px;" </div>
+		<div id = "map" class ="info" style="width:400px;height:400px;background-color:#ffffff;border-radius: 10px;"> </div>
 	</div> 
 
 <script>
@@ -95,7 +102,7 @@ function myMap() {
 }
 </script>
 
-<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaUbDLWOas_hXAs3BopNMxLJhgqW56dZU&callback=myMap"></script>
+<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaUbDLWOas_hXAs3BopNMxLJhgqW56dZU&amp;callback=myMap"></script> 
 
 </div>
 </div>

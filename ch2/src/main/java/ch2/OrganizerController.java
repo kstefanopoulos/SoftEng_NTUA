@@ -20,27 +20,25 @@ public class OrganizerController {
 	@Autowired
 	private OrganizerRepository oRepository;
 	
-	@GetMapping(path = "/add")
-	public @ResponseBody
-
-	
-	String addNewOrganizer(@RequestParam String oem, @RequestParam String cn, @RequestParam String ba, @RequestParam String fn,
-			@RequestParam String ln, @RequestParam String un,
-			@RequestParam String pas, @RequestParam String pn,
-			@RequestParam String sname, @RequestParam int snumber,
-			@RequestParam String pc, @RequestParam String t, @RequestParam String afm) {
+	public organizer addNewOrganizer(String oem, String cn, String ba, String fn,
+			 String ln,  String un,
+			 String pas,  String pn,
+			 String sname,  int snumber,
+			 String pc,  String t, String afm) {
 
 		if (oRepository.findOne(oem)!=null) 
-			return "Organizer with this Email already exists!";
+			return null;
 		else {
 			organizer no = new organizer(oem,cn, ba, fn, ln, un, pas, pn, sname, snumber,pc,t,afm);
 			oRepository.save(no);
 			no.setEvents(null);
 			oRepository.save(no);
-			return "New Organizer Saved";
+			return no;
+			//return "New Organizer Saved";
 			//everything else with setters
 		}
 	}
+
 
 	@GetMapping(path = "/all")
 	public @ResponseBody
@@ -51,7 +49,7 @@ public class OrganizerController {
 
 	@GetMapping(path = "findOne")
 	public @ResponseBody
-	organizer getΑnOrganizer(@RequestParam String oem) {
+	organizer getΑnOrganizer(String oem) {
 		// This returns a JSON or XML with the user
 		if (oRepository.findOne(oem)==null) 
 			return null; //something else here
@@ -73,11 +71,10 @@ public class OrganizerController {
 
 	@GetMapping(path = "/update")
 	public @ResponseBody
-	String UpdateUser(@RequestParam String oem, @RequestParam int ev) {
+	String UpdateUser(@RequestParam String oem) {
 		organizer o = oRepository.findOne(oem);
 		if (o==null)
 			return "Organizer not found!";
-		o.setEvaluation(ev);
 		oRepository.save(o);
 		return "Update this";
 	}
@@ -122,6 +119,17 @@ public class OrganizerController {
 				if (e.getEventId()==evid)
 						return e;
 			}
+		}
+		return null;
+	}
+	
+	public organizer getOrganizerByEmailAndPassw (String oem, String passw) {
+	
+		organizer org= this.getΑnOrganizer(oem);
+		if (org != null) {
+			if (org.getPassword().equals(passw))
+				return org;
+				
 		}
 		return null;
 	}

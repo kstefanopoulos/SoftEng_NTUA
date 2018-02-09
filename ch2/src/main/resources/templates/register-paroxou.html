@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Little Cherries</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <title>Register</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
-  <link rel="stylesheet" href="style.css"> 
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
   
   </head>
 
@@ -20,7 +20,7 @@
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
-				<img src= "logo.png"  width="200" height="100" >
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
 	
 			</div>
 			<div class="col-sm-6">
@@ -34,46 +34,81 @@
 
 
 <!-- Navigation Menu --> 
-
-<nav class="navbar navbar-reversed roz">
+<nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
     <ul class="nav navbar-nav roz">
-		<li class="active"><a href="mainpage.html">Αρχική</a></li>
-		<li><a href="EventPage.html">Εκδηλώσεις</a></li>
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
 		<li class="dropdown roz">
-			<a href="javascript:void(0)" class="dropbtn">H Εταιρία μας</a>
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
 			<div class="dropdown-content roz">
-				<a href="OurCompanyPage.html">Ποιοί Είμαστε</a>
-				<a href="OurCompanyPage.html">Το Οραμά μας</a>
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
 			</div>
 		</li>
-      <li><a href="CommunicationPage.html">Επικοινωνία</a></li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
     </ul>		
   </div>
 </nav>
 
+<!-- Content -->
+
 <div  class="container" align="center"> 
 	<div class="row info">
 	<div class="col-sm-2 info" style="color:grey; font-size:25px">
-		<h3 align="left"> Όνομα Εταιρείας: 	</h3>
-		<h3 align="left"> Οδός:	</h3>
-		<h3 align="left"> Αριθμός:	</h3>
-		<h3 align="left"> Πόλη:	</h3>
+		<h3 align="left"> Όνομα Εταιρείας:</h3> 
+		<h3 align="left"> Πόλη</h3>
+		<h3 align="left"> Οδός</h3>
+		<h3 align="left"> Αρθμός</h3>
 		<h3 align="left"> Τ.Κ.:		</h3>
 		<h3 align="left"> Τηλέφωνο:	</h3>
 		<h3 align="left"> E-mail:	</h3>
 	</div>
-		
-	<div class="col-sm-4 info" style="color:grey; font-size:25px" >
-		<input class="text2" name="company_name" required>
-		<input class="text2" name="street" required>
-		<input class="text2" name="number" required>
-		<input class="text2" name="town" required>
-		<input class="text2" name="postal code" required>
-		<input class="text2" name="phone no" required>
-		<input class="text2" name="e-mail" required>
-	</div>
+	<h1>form</h1>
+	<form th:action="@{/littlecherries/organizers/register}" th:object="${organizer}" method="POST" enctype="utf8">	
+		<div class="col-sm-4 info" style="color:grey; font-size:25px" >
+			<div> 
+				<input class="text2" name="companyname" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('companyname')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			<div> 
+				<input class="text2" name="town" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('town')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			<div>
+				<input class="text2" name="streetname" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('streetname')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			<div>
+				<input class="text2" name="streetnumber" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('streetnumber')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			<div>
+				<input class="text2" name="postalcode" type="number" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('postalcode')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			<div>
+				<input class="text2" name="phonenumber" type="number" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('phonenumber')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			
+			<div>
+				<input class="text2" name="email" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('email')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			
+		</div>
 
 	<div class="col-sm-2 info" style="color:grey; font-size:25px">
 		<h3 align="left"> Όνομα Υπευθύνου:	</h3>
@@ -82,19 +117,44 @@
 		<h3 align="left"> Τραπεζικός Λογαριασμός:</h3>
 		<h3 align="left"> Username:	</h3>
 		<h3 align="left"> Password:		</h3>
-		<form action="">
-			<input type="radio"> Δημιουργία e-wallet<br>
-		</form>
+		
 	</div>
 	<div class="col-sm-4 info" style="color:grey; font-size:25px" >
-		<input class="text2" name="up name" required>
-		<input class="text2" name="up surname" required>
-		<input class="text2" name="afm" required>
-		<input class="text2" name="bank account" required>
-		<input class="text2" name="uname" required>
-		<input class="text2" name="psw" required>
-		<p><button class="button2 text align-bottom" style="font-size:25px;">Create Profile</button></p>
+		<div>
+				<input class="text2" name="firstname" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('firstname')}"
+          		th:text="${error}">Validation error</p>
+			</div>	
+			<div>
+				<input class="text2" name="lastname" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('lastname')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+		<div>
+				<input class="text2" name="afm" th:required="required" type="number"></input>
+				<p th:each="error: ${#fields.errors('afm')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			<div>
+				<input class="text2" name="bankacount" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('bankacount')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			<div>
+				<input class="text2" name="username" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('username')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			<div>
+				<input class="text2" name="password" th:required="required"></input>
+				<p th:each="error: ${#fields.errors('password')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+              <input type="submit" value="Submit" />
+	
 	</div>
-		
+</form>
+</div>
+</div>	
 </body>
 </html>
