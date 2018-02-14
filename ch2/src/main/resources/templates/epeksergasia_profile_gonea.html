@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Change Password</title>
+  <title>Edit Profile</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -10,6 +10,7 @@
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
   
+  </head>
     
    <body>
    
@@ -56,32 +57,50 @@
 <div  class="container" align="center"> 
 	<div class="row info">
 	<div class="col-sm-6 info" style="color:grey; font-size:25px">
-		<h3 align="left"> E-Mail: </h3>
-		<h3 align="left"> Παλιός Κωδικός Πρόσβασης: </h3>
-		<h3 align="left"> Νέος Κωδικός: </h3>
-		<h3 align="left"> Επαλήθευση Κωδικού: </h3>
-		
+		<h3 align="left"> Πόλη: </h3>
+		<h3 align="left"> Οδός: </h3>
+		<h3 align="left"> Αριθμός: </h3>
+		<h3 align="left"> Τ.Κ.:	</h3>
+		<h3 align="left"> Τηλέφωνο:	</h3>
+		<h3 align="left"> Όνομα:</h3>
+		<h3 align="left"> Επώνυμο:</h3>
 	</div>
-	<form th:action="@{/littlecherries/organizers/changepassword}" th:object="${password}" method="POST" enctype="utf8">	
+	<form th:action="@{/littlecherries/organizers/editprofile}" th:object="${organizer}" method="POST" enctype="utf8">	
 		<div class="col-sm-4 info" style="color:grey; font-size:25px" >
 			<div> 
-				<input class="text2" name="email" type="email"></input>
-				<p th:each="error: ${#fields.errors('email')}"
-          		th:text="${error}">Validation error</p>
-			</div>
-			<div> 
-				<input class="text2" name="old" type="password"></input>
-				<p th:each="error: ${#fields.errors('old')}"
+				<input class="text2" name="town"></input>
+				<p th:each="error: ${#fields.errors('town')}"
           		th:text="${error}">Validation error</p>
 			</div>
 			<div>
-				<input class="text2" name="first" type="password"></input>
-				<p th:each="error: ${#fields.errors('first')}"
+				<input class="text2" name="streetname"></input>
+				<p th:each="error: ${#fields.errors('streetname')}"
           		th:text="${error}">Validation error</p>
 			</div>
 			<div>
-				<input class="text2" name="second" type="password"></input>
-				<p th:each="error: ${#fields.errors('second')}"
+				<input class="text2" name="streetnumber" type="number"></input>
+				<p th:each="error: ${#fields.errors('streetnumber')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			<div>
+				<input class="text2" name="postalcode" ></input>
+				<p th:each="error: ${#fields.errors('postalcode')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			<div>
+				<input class="text2" name="phonenumber"></input>
+				<p th:each="error: ${#fields.errors('phonenumber')}"
+          		th:text="${error}">Validation error</p>
+			</div>
+			
+			<div>
+				<input class="text2" name="firstname"></input>
+				<p th:each="error: ${#fields.errors('firstname')}"
+          		th:text="${error}">Validation error</p>
+			</div>	
+			<div>
+				<input class="text2" name="lastname"></input>
+				<p th:each="error: ${#fields.errors('lastname')}"
           		th:text="${error}">Validation error</p>
 			</div>
 			 <input type="submit" value="Submit" />
@@ -90,7 +109,15 @@
 	
 </form>
 </div>
-</div>
+
+		<!-- 
+		<div class="col-sm-6 info" style="color:grey;">
+			<img style="img2" src="Insert-picture-here.jpg" alt="Insert photo here" height="300px" width="300px"> 
+			<p><a href="#" style="font-size:20px;">Upload Photo</a></p>
+			<p><a href="#" style="font-size:20px;">Remove Photo</a></p>
+			<button class="button2 text" style="font-size:25px;">Αποθήκευση Αλλαγών</button>
+		</div>   -->
+	</div>
 
 </body>
 </html>

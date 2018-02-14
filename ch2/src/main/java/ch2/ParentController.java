@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.Date;
 
 //to do: insert with some of the fields, update with some of the fields, try-catch
@@ -16,6 +18,23 @@ public class ParentController {
 	@Autowired
 	private ParentRepository pRepository;
 
+	public parent createParent(String pem,String fn,
+			 String ln,  String un,
+			 String pas,  String pn,
+			 String sname,  int snumber,
+			 String pc,  String t) {
+
+		if (pRepository.findOne(pem)!=null) 
+			return null;
+		else {
+			parent pa = new parent(pem, fn, ln, un, pas, pn, sname, snumber,pc,t);
+			pRepository.save(pa);
+			return pa;
+			//return "New Organizer Saved";
+			//everything else with setters
+		}
+	}
+	
 	@GetMapping(path = "/add")
 	public @ResponseBody
 	String addNewUser(@RequestParam String pem, @RequestParam String fn,
@@ -77,5 +96,20 @@ public class ParentController {
 		pRepository.save(p);
 		return "Update this";
 	}
+	
+	public parent getParentByEmailAndPassw (String pem, String passw) {
+		
+		parent par= this.getΑParent(pem);
+		if (par != null) {
+			if (par.getPassword().equals(passw))
+				return par;
+				
+		}
+		return null;
+	}
+	
+	
+	
+	
 }
 

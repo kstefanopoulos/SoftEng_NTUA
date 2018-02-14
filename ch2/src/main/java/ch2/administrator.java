@@ -11,13 +11,13 @@ public class administrator {
 	private String first_name;
 	private String last_name;
 	private String username;
-	private int password;
+	private String password;
 	private String phone_number;
 	private String account;
 	
-	public administrator() {}
+	//public administrator() {}
 	
-	public administrator(String em, String fn, String ln, String un, int pas, String pn) {
+	public administrator(String em, String fn, String ln, String un, String pas, String pn) {
 		
 		this.email=em;
 		this.first_name=fn;
@@ -60,11 +60,11 @@ public class administrator {
 		this.username = username;
 	}
 
-	public int getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(int password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 

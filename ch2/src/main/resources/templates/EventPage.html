@@ -9,11 +9,64 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+ 
   
   </head>
 
+<style> 
+
+.filterstyle{
+
+background-color:  #ffffff; 
+
+}
+
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background:  #d2b4de ; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 10px; /* Set a specific slider handle width */
+    height: 10px; /* Slider handle height */
+    background:  #fadbd8 ; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 15px; /* Set a specific slider handle width */
+    height: 15px; /* Slider handle height */
+    background:  #fadbd8 ; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+} 
+
+
+</style>
+
+
   
 <body>
+
 
 
 <!-- Head Content. Logo - Company Name -->
@@ -104,11 +157,20 @@
 <!-- FootNote -->
 
 
+
+
+
+
+
+
+
 <div class="container-fluid info "  align="center"> 
  <footer>&copy; Copyright 2017 Little Cherries</footer>
 </div> 
 
 </body>
+
+
 
 
 

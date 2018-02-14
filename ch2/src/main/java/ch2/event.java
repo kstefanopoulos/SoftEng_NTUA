@@ -40,6 +40,8 @@ public class event {
 	public String ages;
 	public String event_class;
 	public String event_description;
+	public String longitude; 
+	public String latitude; 
 	public int evaluation;
 	public int isdone;
 	
@@ -57,7 +59,7 @@ public class event {
 
 	public event() {}
 	
-	public event (String en, String ed, String st, String at, int ec, String sname, int snumber, String pc, String t, String a, String eclass, String edescr) {
+	public event (String en, String ed, String st, String at, int ec, String sname, int snumber, String pc, String t, String a, String eclass, String edescr, String longtd, String lattd) {
 		
 		//this.myorganizer =o;
 		this.event_name=en;
@@ -72,6 +74,8 @@ public class event {
 		this.ages=a;
 		this.event_class=eclass; 
 		this.event_description=edescr;
+		this.longitude=longtd; 
+		this.latitude=lattd; 
 		this.evaluation=0;
 		this.isdone=0;
 	}
@@ -190,6 +194,24 @@ public class event {
 		this.event_description = event_description;
 	}
 
+
+	public String getlongtitude() {
+		return longitude; 
+	}
+
+	public void setlongtitude(String lo) {
+		this.longitude = lo;
+	}
+
+	
+	public String getlatitude() {
+		return latitude; 
+	}
+
+	public void setlatitude(String la) {
+		this.latitude = la;
+	}
+	
 	public int getEvaluation() {
 		return evaluation;
 	}

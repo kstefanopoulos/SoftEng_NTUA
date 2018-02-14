@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
@@ -85,9 +86,9 @@ public class OrganizerController {
 	
 	String addNewEvent(@RequestParam String oem, @RequestParam String en, @RequestParam String ed, @RequestParam String st, @RequestParam String at,
 			@RequestParam int ec, @RequestParam String sname, @RequestParam int snumber,
-			@RequestParam String pc, @RequestParam String t, @RequestParam String a,  @RequestParam String eclass,  @RequestParam String edescr) {
+			@RequestParam String pc, @RequestParam String t, @RequestParam String a,  @RequestParam String eclass,  @RequestParam String edescr,@RequestParam String lo,  @RequestParam String la) {
 
-			event ne = new event(en, ed, st, at, ec,sname, snumber,pc,t,a,eclass,edescr);
+			event ne = new event(en, ed, st, at, ec,sname, snumber,pc,t,a,eclass,edescr,lo,la);
 			organizer org=oRepository.findOne(oem);
 			if (org==null)
 				return "this organizer does not exist!";
