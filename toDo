@@ -18,8 +18,8 @@
 
 2. Parent:
 
-    2.1. Register
-    2.2. Login
+    2.1. Register  -> ok
+    2.2. Login   -> ok
     2.3. Book Ticket
     2.4. Add Favourites
     2.5. Evaluate Event
@@ -42,7 +42,7 @@
     3.7. View my events
     3.8. View statistics about my events
     3.9. Upload foto
-    3.10. Logout
+    3.10. Logout -> ok
 
 4. Admin
 
