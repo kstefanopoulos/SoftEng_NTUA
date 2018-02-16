@@ -1,0 +1,54 @@
+1. Γενικά:
+
+    1.1. Mainpage
+    1.2. Contact Page
+    1.3. Aboutus Page
+    1.4. Events Page
+    1.5. Single Events Page
+    1.6. Event Search Page + Results in Map
+    1.7. Register Page
+    1.8. Υδατογράφημα
+    1.9. Pdf
+
+Για όλα τα παραπάνω θα πρέπει να αναγνωρίζεται αν ο Χρήστης που μπαίνει στη σελίδα είναι Ανώνυμος ή Ταυτοποιημένος
+
+2. Parent:
+
+    2.1. Register
+    2.2. Login
+    2.3. Book Ticket
+    2.4. Add Favourites
+    2.5. Evaluate Event
+    2.6. Change Password
+    2.7. View Profile
+    2.8. Update Profile
+    2.9. Delete Profile
+    2.10. Logout
+    2.11. Load Credits
+    2.12. Upload Foto
+
+3. Organizer
+
+    3.1. Register
+    3.2. Login
+    3.3. View Profile
+    3.4. Update Profile
+    3.5. Change Password
+    3.6. Add new event
+    3.7. View my events
+    3.8. View statistics about my events
+    3.9. Upload foto
+    3.10. Logout
+
+4. Admin
+
+    4.1. Login
+    4.2. Add Admin
+    4.3. View a Profile
+    4.4. Lock a Profile
+    4.5. Change a User's Rights
+    4.6. View all Parents
+    4.7. View all Organizers
+    4.8. Logout
+    
+
