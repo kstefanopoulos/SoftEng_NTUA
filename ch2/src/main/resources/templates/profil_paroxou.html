@@ -49,6 +49,8 @@
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
       <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    
     </ul>		
   </div>
 </nav>
@@ -62,7 +64,7 @@
 	<div class="row info">
 		<div class="sidenav" style="color:grey;font-size:46px;">
 			<a th:href="@{/littlecherries/organizers/showinfo}">Προσωπικά Στοιχεία</a>
-			<a th:href="@{/littlecherries/organizers/companyevents}">Ιστορικό Events</a>
+			<a th:href="@{/littlecherries/organizers/viewmyevents}">Ιστορικό Events</a>
 		</div>
 		<div class="col-sm-8 info" style="color:grey;font-size:46px;">
 		</div>
@@ -70,7 +72,7 @@
 			<img style="img2" th:src= "@{/images/Insert-picture-here.jpg}" alt="Insert photo here" height="300px" width="300px"></img> 
 			<!--  <p><a href="#" style="font-size:20px;">Upload Photo</a></p>
 			<p><a href="#" style="font-size:20px;">Remove Photo</a></p> -->
-			<button class="button2 text" style="font-size:25px;">Δημιουργία Event</button>
+			<button><a th:href="@{/littlecherries/organizers/addevent}" class="button2 text">Δημιουργία Event</a></button>
 			<button><a th:href="@{/littlecherries/organizers/editprofile}" class="button2 text">Επεξεργασία Προφίλ</a></button>
 			<button><a th:href="@{/littlecherries/organizers/changepassword}" class="button2 text">Αλλαγή Password</a></button>
 			

@@ -2,6 +2,7 @@ package ch2;
 
 import javax.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Set;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
@@ -24,20 +26,19 @@ public class event {
     @JoinColumn(name = "oemail")
     @JsonIgnore
 	public organizer myorganizer;
-    //public String organizer_email;
-    
 	
+	@OneToMany(mappedBy = "myevent", cascade = CascadeType.ALL)
+    private Set<eventinfo> eventinfos;
+    
 	public String organizer_name;
 	public String event_name;
-	public String event_date;
-	public String start_time;
-	public String available_tickets;
 	public int event_cost;
 	public String street_name;
 	public int street_number;
 	public String postal_code;
 	public String town;
-	public String ages;
+	public int startage;
+	public int endage;
 	public String event_class;
 	public String event_description;
 	public String longitude; 
@@ -59,25 +60,20 @@ public class event {
 
 	public event() {}
 	
-	public event (String en, String ed, String st, String at, int ec, String sname, int snumber, String pc, String t, String a, String eclass, String edescr, String longtd, String lattd) {
+	public event (String en, int ec, String sname, int snumber, String pc, String t, int sa, int ea) {
 		
 		//this.myorganizer =o;
 		this.event_name=en;
-		this.event_date=ed;
-		this.start_time=st;
-		this.available_tickets=at;
 		this.event_cost=ec;
 		this.street_name=sname;
 		this.street_number=snumber;
 		this.postal_code=pc;
 		this.town=t;
-		this.ages=a;
-		this.event_class=eclass; 
-		this.event_description=edescr;
-		this.longitude=longtd; 
-		this.latitude=lattd; 
+		this.startage=sa;
+		this.endage=ea;
 		this.evaluation=0;
 		this.isdone=0;
+		this.eventinfos= new HashSet<eventinfo>();
 	}
 
 	public int getEventId() {
@@ -104,30 +100,6 @@ public class event {
 
 	public void setEvent_name(String event_name) {
 		this.event_name = event_name;
-	}
-
-	public String getEvent_date() {
-		return event_date;
-	}
-
-	public void setEvent_date(String event_date) {
-		this.event_date = event_date;
-	}
-
-	public String getStart_time() {
-		return start_time;
-	}
-
-	public void setStart_time(String start_time) {
-		this.start_time = start_time;
-	}
-
-	public String getAvailable_tickets() {
-		return available_tickets;
-	}
-
-	public void setAvailable_tickets(String available_tickets) {
-		this.available_tickets = available_tickets;
 	}
 
 	public int getEvent_cost() {
@@ -170,12 +142,20 @@ public class event {
 		this.town = town;
 	}
 
-	public String getAges() {
-		return ages;
+	public int getStartage() {
+		return startage;
 	}
 
-	public void setAges(String ages) {
-		this.ages = ages;
+	public void setStartage(int startage) {
+		this.startage = startage;
+	}
+
+	public int getEndage() {
+		return endage;
+	}
+
+	public void setEndage(int endage) {
+		this.endage = endage;
 	}
 
 	public String getEvent_class() {
@@ -258,6 +238,32 @@ public class event {
 
 	public void setOrganizer_name(String organizer_name) {
 		this.organizer_name = organizer_name;
+	}
+
+	public Set<eventinfo> getEventinfos() {
+		return eventinfos;
+	}
+
+	public void setEventinfos(Set<eventinfo> eventinfos) {
+		this.eventinfos = eventinfos;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	} 
 
+	
+	
 }

@@ -1,6 +1,7 @@
 package ch2;
 
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import register.AdministratorDTO;
+import register.EventDTO;
 import register.OrganizerDTO;
 import register.OrganizerToUpdate;
 import register.ParentDTO;
@@ -46,7 +48,7 @@ public class MainController {
     ParentToUpdate parupdate = new ParentToUpdate(); 
     ChangePasswordForm changepsw = new ChangePasswordForm();
     UserCredentials userCredentials;
-    
+    EventDTO eventdto = new EventDTO();
 
     @RequestMapping(value="/littlecherries")
 	public String mainindex(Model model) {
@@ -401,7 +403,7 @@ public String ChangePassw(WebRequest request, Model model) {
 	if (org != null) {
 		model.addAttribute("user",org);
 	    model.addAttribute("password", changepsw);
-		return "change_password";
+		return "change_password_organizer";
 	}
 return "registration";
 }
@@ -416,7 +418,8 @@ public String ChangePassword(Model model, @ModelAttribute("changepsw") @Valid Ch
 				  userCredentials.setPassword(accountDto.getFirst());
 				  org.setPassword(accountDto.getFirst());
 			  	  oc.UpdateUser(org.getOemail());
-			  	  model.addAttribute("user",org);
+			  	  model.addAttribute("par",null);
+			  	  model.addAttribute("org",org);
 			  	  return "SuccessfulPasswordChange";
 			  }
 			  else {
@@ -427,6 +430,54 @@ public String ChangePassword(Model model, @ModelAttribute("changepsw") @Valid Ch
 		  return "registration";
 	}
 
+@RequestMapping(value = "/littlecherries/organizers/viewmyevents", method = RequestMethod.GET) 
+public String OrganizerViewEvents(Model model) {
+	if (userCredentials == null)
+		return "registration";
+	organizer org= oc.getΑnOrganizer(userCredentials.getEmail());
+	if (org != null) {
+		model.addAttribute("user",org);
+		Set<event> ev=org.getEvents();
+	    model.addAttribute("events", ev);
+		return "company_events"; }
+	return "registration";
+	}
+
+@RequestMapping(value = "/littlecherries/organizers/addevent", method = RequestMethod.GET) 
+public String OrganizerAddsEvent(Model model) {
+	if (userCredentials == null)
+		return "registration";
+	organizer org= oc.getΑnOrganizer(userCredentials.getEmail());
+	if (org==null)
+		return "registration";
+	else {
+		model.addAttribute("user",org);
+		return "event_creation";
+	}
+}
+
+@RequestMapping(value = "/littlecherries/organizers/addevent", method = RequestMethod.POST) 
+public String OrganizerCreatesEvent(Model model, @ModelAttribute("eventdto") @Valid EventDTO eventDto, 
+	      BindingResult result, WebRequest request, Errors errors) {    
+	
+	    //check this!!!!
+		/*if(result.hasErrors()){
+			return "registration";
+		}*/
+	    
+		organizer org= oc.getΑnOrganizer(userCredentials.getEmail());
+		if (org==null)
+			return "registration";
+		//add event
+		eventinfo ei = new eventinfo(eventDto.getDates(),eventDto.getTickets(),eventDto.getDuration());
+		event e = oc.addNewEvent(org.getOemail(), eventDto.getTitle(), eventDto.getPrice(), eventDto.getStreetname(),
+				eventDto.getStreetnumber(), eventDto.getPostalcode(), eventDto.getTown(), eventDto.getStartage(),
+				eventDto.getEndage(),ei);
+		if (e==null)
+			return "redirect:/littlecherries/organizers/addevent";
+	   
+		return "redirect:/littlecherries/organizers/viewmyevents";
+	}
 
 /////////////////////  PARENT'S STUFF   ////////////////////////  
 
@@ -462,8 +513,8 @@ public String Parenteditprofile(WebRequest request, Model model) {
 	parent par= pr.getΑParent(userCredentials.getEmail());
 	if (par != null) {
 		model.addAttribute("user",par);
-	    model.addAttribute("parents", parupdate);
-		return "epeksergasia_profil_paroxou";
+	    model.addAttribute("parent", parupdate);
+		return "epeksergasia_profile_gonea";
 	}
 	return "redirect:littlecherries/register";
 
@@ -506,7 +557,7 @@ public String ParentChangePassw(WebRequest request, Model model) {
 	if (par != null) {
 		model.addAttribute("user",par);
 	    model.addAttribute("password", changepsw);
-		return "change_password";
+		return "change_password_parent";
 	}
 return "registration";
 }
@@ -521,12 +572,14 @@ public String ParentChangePassword(Model model, @ModelAttribute("changepsw") @Va
 				  userCredentials.setPassword(accountDto.getFirst());
 				  par.setPassword(accountDto.getFirst());
 			  	  pr.UpdateUser(par.getPemail(), null);
-			  	  model.addAttribute("user",par);
+			  	  model.addAttribute("par",par);
+			  	  model.addAttribute("org",null);
+
 			  	  return "SuccessfulPasswordChange";
 			  }
 			  else {
 					model.addAttribute("user",par);
-					return "redirect:/littlecherries/organizers/changepassword";
+					return "redirect:/littlecherries/parents/changepassword";
 			  }
 		  }
 		  return "registration";

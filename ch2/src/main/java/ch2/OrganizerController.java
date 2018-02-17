@@ -80,26 +80,27 @@ public class OrganizerController {
 		return "Update this";
 	}
 	
-	@GetMapping(path = "/addevent")
-	public @ResponseBody
+	public event addNewEvent(String oem, String en, int ec, String sname, int snumber,
+			String pc, String t, int sa, int ea, eventinfo i) {
 
-	
-	String addNewEvent(@RequestParam String oem, @RequestParam String en, @RequestParam String ed, @RequestParam String st, @RequestParam String at,
-			@RequestParam int ec, @RequestParam String sname, @RequestParam int snumber,
-			@RequestParam String pc, @RequestParam String t, @RequestParam String a,  @RequestParam String eclass,  @RequestParam String edescr,@RequestParam String lo,  @RequestParam String la) {
-
-			event ne = new event(en, ed, st, at, ec,sname, snumber,pc,t,a,eclass,edescr,lo,la);
+			event ne = new event(en,ec,sname, snumber,pc,t,sa,ea);
 			organizer org=oRepository.findOne(oem);
 			if (org==null)
-				return "this organizer does not exist!";
+				return null;
 			ne.setMyorganizer(org);
+			i.setMyevent(ne);
+			Set<eventinfo> infos= ne.getEventinfos();
+		    infos.add(i);
+		    ne.setEventinfos(infos);
 			ne.setOrganizer_name(org.getCompany_name());
 			Set<event> MyEvents=org.getEvents();
 			MyEvents.add(ne);
 			org.setEvents(MyEvents); 
 			oRepository.save(org);
-			return "New Event Saved";
+			return ne;
 		}
+	
+	
 	
 	@GetMapping(path = "/myevents")
 	public @ResponseBody Iterable<event> getAllEvents(@RequestParam String oem) {

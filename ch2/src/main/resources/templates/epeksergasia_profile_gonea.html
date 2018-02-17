@@ -48,7 +48,8 @@
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/parents/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
     </ul>		
   </div>
 </nav>
@@ -65,7 +66,7 @@
 		<h3 align="left"> Όνομα:</h3>
 		<h3 align="left"> Επώνυμο:</h3>
 	</div>
-	<form th:action="@{/littlecherries/organizers/editprofile}" th:object="${organizer}" method="POST" enctype="utf8">	
+	<form th:action="@{/littlecherries/parents/editprofile}" th:object="${parent}" method="POST" enctype="utf8">	
 		<div class="col-sm-4 info" style="color:grey; font-size:25px" >
 			<div> 
 				<input class="text2" name="town"></input>
