@@ -23,9 +23,9 @@
     2.3. Book Ticket
     2.4. Add Favourites
     2.5. Evaluate Event
-    2.6. Change Password
+    2.6. Change Password  -> ok
     2.7. View Profile -> ok
-    2.8. Update Profile
+    2.8. Update Profile   -> ok ?
     2.9. Delete Profile
     2.10. Logout        -> ok
     2.11. Load Credits
@@ -42,6 +42,7 @@
     3.5. Change Password  -> ok
     3.6. Add new event
     3.7. View my events
+    3.8. View for each event # of tickets sold, # of credits given, reviews and times of favourited
     3.8. View statistics about my events
     3.9. Upload foto
     3.10. Logout -> ok
