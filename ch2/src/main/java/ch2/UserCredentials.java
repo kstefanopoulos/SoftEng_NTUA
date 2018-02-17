@@ -12,6 +12,8 @@ public class UserCredentials {
 	@NotEmpty
 	private String password;
 
+	private int type;				//parent=0; organizer=1; admin=2;
+	
 	public String getEmail() {
 		return email;
 	}
@@ -27,4 +29,14 @@ public class UserCredentials {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+	
+	
 }

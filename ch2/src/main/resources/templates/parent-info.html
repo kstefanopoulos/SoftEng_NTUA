@@ -49,7 +49,7 @@
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
     </ul>		
   </div>
 </nav>
@@ -59,10 +59,9 @@
               
       <div th:if="${user != null}">
          <ul>
-            <li>Email: <span th:utext="${user.oemail}">..</span></li>
-            <li>Όνομα Εταιρείας: <span th:utext="${user.company_name}">..</span></li>
-            <li>Όνομα Υπεύθυνου: <span th:utext="${user.first_name}">..</span></li>
-            <li>Επώνυμο Υπεύθυνου: <span th:utext="${user.last_name}">..</span></li>
+            <li>Email: <span th:utext="${user.pemail}">..</span></li>
+            <li>Όνομα: <span th:utext="${user.first_name}">..</span></li>
+            <li>Επώνυμο: <span th:utext="${user.last_name}">..</span></li>
             <li>Πόλη: <span th:utext="${user.town}">..</span></li>
             <li>Οδός: <span th:utext="${user.street_name}">..</span></li>
             <li>Αριθμός: <span th:utext="${user.street_number}">..</span></li>

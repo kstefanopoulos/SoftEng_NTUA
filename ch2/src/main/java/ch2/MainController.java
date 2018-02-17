@@ -35,7 +35,9 @@ public class MainController {
 	
 	@Autowired
 	private OrganizerController oc;
-    private ParentController pr ; 
+	@Autowired
+    private ParentController pr; 
+	@Autowired
     private AdministratorController ad; 
     ParentDTO parentdto = new ParentDTO(); 
     OrganizerDTO organizerdto = new OrganizerDTO();
@@ -55,10 +57,10 @@ public class MainController {
 			parent par = pr.getParentByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
 			administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
 			if (org != null) 
-				model.addAttribute("user",org);
+				model.addAttribute("org",org);
 			else{
 				if(par!=null)
-					model.addAttribute("user",par); 
+					model.addAttribute("par",par); 
 				else{ 
 					
 					if(adm != null )
@@ -80,10 +82,10 @@ public class MainController {
 		  parent par = pr.getParentByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
 		  administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
 		  if (org != null) 
-				model.addAttribute("user",org);
+				model.addAttribute("org",org);
 			else{
 				if(par!=null)
-					model.addAttribute("user",par); 
+					model.addAttribute("par",par); 
 				else{ 
 					
 					if(adm != null )
@@ -105,10 +107,10 @@ public class MainController {
 		parent par = pr.getParentByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
 		administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
 		if (org != null) 
-			model.addAttribute("user",org);
+			model.addAttribute("org",org);
 		else{
 			if(par!=null)
-				model.addAttribute("user",par); 
+				model.addAttribute("par",par); 
 			else{ 
 				
 				if(adm != null )
@@ -116,7 +118,6 @@ public class MainController {
 				
 			}
 		}
-	
 		}
     return "OurCompanyPage";
   }
@@ -142,10 +143,10 @@ public class MainController {
 		parent par = pr.getParentByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
 		administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
 		if (org != null) 
-			model.addAttribute("user",org);
+			model.addAttribute("org",org);
 		else{
 			if(par!=null)
-				model.addAttribute("user",par); 
+				model.addAttribute("par",par); 
 			else{ 
 				
 				if(adm != null )
@@ -167,16 +168,14 @@ public class MainController {
 	 return "registration";
  }
  
- 
- //////// ORGANIZER /////////////
- 
- 
- @RequestMapping(value = "/littlecherries/organizers/registerSuccessful")
+ @RequestMapping(value = "/littlecherries/registerSuccessful")
  public String viewRegisterSuccessful(Model model) {
 
     return "registerSuccessfulPage";
  }
-
+ 
+ //////// ORGANIZER /////////////
+ 
 @RequestMapping(value = "/littlecherries/organizers/register", method = RequestMethod.GET)
 	public String showRegistrationFormOrganizer(WebRequest request, Model model) {
 	    model.addAttribute("organizer", organizerdto);
@@ -248,12 +247,8 @@ public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Val
     if (registered==null)
     	return "UnsuccessfulRegistrationPage";
     redirectAttributes.addFlashAttribute("flashUser", registered);
-
-    return "redirect:/littlecherries/parents/registerSuccessful"; }
-    // rest of the implementation
+    return "redirect:/littlecherries/registerSuccessful"; }
 }
-
-
 
 	
 //////// LOGIN ///////////////////
@@ -275,27 +270,26 @@ public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential")
 	if(bindingResult.hasErrors()){
 		return "registration";
 	}
-	
 	//ModelAndView modelAndView = new ModelAndView("welcome");
 	organizer org = oc.getOrganizerByEmailAndPassw(myuserCredentials.getEmail(), myuserCredentials.getPassword());
 	parent par = pr.getParentByEmailAndPassw(myuserCredentials.getEmail(), myuserCredentials.getPassword());
-	if(org!= null){
+	
+	 if(org!= null){
 		redirectAttributes.addFlashAttribute("user", org);
 		userCredentials=myuserCredentials;
+		userCredentials.setType(1);
 		return "redirect:/littlecherries/organizers/showprofile";
-	}else{
-		
-		if(par!=null){
+	}else if(par!=null){
 			redirectAttributes.addFlashAttribute("user", par);
 			userCredentials=myuserCredentials;
-			return "redirect:/littlecherries/parent/showprofile";
-		}else{
+			userCredentials.setType(0);
+			return "redirect:/littlecherries/parents/showprofile";
+		}
 	
 		return "registration";
 	}
-	}
 	
-}
+
 	
 
 ////// ADMIN LOGIN ///////////////

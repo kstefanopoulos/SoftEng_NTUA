@@ -64,22 +64,23 @@
 			<h3 align ="center"> 
 				Εγγραφείτε ως:
 			</h3>
-			<button th:href="@{/littlecherries/parents/register}" type="button" class="btn btn-primary">Γονέας</button>
-			<button th:href="@{/littlecherries/organizers/register}" type="button" class="btn btn-primary">Πάροχος</button>
+			
+			<button><a th:href="@{/littlecherries/parents/register}" type="button" class="btn btn-primary">Γονέας</a></button>
+			<button><a th:href="@{/littlecherries/organizers/register}" type="button" class="btn btn-primary">Πάροχος</a></button>
 		</div>
 		<div class="col-sm-2 info" >
 		<h3 align="center"><b> Login </b></h3>
 			<h3 align ="center"> 
 				Συνδεθείτε:
 			</h3>
-		<button th:href="@{/littlecherries/login}" type="button" class="btn btn-primary">Login</button>
+		<button><a th:href="@{/littlecherries/login}" type="button" class="btn btn-primary">Login</a></button>
 		</div>
 	  <div class="col-sm-4">
 	  	<h3 align="center"><b> Admin Login </b></h3>
 			<h3 align ="center"> 
 				Είσοδος Διαχειριστή:
 			</h3>
-	  <button th:href="@{/littlecherries/login/admin}" type="button" class="btn btn-primary">Admin Login</button>
+	  <button><a th:href="@{/littlecherries/login/admin}" type="button" class="btn btn-primary">Admin Login</a></button>
 	  </div>
 		
 	</div>			

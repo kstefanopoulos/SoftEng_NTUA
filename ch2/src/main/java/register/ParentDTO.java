@@ -26,7 +26,6 @@ public class ParentDTO {
 	  private String streetname;
 	  
 	  @NotNull
-	  @NotEmpty
 	  private int streetnumber;
 	  
 	  @NotNull

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Organizer Profile</title>
+  <title>Parent Profile</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -48,7 +48,7 @@
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
     </ul>		
   </div>
 </nav>
@@ -61,8 +61,10 @@
      <h2>You have successfully logged in!</h2>
 	<div class="row info">
 		<div class="sidenav" style="color:grey;font-size:46px;">
-			<a th:href="@{/littlecherries/organizers/showinfo}">Προσωπικά Στοιχεία</a>
-			<a th:href="@{/littlecherries/organizers/companyevents}">Ιστορικό Events</a>
+			<a th:href="@{/littlecherries/parents/showinfo}">Προσωπικά Στοιχεία</a>
+		    <a th:href="@{/littlecherries/parents/events_gone}">Ιστορικό Events</a>
+		    <a th:href="@{/littlecherries/parents/events_saved}">Το Καλάθι μου</a>
+		    		
 		</div>
 		<div class="col-sm-8 info" style="color:grey;font-size:46px;">
 		</div>
@@ -70,9 +72,8 @@
 			<img style="img2" th:src= "@{/images/Insert-picture-here.jpg}" alt="Insert photo here" height="300px" width="300px"></img> 
 			<!--  <p><a href="#" style="font-size:20px;">Upload Photo</a></p>
 			<p><a href="#" style="font-size:20px;">Remove Photo</a></p> -->
-			<button class="button2 text" style="font-size:25px;">Δημιουργία Event</button>
-			<button><a th:href="@{/littlecherries/organizers/editprofile}" class="button2 text">Επεξεργασία Προφίλ</a></button>
-			<button><a th:href="@{/littlecherries/organizers/changepassword}" class="button2 text">Αλλαγή Password</a></button>
+			<button><a th:href="@{/littlecherries/parents/editprofile}" class="button2 text">Επεξεργασία Προφίλ</a></button>
+			<button><a th:href="@{/littlecherries/parents/changepassword}" class="button2 text">Αλλαγή Password</a></button>
 			
 			
 		</div>

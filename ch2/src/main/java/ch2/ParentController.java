@@ -14,6 +14,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping(path = "/parents")
+
 public class ParentController {
 	@Autowired
 	private ParentRepository pRepository;
@@ -29,9 +30,12 @@ public class ParentController {
 		else {
 			parent pa = new parent(pem, fn, ln, un, pas, pn, sname, snumber,pc,t);
 			pRepository.save(pa);
+			bucket b= new bucket(pa,0,0);
+			b.setPemail(pem);
+			//b.setBucketId(12);
+		    pa.setParentbucket(b);
+			pRepository.save(pa);
 			return pa;
-			//return "New Organizer Saved";
-			//everything else with setters
 		}
 	}
 	
