@@ -1,0 +1,60 @@
+****To οk αναφέρεται στη λειτουργικότητα των παρακάτω όχι στην εμφάνιση***
+
+1. Γενικά:
+
+    1.1. Mainpage       -> τι θα εχει?
+    1.2. Contact Page   -> ok
+    1.3. Aboutus Page  -> ok
+    1.4. Events Page   -> ok
+    1.5. Single Event Page
+    1.6. Event Search Page + Results in Map
+    1.7. Register Page  
+    1.8. Υδατογράφημα
+    1.9. Pdf
+    1.10. Https και γενικα θέματα ασφάλειας
+    1.11. Κωδικοποιηση password
+    
+Για όλα τα παραπάνω θα πρέπει να αναγνωρίζεται αν ο Χρήστης που μπαίνει στη σελίδα είναι Ανώνυμος ή Ταυτοποιημένος
+
+2. Parent:
+
+    2.1. Register  -> ok
+    2.2. Login   -> ok
+    2.3. Book Ticket
+    2.4. Add Favourites
+    2.5. Evaluate Event
+    2.6. Change Password
+    2.7. View Profile -> ok
+    2.8. Update Profile
+    2.9. Delete Profile
+    2.10. Logout        -> ok
+    2.11. Load Credits
+    2.12. Upload Foto
+    2.13. Να δει το Ιστορικό του
+    2.14. Να δει το Καλάθι του
+
+3. Organizer
+
+    3.1. Register      -> ok
+    3.2. Login         -> ok
+    3.3. View Profile   -> ok
+    3.4. Update Profile  -> ok street number (?)
+    3.5. Change Password  -> ok
+    3.6. Add new event
+    3.7. View my events
+    3.8. View statistics about my events
+    3.9. Upload foto
+    3.10. Logout -> ok
+
+4. Admin
+
+    4.1. Login
+    4.2. Add Admin
+    4.3. View a Profile
+    4.4. Lock a Profile
+    4.5. Change a User's Rights
+    4.6. View all Parents
+    4.7. View all Organizers
+    4.8. Logout
+    
+
