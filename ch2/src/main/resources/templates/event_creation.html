@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Add Event</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+
+<style>
+
+
+table, th, td{
+	border: 1px solid grey;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
+
+</style>
+  
+  </head>
+
+  
+<body>
+
+
+<!-- Head Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+<!-- Navigation Menu --> 
+
+<nav class="navbar navbar-reversed  roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    
+    </ul>		
+  </div>
+</nav>
+
+<div class="container" align="center"> 
+	<div class="row info">
+	<form th:action="@{/littlecherries/organizers/addevent}" th:object="${event}" method="POST" enctype="utf8">	
+	<div class="col-sm-4" style="color:grey; font-size:20px">
+		<h3 align="left"> Τίτλος Event:  <input class="text2" name="title" th:required="required"></input></h3>
+		<h3 align="left"> Τιμή Εισιτηρίου: <input class="text2" name="price" th:required="required" th:type="number"></h3>
+		
+		<p><h3 align="center"><b> Ηλικίες </b></h3></p>
+		<h3 align="left"> Από: <input class="text2" name="startage" th:required="required" th:type="number"></h3>
+		<h3 align="left"> Εώς: <input class="text2" name="endage" th:required="required" th:type="number"></h3>
+		
+		<table style="width:100%; position:relative; bottom:-20px;">
+		<tr class="tr1">
+			<th>Ημερομηνία</th>
+			<th>Διαθέσιμα Εισιτήρια</th>
+			<th>Ώρα Έναρξης</th>
+			
+		</tr>
+		<tr>
+			<td><input class="date" name="dates" th:value="${#dates.createNow()}" th:required="required" th:type="date" class="form-control"></td>
+			<td><input class="text2" name="tickets" th:required="required" th:type="number"></td>
+			<!--  <td><input class="text2" name="time" th:required="required" th:type="time"></td></td>
+			-->
+			
+		</tr>
+		</table>
+		
+	</div>
+	 
+	<div class="col-sm-4" style="color:grey; font-size:20px"> 
+		<h3 align="left"> Διάρκεια:<input class="text2" name="duration" th:required="required" th:type="number"></h3>
+		<h3 align="left"> Όνομα δρόμου: <input class="text2" name="streetname" th:required="required"></h3>
+		<h3 align="left"> Αριθμός:<input class="text2" name="streetnumber" th:required="required"></h3>
+		<h3 align="left"> Πόλη: <input class="text2" name="town" th:required="required"></h3>
+		<h3 align="left"> Τ.Κ.: <input class="text2" name="postalcode" th:required="required"></h3>
+		<p><button class="button1 text align-bottom" style="font-size:25px; position:relative; bottom:-250px; width:70%">Υποβολή</button></p>
+	</div>
+	<!--  
+	<div class="col-sm-4 info" style="color:grey;">
+		<img style="img2" src="Insert-picture-here.jpg" alt="Insert photo here" height="300px" width="300px"> 
+		<p><a href="#" style="font-size:20px;">Upload Photo</a></p>
+		<p><a href="#" style="font-size:20px;">Remove Photo</a></p> 
+		<p><h3 align="center" style="position:relative; bottom:-20px;"><b> Περιγραφή Event </b></h3></p>
+		<input class="text2" style="width: 300px; height: 100px; padding: 30px; border: 1px solid grey;" name="description" required>
+	</div> -->
+	</form>	
+</div>
+</div>
+	
+	
+</body>
+</html>
