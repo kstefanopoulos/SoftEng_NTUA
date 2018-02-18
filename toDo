@@ -2,17 +2,18 @@
 
 1. Γενικά:
 
-    1.1. Mainpage       -> τι θα εχει?
+    1.1. Mainpage   -> τα πιο προσφατα events
     1.2. Contact Page   -> ok
     1.3. Aboutus Page  -> ok
-    1.4. Events Page   -> ok
-    1.5. Single Event Page
-    1.6. Event Search Page + Results in Map
-    1.7. Register Page  
-    1.8. Υδατογράφημα
-    1.9. Pdf
-    1.10. Https και γενικα θέματα ασφάλειας
-    1.11. Κωδικοποιηση password
+    1.4. Events Page + Filters + Results  -> ok
+    1.5. Single Event Page 
+    1.6. Register Page  -> ok
+    1.7. Υδατογράφημα στα events
+    1.8. Pdf
+    1.9. Https και γενικα θέματα ασφάλειας
+    1.10. Κωδικοποιηση password
+    1.11. Mobile and tablet
+    1.12. Να δουλεύει στα ελληνικά
     
 Για όλα τα παραπάνω θα πρέπει να αναγνωρίζεται αν ο Χρήστης που μπαίνει στη σελίδα είναι Ανώνυμος ή Ταυτοποιημένος
 
@@ -32,6 +33,7 @@
     2.12. Upload Foto
     2.13. Να δει το Ιστορικό του
     2.14. Να δει το Καλάθι του
+    (2.15. Reset Password)
 
 3. Organizer
 
