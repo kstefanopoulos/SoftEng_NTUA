@@ -68,7 +68,10 @@
             <li>Αριθμός: <span th:utext="${user.street_number}">..</span></li>
             <li>Τηλέφωνο Επικοινωνίας: <span th:utext="${user.phone_number}">..</span></li>
             <li>Balance: <span th:utext="${user.balance}">..</span></li>
-
+			<div th:unless="${user.last_transaction_date==null}">
+				 <li>Ημερομηνία Τελευταίας Συναλλαγής: <span th:utext="${user.last_transaction_date}">..</span></li>
+				
+			</div>
 
          </ul>
       </div>

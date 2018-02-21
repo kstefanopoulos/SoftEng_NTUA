@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src='http://code.jquery.com/jquery-1.11.0.js'></script>
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.css">
+  <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
 
@@ -27,6 +30,16 @@ table, th, td{
   
 <body>
 
+<!-- JavaScript and jQuery -->
+<script th:inline="javascript" >
+	function addRow() {
+		
+  		var tableBody = $('.table > tbody'), lastRowClone = $('tr:last-child', tableBody).clone();
+   		$('input[type=text]', lastRowClone).val('');  
+    	tableBody.append(lastRowClone);
+    	
+  }
+</script>
 
 <!-- Head Content. Logo - Company Name -->
 <div class="container-fluid">
@@ -72,41 +85,27 @@ table, th, td{
 <div class="container" align="center"> 
 	<div class="row info">
 	<form th:action="@{/littlecherries/organizers/addevent}" th:object="${event}" method="POST" enctype="utf8">	
-	<div class="col-sm-4" style="color:grey; font-size:20px">
+	<div class="col-sm-4" style="color:grey; font-size:20px"> 
 		<h3 align="left"> Τίτλος Event:  <input class="text2" name="title" th:required="required"></input></h3>
 		<h3 align="left"> Τιμή Εισιτηρίου: <input class="text2" name="price" th:required="required" th:type="number"></h3>
 		
 		<p><h3 align="center"><b> Ηλικίες </b></h3></p>
-		<h3 align="left"> Από: <input class="text2" name="startage" th:required="required" th:type="number"></h3>
+		<h3 align="left"> Από: <input class="text2" name="startage"  th:required="required" th:type="number"></h3>
 		<h3 align="left"> Εώς: <input class="text2" name="endage" th:required="required" th:type="number"></h3>
-		
-		<table style="width:100%; position:relative; bottom:-20px;">
-		<tr class="tr1">
-			<th>Ημερομηνία</th>
-			<th>Διαθέσιμα Εισιτήρια</th>
-			<th>Ώρα Έναρξης</th>
-			
-		</tr>
-		<tr>
-			<td><input class="date" name="dates" th:value="${#dates.createNow()}" th:required="required" th:type="date" class="form-control"></td>
-			<td><input class="text2" name="tickets" th:required="required" th:type="number"></td>
-			<!--  <td><input class="text2" name="time" th:required="required" th:type="time"></td></td>
-			-->
-			
-		</tr>
-		</table>
 		
 	</div>
 	 
-	<div class="col-sm-4" style="color:grey; font-size:20px"> 
+	
+	 <!--  
+	<div class="col-sm-4" style="color:grey; font-size:20px">  
 		<h3 align="left"> Διάρκεια:<input class="text2" name="duration" th:required="required" th:type="number"></h3>
 		<h3 align="left"> Όνομα δρόμου: <input class="text2" name="streetname" th:required="required"></h3>
 		<h3 align="left"> Αριθμός:<input class="text2" name="streetnumber" th:required="required"></h3>
 		<h3 align="left"> Πόλη: <input class="text2" name="town" th:required="required"></h3>
-		<h3 align="left"> Τ.Κ.: <input class="text2" name="postalcode" th:required="required"></h3>
+		<h3 align="left"> Τ.Κ.: <input class="text2" name="postalcode" th:required="required"></h3>  -->
 		<p><button class="button1 text align-bottom" style="font-size:25px; position:relative; bottom:-250px; width:70%">Υποβολή</button></p>
-	</div>
-	<!--  
+	
+	<!--   </div>  
 	<div class="col-sm-4 info" style="color:grey;">
 		<img style="img2" src="Insert-picture-here.jpg" alt="Insert photo here" height="300px" width="300px"> 
 		<p><a href="#" style="font-size:20px;">Upload Photo</a></p>

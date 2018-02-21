@@ -90,15 +90,13 @@ public class ParentController {
 		return "Delete this";
 	}
 
-	@GetMapping(path = "/update")
-	public @ResponseBody
-	String UpdateUser(@RequestParam String pem, @RequestParam Date ltd) {
+	
+	public parent UpdateUser(String pem) {
 		parent p = pRepository.findOne(pem);
 		if (p==null)
-			return "Parent not found!";
-		p.setLast_transaction_date(ltd);
+			return null;
 		pRepository.save(p);
-		return "Update this";
+		return p;
 	}
 	
 	public parent getParentByEmailAndPassw (String pem, String passw) {

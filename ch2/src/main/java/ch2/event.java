@@ -45,6 +45,7 @@ public class event {
 	public String latitude; 
 	public int evaluation;
 	public int isdone;
+	public int duration;
 	
     @OneToMany(mappedBy = "anevent")
     @JsonIgnore
@@ -60,7 +61,7 @@ public class event {
 
 	public event() {}
 	
-	public event (String en, int ec, String sname, int snumber, String pc, String t, int sa, int ea) {
+	public event (String en, int ec, String sname, int snumber, String pc, String t, int sa, int ea, int d) {
 		
 		//this.myorganizer =o;
 		this.event_name=en;
@@ -74,6 +75,7 @@ public class event {
 		this.evaluation=0;
 		this.isdone=0;
 		this.eventinfos= new HashSet<eventinfo>();
+		this.duration=d;
 	}
 
 	public int getEventId() {
@@ -262,8 +264,16 @@ public class event {
 
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	} 
 
-	
+		
 	
 }

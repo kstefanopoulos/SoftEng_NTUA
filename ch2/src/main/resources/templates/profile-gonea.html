@@ -75,7 +75,13 @@
 			<p><a href="#" style="font-size:20px;">Remove Photo</a></p> -->
 			<button><a th:href="@{/littlecherries/parents/editprofile}" class="button2 text">Επεξεργασία Προφίλ</a></button>
 			<button><a th:href="@{/littlecherries/parents/changepassword}" class="button2 text">Αλλαγή Password</a></button>
+			<button><a th:href="@{/littlecherries/parents/loadcredits}" class="button2 text">Φόρτωση Πόντων</a></button>
 			
+			<form th:action="@{/littlecherries/parents/deleteprofile}">
+  					<input type="text" name="q" />
+  					<input type="submit" value="Διαγραφή Προφίλ"
+    				onclick="return confirm('Θελετε να διαγράψετε οριστικά το προφίλ σας?')"
+    		/></form>
 			
 		</div>
 	</div>

@@ -80,25 +80,28 @@ public class OrganizerController {
 		return "Update this";
 	}
 	
-	public event addNewEvent(String oem, String en, int ec, String sname, int snumber,
-			String pc, String t, int sa, int ea, eventinfo i) {
+	public event createNewEvent(String oem, String en, int ec, String sname, int snumber,
+			String pc, String t, int sa, int ea, int d) {
 
-			event ne = new event(en,ec,sname, snumber,pc,t,sa,ea);
-			organizer org=oRepository.findOne(oem);
-			if (org==null)
-				return null;
-			ne.setMyorganizer(org);
-			i.setMyevent(ne);
-			Set<eventinfo> infos= ne.getEventinfos();
-		    infos.add(i);
-		    ne.setEventinfos(infos);
-			ne.setOrganizer_name(org.getCompany_name());
-			Set<event> MyEvents=org.getEvents();
-			MyEvents.add(ne);
-			org.setEvents(MyEvents); 
-			oRepository.save(org);
+			event ne = new event(en,ec,sname, snumber,pc,t,sa,ea, d);
 			return ne;
 		}
+	
+	public event saveNewEvent(String oem, event e, Set<eventinfo> es) {
+		organizer org=oRepository.findOne(oem);
+		if (org==null)
+			return null;
+		e.setMyorganizer(org);
+		for (eventinfo i: es)
+			i.setMyevent(e);
+	    e.setEventinfos(es);
+		e.setOrganizer_name(org.getCompany_name());
+		Set<event> MyEvents=org.getEvents();
+		MyEvents.add(e);
+		org.setEvents(MyEvents); 
+		oRepository.save(org);
+		return e;
+	}
 	
 	
 	

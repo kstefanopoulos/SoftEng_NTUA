@@ -41,15 +41,6 @@ public class EventDTO {
 	  private String postalcode;
 	  
 	  @NotNull
-	  @DateTimeFormat(pattern = "yyyy-MM-dd")
-	  private Date dates;
-	  
-	  @NotNull
-	  private int tickets;
-	  
-	  private Time time;
-	  
-	  @NotNull
 	  private int duration;	  
 
 	public String getTitle() {
@@ -100,21 +91,6 @@ public class EventDTO {
 		this.postalcode = postalcode;
 	}
 
-	public Date getDates() {
-		return dates;
-	}
-
-	public void setDates(Date dates) {
-		this.dates = dates;
-	}
-
-	public int getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(int tickets) {
-		this.tickets = tickets;
-	}
 
 	public int getStartage() {
 		return startage;
@@ -132,13 +108,6 @@ public class EventDTO {
 		this.endage = endage;
 	}
 
-	public Time getTime() {
-		return time;
-	}
-
-	public void setTime(Time time) {
-		this.time = time;
-	}
 
 	public int getDuration() {
 		return duration;
