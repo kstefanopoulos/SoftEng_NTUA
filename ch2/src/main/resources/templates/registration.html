@@ -10,9 +10,25 @@
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"></link>
   
-  
-  </head>
+ <style>
 
+.btn-primary{ 
+ background-color : #BA55D3; 
+ 
+ }
+ 
+ 
+ 
+
+
+
+</style>
+  
+  
+</head>
+
+  
+  
   
 <body>
 
@@ -56,39 +72,32 @@
 </nav>
 
 
-<div  class="container-fluid" align="center"> 
+<!--  Page Content  -->
+
+<div  class="container-fluid win" align="center"> 
 	<div class="row info">
 	  <div class="col-sm-2"></div>
-		<div class="col-sm-2 info" >
+		<div class="col-sm-4 info" >
 			<h3 align="center"><b> Sign Up </b></h3>
 			<h3 align ="center"> 
 				Εγγραφείτε ως:
 			</h3>
 			
-			<button><a th:href="@{/littlecherries/parents/register}" type="button" class="btn btn-primary">Γονέας</a></button>
-			<button><a th:href="@{/littlecherries/organizers/register}" type="button" class="btn btn-primary">Πάροχος</a></button>
+			<a th:href="@{/littlecherries/parents/register}" type="button" class="btn btn-primary">Γονέας</a>
+			<a th:href="@{/littlecherries/organizers/register}" type="button" class="btn btn-primary">Πάροχος</a>
 		</div>
-		<div class="col-sm-2 info" >
+		<div class="col-sm-4 info" >
 		<h3 align="center"><b> Login </b></h3>
 			<h3 align ="center"> 
 				Συνδεθείτε:
 			</h3>
-		<button><a th:href="@{/littlecherries/login}" type="button" class="btn btn-primary">Login</a></button>
+		<a th:href="@{/littlecherries/login}" type="button" class="btn btn-primary">Login</a>
 		</div>
-	  <div class="col-sm-4">
-	  	<h3 align="center"><b> Admin Login </b></h3>
-			<h3 align ="center"> 
-				Είσοδος Διαχειριστή:
-			</h3>
-	  <button><a th:href="@{/littlecherries/login/admin}" type="button" class="btn btn-primary">Admin Login</a></button>
-	  </div>
-		
+
 	</div>			
   </div> 
 
-<div align="center"> 
- <footer>&copy; Copyright 2017 Little Cherries</footer>
-</div> 
+
 
 </body>
 </html>

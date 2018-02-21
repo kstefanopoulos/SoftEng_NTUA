@@ -1,15 +1,23 @@
 package ch2;
 
 
-import java.sql.Date;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,18 +25,24 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
 
 import register.AdministratorDTO;
 import register.EventDTO;
 import register.OrganizerDTO;
 import register.OrganizerToUpdate;
 import register.ParentDTO;
-import register.ParentToUpdate;
+import register.ParentToUpdate;  
 
 
 @Controller
@@ -39,8 +53,11 @@ public class MainController {
 	private OrganizerController oc;
 	@Autowired
     private ParentController pr; 
-	@Autowired
+	/*@Autowired 
+	private SmtpEmailSender sender; */ 
+	@Autowired 
     private AdministratorController ad; 
+
     ParentDTO parentdto = new ParentDTO(); 
     OrganizerDTO organizerdto = new OrganizerDTO();
     AdministratorDTO administratordto = new AdministratorDTO(); 
@@ -123,8 +140,67 @@ public class MainController {
 		}
     return "OurCompanyPage";
   }
+
  
- @RequestMapping(value = "/littlecherries/events")
+ ///  RDF SERVICE ///
+ 
+ 
+ @RequestMapping(value="/littlecherries/pdfservice")
+ public String createPDF() throws FileNotFoundException, MalformedURLException {
+	 String dest = "C:\\Users\\vasil\\Desktop\\hello.pdf";       
+     PdfWriter writer = new PdfWriter(dest);           
+     
+     // Creating a PdfDocument       
+     PdfDocument pdf = new PdfDocument(writer); 
+    // Creating a Document       
+     Document document = new Document(pdf);  
+     String imFile = "C:\\Users\\vasil\\Downloads\\ch2\\ch2\\src\\main\\resources\\static\\logo.png";       
+     ImageData data = ImageDataFactory.create(imFile);              
+     
+     // Creating an Image object        
+     Image image = new Image(data);                        
+     
+     // Adding image to the document       
+     document.add(image);              
+     
+     String para1 = "Hello World !" ; 
+     String para2 = "Hello Little Cherries !"; 
+     
+     // Creating Paragraphs       
+     Paragraph paragraph1 = new Paragraph(para1);             
+     Paragraph paragraph2 = new Paragraph(para2);              
+     
+     // Adding paragraphs to document       
+     document.add(paragraph1);       
+     document.add(paragraph2);           
+     
+     // Closing the document       
+     document.close();       
+     
+     return "pdfservice" ;
+     
+  } 
+ 
+ 
+ /// EMAIL SERVICE /// 
+ /*
+ @RequestMapping(value="/littlecherries/pdfservice/emailit", method=RequestMethod.POST)
+ public String SendByEmail() throws MessagingException{
+	 
+	   String Subject = "LittleCherries Ticket!"; 
+	   String Text = "Hello Cherry!! " ; 
+	   try{ 
+		   sender.send("tassopoulouvasiliki@gmail.com",Subject,Text); }
+	  catch(MessagingException e){
+		  
+		  e.printStackTrace();
+	  }
+	   
+	   return "emailservice"; 
+ }
+ 
+*/ 
+@RequestMapping(value = "/littlecherries/events")
  public String eventsindex(Model model) {
 	 
 	List<event> list = new ArrayList<event>();
@@ -216,16 +292,11 @@ private organizer createOrganizerAccount(OrganizerDTO accountDto, BindingResult 
 
 //////// PARENT ////////////////////
 
-
-
-@RequestMapping(value = "/littlecherries/parents/register", method = RequestMethod.GET)
+@RequestMapping(value = "/littlecherries/parents/register", method = RequestMethod.POST)
 	public String showRegistrationFormParent(WebRequest request, Model model ) {
 	 model.addAttribute("parent", parentdto);
 	    return "register-gonea";
 }
-
-
-
 private parent createParentAccount(ParentDTO accountDto, BindingResult result) {
     parent registered = null;
     registered = pr.createParent(accountDto.getEmail(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),accountDto.getPassword(),accountDto.getPhonenumber(),accountDto.getStreetname(),
@@ -234,7 +305,7 @@ private parent createParentAccount(ParentDTO accountDto, BindingResult result) {
     return registered;
 }
 
-@RequestMapping(value = "/littlecherries/parents/register", method = RequestMethod.POST)
+@RequestMapping(value = "/littlecherries/parents/register", method = RequestMethod.GET)
 public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Valid ParentDTO accountDto, 
       BindingResult result, WebRequest request, Errors errors, final RedirectAttributes redirectAttributes) {    
        parent registered = new parent(); 
@@ -263,14 +334,14 @@ public String loginPage(Model model){
 
 
 
-///// ORGANIZER AND PARENT LOGIN //////
+///// ORGANIZER PARENT AND ADMIN LOGIN //////
 
 @RequestMapping(value ="/littlecherries/login" ,method=RequestMethod.POST)
 public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential") UserCredentials myuserCredentials,
 		BindingResult bindingResult,
 		final RedirectAttributes redirectAttributes){
 	if(bindingResult.hasErrors()){
-		return "registration";
+		return "login";
 	}
 	//ModelAndView modelAndView = new ModelAndView("welcome");
 	organizer org = oc.getOrganizerByEmailAndPassw(myuserCredentials.getEmail(), myuserCredentials.getPassword());
@@ -290,37 +361,9 @@ public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential")
 	
 		return "registration";
 	}
-	
-
-	
-
-////// ADMIN LOGIN ///////////////
 
 
-@RequestMapping(value="/littlecherries/login/admin", method=RequestMethod.GET) 
-public String adminloginpage( Model model){
-	model.addAttribute("userCredential", new UserCredentials());
-	return "adminlogin"; 
 	
-}
-@RequestMapping(value ="/littlecherries/login/admin" ,method=RequestMethod.POST)
-public String AdminloginSuccess(Model model, @Valid @ModelAttribute("userCredential") UserCredentials myuserCredentials,
-		BindingResult bindingResult,
-		final RedirectAttributes redirectAttributes){
-	if(bindingResult.hasErrors()){
-		return "registration";
-	}
-	
-	//ModelAndView modelAndView = new ModelAndView("welcome");
-	
-	if(ad!= null){
-		redirectAttributes.addFlashAttribute("user", ad);
-		userCredentials=myuserCredentials;
-		return "redirect:/littlecherries/administrator/showprofile";
-	}else{
-		return "registration";
-	}
-}
 
 /////////  PROFILE AND ACTION STUFF  ///////////////
 
@@ -584,6 +627,23 @@ public String ParentChangePassword(Model model, @ModelAttribute("changepsw") @Va
 		  }
 		  return "registration";
 	}
+
+
+/// Admin Profile Stuff //// 
+
+
+@RequestMapping(value ="/littlecherries/administrator/showprofile" ,method=RequestMethod.GET)
+public String  AdministratorshowProfile(Model model) {
+	if (userCredentials == null)
+		return "registration";
+	administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+	if (ad!= null) {
+		model.addAttribute("user",ad);
+		return "profile-admin";  
+	}
+	return "registration";
+}
+
 
 
 
