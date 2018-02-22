@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Add Event</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src='http://code.jquery.com/jquery-1.11.0.js'></script>
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.css">
+  <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+
+<style>
+
+
+table, th, td{
+	border: 1px solid grey;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
+
+</style>
+  
+  </head>
+
+  
+<body>
+
+<!-- JavaScript and jQuery -->
+<script th:inline="javascript" >
+	function addRow() {
+		
+  		var tableBody = $('.table > tbody'), lastRowClone = $('tr:last-child', tableBody).clone();
+   		$('input[type=text]', lastRowClone).val('');  
+    	tableBody.append(lastRowClone);
+    	
+  }
+	
+	function saveNeeded() {
+        $('#submit').css('color','red');
+        $('#submit').css('font-weight','bold');
+        if( $('#submit').val().indexOf('!') != 0 ) {
+            $('#submit').val( '!' + $('#submit').val() );
+        }
+    }
+	
+	$(document).ready(function () {
+        console.log("ready!");
+        $("#addAction").click(function () {
+            console.log("FUNCTION");
+            $("#myUl").append('<li><input id="row.date" name="myRows[0].date"/></li>');
+        });
+    });
+</script>
+
+<!-- Head Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+<!-- Navigation Menu --> 
+
+<nav class="navbar navbar-reversed  roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    
+    </ul>		
+  </div>
+</nav>
+      
+      <div th:if="${list != null}">
+      	<div>
+        <table class="table table-striped">
+			<thead>
+				<th>Ημερομηνία</th>
+				<th>Διαθέσιμα Εισιτήρια</th>
+				<th>Ώρα Έναρξης</th>			
+			</thead>
+			<tbody>	
+			<tr th:each= "row : ${list}">
+				<td th:text="${row.date}"></td>
+				<td th:text="${row.tickets}"></td>
+				<td th:text="${row.time}"></td>
+			</tr>
+			</tbody>
+	  </table>
+      </div>
+      
+    <div>  
+    <form th:action="@{/littlecherries/organizers/addevent/edit}" th:object="${row}" method="POST">	
+	<div class="col-sm-4" style="color:grey; font-size:20px"> 
+		<table class="table table-striped">
+			<thead>
+				<th>Ημερομηνία</th>
+				<th>Διαθέσιμα Εισιτήρια</th>
+				<th>Ώρα Έναρξης</th>			
+			</thead>
+			<tbody>	
+				<td><input class="date" name="date" th:type="date"  th:required="required" class="form-control"></td>
+				<td><input class="text2" name="tickets" th:type="number" th:required="required"></td>
+				<td><input class="time" name="time" th:type="time" th:required="required" class="form-control"></td>
+		</tbody>
+		</table>
+		</div>
+		<div><p><button class="button1 text align-bottom" style="font-size:25px; position:relative; bottom:-250px; width:70%">Save Entry</button></p>		
+	</div>
+	</form>	
+   <button><a th:href="@{/littlecherries/organizers/addevent/save}" type="button" class="btn btn-primary">Υποβολή</a></button>
+	
+    </div>
+    </div>
+    
+    <div th:unless="${list != null}">
+    <form th:action="@{/littlecherries/organizers/addevent/edit}" th:object="${row}" method="POST">	
+	<div class="col-sm-4" style="color:grey; font-size:20px"> 
+		<table class="table table-striped">
+			<thead>
+				<th>Ημερομηνία</th>
+				<th>Διαθέσιμα Εισιτήρια</th>
+				<th>Ώρα Έναρξης</th>			
+			</thead>
+			<tbody>	
+				<td><input class="date" name="date" th:type="date" th:required="required" class="form-control"></td>
+				<td><input class="text2" name="tickets"  th:type="number" th:required="required"></td>
+				<td><input class="time" name="time" th:type="time" th:required="required" class="form-control"></td>
+		</tbody>
+		</table>
+		</div>
+		<div><p><button class="button1 text align-bottom" style="font-size:25px; position:relative; bottom:-250px; width:70%">Save Entry</button></p>
+	</div>
+	</form>	
+    </div>
+    </div>
+    
+      <!-- FootNote -->
+
+
+	<div class="container-fluid"  align="center"> 
+ 		<footer>&copy; Copyright 2017 Little Cherries</footer>
+	</div> 
+      
+       
+   </body>
+</html>
