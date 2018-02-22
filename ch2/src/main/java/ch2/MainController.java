@@ -1,10 +1,12 @@
 package ch2;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -12,6 +14,7 @@ import java.util.Set;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -38,11 +41,14 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 
 import register.AdministratorDTO;
+import register.CreditsForm;
 import register.EventDTO;
 import register.OrganizerDTO;
 import register.OrganizerToUpdate;
 import register.ParentDTO;
-import register.ParentToUpdate;  
+import register.ParentToUpdate;
+import register.Row;
+import register.Rowlist;
 
 
 @Controller
@@ -64,8 +70,13 @@ public class MainController {
     OrganizerToUpdate orgupdate = new OrganizerToUpdate();
     ParentToUpdate parupdate = new ParentToUpdate(); 
     ChangePasswordForm changepsw = new ChangePasswordForm();
+    CreditsForm crform = new CreditsForm();
     UserCredentials userCredentials;
+
     EventDTO eventdto = new EventDTO();
+    Rowlist list ;
+    Row row;
+    event ev;
 
     @RequestMapping(value="/littlecherries")
 	public String mainindex(Model model) {
@@ -320,7 +331,7 @@ public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Val
     if (registered==null)
     	return "UnsuccessfulRegistrationPage";
     redirectAttributes.addFlashAttribute("flashUser", registered);
-    return "redirect:/littlecherries/registerSuccessful"; }
+    return "redirect:/littlecherries/ecessful"; }
 }
 
 	
@@ -494,6 +505,7 @@ public String OrganizerAddsEvent(Model model) {
 	if (org==null)
 		return "registration";
 	else {
+		model.addAttribute("event", eventdto);
 		model.addAttribute("user",org);
 		return "event_creation";
 	}
@@ -501,26 +513,102 @@ public String OrganizerAddsEvent(Model model) {
 
 @RequestMapping(value = "/littlecherries/organizers/addevent", method = RequestMethod.POST) 
 public String OrganizerCreatesEvent(Model model, @ModelAttribute("eventdto") @Valid EventDTO eventDto, 
-	      BindingResult result, WebRequest request, Errors errors) {    
+	      BindingResult result, WebRequest request, Errors errors) throws ParseException {    
 	
+		if (userCredentials == null)
+			return "registration";
 	    //check this!!!!
 		/*if(result.hasErrors()){
 			return "registration";
 		}*/
-	    
 		organizer org= oc.getΑnOrganizer(userCredentials.getEmail());
 		if (org==null)
 			return "registration";
-		//add event
-		eventinfo ei = new eventinfo(eventDto.getDates(),eventDto.getTickets(),eventDto.getDuration());
-		event e = oc.addNewEvent(org.getOemail(), eventDto.getTitle(), eventDto.getPrice(), eventDto.getStreetname(),
+   
+		event e = oc.createNewEvent(org.getOemail(), eventDto.getTitle(), eventDto.getPrice(), eventDto.getStreetname(),
 				eventDto.getStreetnumber(), eventDto.getPostalcode(), eventDto.getTown(), eventDto.getStartage(),
-				eventDto.getEndage(),ei);
+				eventDto.getEndage(),eventDto.getDuration());
 		if (e==null)
 			return "redirect:/littlecherries/organizers/addevent";
-	   
-		return "redirect:/littlecherries/organizers/viewmyevents";
+	    ev=e;
+	    list = new Rowlist();
+	    model.addAttribute("event", e);
+		return "redirect:/littlecherries/organizers/addevent/edit";  
 	}
+
+@RequestMapping(value = "/littlecherries/organizers/addevent/edit", method = RequestMethod.GET) 
+public String SaveDates(Model model) {
+	if (userCredentials == null)
+		return "registration";
+	organizer org= oc.getΑnOrganizer(userCredentials.getEmail());
+	if (org==null)
+		return "registration";
+	else {
+		Rowlist mylist= new Rowlist();
+		List<Row> rl = new ArrayList<Row>();
+		list.setMyRows(rl);
+		model.addAttribute("list",null);
+		model.addAttribute("row",row);
+		model.addAttribute("user",org);
+		return "SelectDates";
+	}
+}
+
+@RequestMapping(value = "/littlecherries/organizers/addevent/edit", method = RequestMethod.POST) 
+public String SaveDatesEdit (Model model, @ModelAttribute("row") @Valid Row row, 
+	      BindingResult result, WebRequest request, Errors errors) throws ParseException{
+	
+			if (userCredentials == null)
+				return "registration";
+			organizer org= oc.getΑnOrganizer(userCredentials.getEmail());
+			if (org==null)
+				return "registration";
+			if (ev == null) {
+				model.addAttribute("event", eventdto);
+				model.addAttribute("user",org);
+				return "event_creation";
+			}
+			else {
+				SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm");
+				String mytime = localDateFormat.format(row.getTime().getTime());
+				Date ttime = (Date)localDateFormat.parse(mytime);
+				row.setTime(ttime);
+				list.getMyRows().add(row);
+				model.addAttribute("list",list.getMyRows());
+				model.addAttribute("row",row);
+				model.addAttribute("user",org);
+				return "SelectDates";
+				
+			} 
+				
+	      }
+
+@RequestMapping(value = "/littlecherries/organizers/addevent/save", method = RequestMethod.GET) 
+public String SaveΕvent (Model model) throws ParseException {
+	if (userCredentials == null)
+		return "registration";
+	organizer org= oc.getΑnOrganizer(userCredentials.getEmail());
+	if (org==null)
+		return "registration";
+	if (ev == null) {
+		model.addAttribute("event", eventdto);
+		model.addAttribute("user",org);
+		return "event_creation";
+	}
+	else {
+		Set<eventinfo> newset= new HashSet<eventinfo>();
+		for (Row r : list.getMyRows()) {
+			//SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm");
+			//String mytime = localDateFormat.format(r.getTime().getTime());
+			//Date ttime = (Date)localDateFormat.parse(mytime);
+			eventinfo ei = new eventinfo(r.getDate(),r.getTickets(), r.getTime());
+			newset.add(ei); }
+			oc.saveNewEvent(org.getOemail(), ev, newset);
+			model.addAttribute("user",org);
+			Set<event> ev=org.getEvents();
+			model.addAttribute("events", ev); 
+		return "redirect:/littlecherries/organizers/viewmyevents"; }
+}
 
 /////////////////////  PARENT'S STUFF   ////////////////////////  
 
@@ -570,7 +658,7 @@ public String Parentedit_profile(Model model, @ModelAttribute("parupdate") @Vali
 	parent par= pr.getΑParent(userCredentials.getEmail());
     	
 		par = ParentCheckAndUpdate(par,accountDto);
-    	pr.UpdateUser(par.getPemail(), null);
+    	pr.UpdateUser(par.getPemail());
     	model.addAttribute("user",par);
 		return "redirect:/littlecherries/parents/showinfo";}
     // rest of the implementation
@@ -614,7 +702,7 @@ public String ParentChangePassword(Model model, @ModelAttribute("changepsw") @Va
 			  if (accountDto.getOld().equals(par.getPassword()) && accountDto.getFirst().equals(accountDto.getSecond())) {
 				  userCredentials.setPassword(accountDto.getFirst());
 				  par.setPassword(accountDto.getFirst());
-			  	  pr.UpdateUser(par.getPemail(), null);
+			  	  pr.UpdateUser(par.getPemail());
 			  	  model.addAttribute("par",par);
 			  	  model.addAttribute("org",null);
 
@@ -629,22 +717,50 @@ public String ParentChangePassword(Model model, @ModelAttribute("changepsw") @Va
 	}
 
 
-/// Admin Profile Stuff //// 
-
-
-@RequestMapping(value ="/littlecherries/administrator/showprofile" ,method=RequestMethod.GET)
-public String  AdministratorshowProfile(Model model) {
+@RequestMapping(value = "/littlecherries/parents/loadcredits", method = RequestMethod.GET) 
+public String ParentLoadCreditsGetPage(Model model){
 	if (userCredentials == null)
 		return "registration";
-	administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
-	if (ad!= null) {
-		model.addAttribute("user",ad);
-		return "profile-admin";  
+	parent par= pr.getΑParent(userCredentials.getEmail());
+	if (par != null) {
+		model.addAttribute("user",par);
+		model.addAttribute("card",crform);
+		return "load_credits";
 	}
 	return "registration";
+
 }
 
+@RequestMapping(value = "/littlecherries/parents/loadcredits", method = RequestMethod.POST) 
+public String ParentLoadCreditsPost(Model model, @ModelAttribute("crform") @Valid CreditsForm crform, 
+	      BindingResult result, WebRequest request, Errors errors) throws ParseException {    
+			parent par= pr.getΑParent(userCredentials.getEmail());
+	    	if (par==null)
+	    		return "registration";
+	    	int prev=par.getBalance();
+	    	int curr=prev + crform.getPoints() ;
+	    	par.setBalance(curr);
+	    	SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String mydate = localDateFormat.format(new Date());
+			Date tdate = (Date)localDateFormat.parse(mydate);
+	    	par.setLast_transaction_date(tdate);
+		  	pr.UpdateUser(par.getPemail());
+	    	model.addAttribute("user",par);
+			return "redirect:/littlecherries/parents/showinfo"; 
+}
 
+@RequestMapping(value = "/littlecherries/parents/deleteprofile", method = RequestMethod.GET) 
+	public String ParentDeleteProfile(Model model){
+		if (userCredentials == null)
+			return "registration";
+		parent par= pr.getΑParent(userCredentials.getEmail());
+		if (par != null) {
+			pr.DeleteUser(par.getPemail());
+			userCredentials=null;
+			return "redirect:/littlecherries";
+		}
+		return "registration";
+}
 
 
 
