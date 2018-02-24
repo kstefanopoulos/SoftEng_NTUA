@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- <html lang="en"> -->
+<html lang="en" dir="ltr">
+<head>
+  <title>Little Cherries</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
+  <link rel="stylesheet" href="style.css"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  
+<style type="text/css">
+	
+table, th, td{
+	border: 1px solid white;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
+	
+</style>
+</head>
+  
+<body>
+
+
+<!-- Head Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img src= "logo.png"  width="200" height="100" >
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+<!-- Navigation Menu --> 
+
+<nav class="navbar navbar-reversed roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li><a href="#">Αρχική</a></li>
+		<li><a href="#file:///C:/Users/%CE%94%CE%B1%CE%BD%CE%AC%CE%B7/Desktop/StaticPages/StaticPages/EventPage.html">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn">H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a href="#file:///C:/Users/%CE%94%CE%B1%CE%BD%CE%AC%CE%B7/Desktop/StaticPages/StaticPages/OurCompanyPage.html">Ποιοί Είμαστε</a>
+				<a href="#file:///C:/Users/%CE%94%CE%B1%CE%BD%CE%AC%CE%B7/Desktop/StaticPages/StaticPages/OurCompanyPage.html">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li><a href="#file:///C:/Users/%CE%94%CE%B1%CE%BD%CE%AC%CE%B7/Desktop/StaticPages/StaticPages/CommunicationPage.html">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+      <li><a href="#file:///.\SignUp.html"><span class="glyphicon glyphicon-user"></span> *username*</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div  class="container"> 
+	<div class="row info">
+	<div class="col-sm-4">
+		<h3>*Τίτλος Event*</h3>
+		<h3>*Τοποθεσία*</h3>
+		<h3>*Ημέρα & Ώρα*</h3>
+		<h3>Διαθέσιμα Εισιτήρια:*Αριθμός*</h3>
+		<h3>Αξιολογήστε αυτό το event:</h3>
+		<div class="star-rating">
+			<input id="star-5" type="radio" name="rating" value="star-5">
+			<label for="star-5" title="5 stars">
+				<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>
+			</label>
+			<input id="star-4" type="radio" name="rating" value="star-4">
+			<label for="star-4" title="4 stars">
+				<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>
+			</label>
+			<input id="star-3" type="radio" name="rating" value="star-3">
+			<label for="star-3" title="3 stars">
+				<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>
+			</label>
+			<input id="star-2" type="radio" name="rating" value="star-2">
+			<label for="star-2" title="2 stars">
+				<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>
+			</label>
+			<input id="star-1" type="radio" name="rating" value="star-1">
+			<label for="star-1" title="1 star">
+				<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>
+			</label>
+		</div>
+	</div>
+	
+	<div class="col-sm-4">
+	<img style="img2" src="random.jpg" alt="event-picture" height="300px" width="300px">
+	<p><h3 align="center" style="position:relative; bottom:-20px;"><b>* Περιγραφή Event* </b></h3></p>
+	</div>
+	<div class="col-sm-4">
+		<p><button class="button1 text" style="font-size:25px; width:60%; position:relative; left:200px;">Κράτηση</button></p>
+		<p><button class="button1 text" style="font-size:25px; width:60%; position:relative; left:200px;">Προσθήκη στο Καλάθι</button></p>
+		<p><button class="button1 text" style="font-size:25px; width:60%; position:relative; left:200px;">Προσθήκη στα Αγαπημένα</button></p>
+		<p><button class="button1 text" style="font-size:25px; width:60%; position:relative; left:200px;">Αξιολόγηση</button></p>
+	</div>
+	</div>
+</div>	
+	
+	
+	
+<div  class="container"> 
+	<div class="row info">
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4">
+	<div class="info" align="center">
+		<div id = "map" class ="info" style="width:350px;height:350px;background-color:#ffffff;border-radius: 10px;"> </div>
+	</div>		
+
+	<script>
+	function myMap() {
+	  var mapCanvas = document.getElementById("map");
+	  var mapOptions = {
+		center: new google.maps.LatLng(37.965748, 23.708142), zoom: 10
+	  };
+	  var map = new google.maps.Map(mapCanvas, mapOptions);
+	}
+	</script>
+	<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaUbDLWOas_hXAs3BopNMxLJhgqW56dZU&callback=myMap"></script>
+	</div>
+	</div>
+</div>
+</body>
+</html>
