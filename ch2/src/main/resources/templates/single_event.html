@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Events Page</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+  
+<style type="text/css">
+	.starRate {position:relative; margin:20px; overflow:hidden; zoom:1;}
+	.starRate ul {width:160px; margin:0; padding:0;}
+	.starRate li {display:inline; list-style:none;}
+	.starRate a, .starRate b {background:url(star_rate.gif) left top repeat-x;}
+	.starRate a {float:right; margin:0 80px 0 -144px; width:80px; height:16px; background-position:left 16px; color:#000; text-decoration:none;}
+	.starRate a:hover {background-position:left -32px;}
+	.starRate b {position:absolute; z-index:-1; width:80px; height:16px; background-position:left -16px;}
+	.starRate div b {left:0px; bottom:0px; background-position:left top;}
+	.starRate a span {position:absolute; left:-300px;}
+	.starRate a:hover span {left:90px; width:100%;}
+
+table, th, td{
+	border: 1px solid white;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
+</style>
+</head>
+  
+<body>
+
+
+<!-- Head Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+<!-- Navigation Menu --> 
+
+<nav class="navbar navbar-reversed  roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+    <div th:unless="${org==null}">
+      		<li><a th:utext="${org.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      		<li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    </div>
+    <div th:unless="${par==null}">
+      		<li><a th:utext="${par.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      		<li><a th:href="@{/littlecherries/parents/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+     </div>
+     <div th:if="${org==null}">
+     	<div th:if="${par==null}">
+         <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+   </div> </div>
+   </div>
+    </ul>		
+  </div>
+</nav>
+
+<div  class="container"> 
+	<div class="row info">
+	<div class="col-sm-4">
+		<li>Τίτλος: <span th:utext="${event.event_name}">..</span></li>
+		<li>Οδός: <span th:utext="${event.street_name}">..</span></li>
+		<li>Αριθμός: <span th:utext="${event.street_number}">..</span></li>
+		<li>Πόλη: <span th:utext="${event.town}">..</span></li>
+		<li>Από: <span th:utext="${event.startage}">..</span></li>
+		<li>Eώς: <span th:utext="${event.endage}">..</span></li>
+		<li>Περιγραφή Εκδήλωσης <span th:utext="${event.event_description}">..</span></li>
+	</div>
+	
+	<div>
+        <table class="table table-striped">
+			<thead>
+				<th>Ημερομηνία</th>
+				<th>Διαθέσιμα Εισιτήρια</th>
+				<th>Ώρα Έναρξης</th>			
+			</thead>
+			<tbody>	
+			<tr th:each= "eventinfo : ${event.eventinfos}">
+				<td th:text="${eventinfo.eventdate}"></td>
+				<td th:text ="${eventinfo.availabletickets}"></td>
+				<td th:text="${eventinfo.starttime}"></td> 
+			</tr>
+			</tbody>
+	  </table>
+      </div> 
+	
+	
+	<div class="rating">
+			<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+	</div>
+			
+	<div class="col-sm-4">
+	<img style="img2" th:src="@{/images/Insert-picture-here.jpg}" alt="event-picture" height="300px" width="300px">
+   </div>
+	<div th:unless="${par==null}">
+		<div class="col-sm-4">
+		<button><a th:href="@{/littlecherries/parents/{eventid}/buyticket(eventid=${event.eventid})}" type="button" class="btn btn-primary">Κράτηση</a></button>
+		<button><a th:href="@{/littlecherries/parents/{eventid}/save(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στο Καλάθι</a></button>
+		<button><a th:href="@{/littlecherries/parents/{eventid}/saveasfav(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στα Αγαπημένα</a></button>
+		
+		<p><button class="button1 text" style="font-size:25px; width:60%; position:relative; left:200px;">Αξιολόγηση</button></p>
+		</div>
+	</div>
+	
+	<div th:unless="${org==null}">
+		<div th:if="${org==myorg}">
+		<div class="col-sm-4">
+			<p><button class="button1 text" style="font-size:25px; width:60%; position:relative; left:200px;">Πληροφορίες</button></p>
+		</div>
+	</div>	
+</div>
+</body>
+</html>

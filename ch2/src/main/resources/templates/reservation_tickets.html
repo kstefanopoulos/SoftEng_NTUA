@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Events Page</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+
+<style>
+
+
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
+</style>
+  
+  </head>
+
+<script>
+ function sum(p1,p2) {
+	 return p1*p2
+ }
+</script>
+  
+<body>
+
+
+<!-- Head Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+<!-- Navigation Menu --> 
+
+<nav class="navbar navbar-reversed  roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li class="active"><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+    <div th:unless="${par==null}">
+      		<li><a th:utext="${par.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      		<li><a th:href="@{/littlecherries/parents/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+     </div>
+   </div>
+    </ul>		
+  </div>
+</nav>
+
+
+<div  class="container" align="center"> 
+	<div class="row info">
+	<div class="col-sm-2"><li>To υπόλοιπό σας: <span th:utext="${par.balance}">..</span></li>
+	</div>    
+        <table class="table table-striped">
+			<thead>
+				<th>Ημερομηνία</th>
+				<th>Διαθέσιμα Εισιτήρια</th>
+				<th>Ώρα Έναρξης</th>
+				<th>Τιμή Εισητηρίου</th>			
+			</thead>
+			<tbody>	
+			 <tr>
+				<td th:text="${info.eventdate}"></td>
+				<td th:text="${info.availabletickets}"></td>
+				<td th:text="${info.starttime}"></td> 
+				<td th:text="${event.event_cost}"></td> 
+				</tr> 
+		    
+			</tbody>
+	  </table>
+	</div>
+	<div>
+	<form th:action="@{/littlecherries/parents/{eventid}/buyticket/{infoid}(eventid=${event.eventid}, infoid=${info.eventinfoid})}" th:object="${rform}" method="POST" enctype="utf8">	
+		<div class="col-sm-4 info" style="color:grey; font-size:25px" >
+			<div> 
+				<input class="text2" name="numberoftickets" th:required="required" type="number"></input>
+			</div>
+	    </div>
+	    <input type="submit" value="Κράτηση" onclick="return confirm('Θελετε να οριστικοποιήσετε την κράτησή σας?')"/>
+	    
+	  </form>
+	 </div>
+</body>
+</html>
