@@ -2,11 +2,11 @@
 
 1. Γενικά:
 
-    1.1. Mainpage   -> τα πιο προσφατα events
+    1.1. Mainpage  
     1.2. Contact Page   -> ok
     1.3. Aboutus Page  -> ok
-    1.4. Events Page + Filters + Results  -> ok
-    1.5. Single Event Page 
+    1.4. Events Page + Filters + Results 
+    1.5. Single Event Page  -> οk
     1.6. Register Page  -> ok
     1.7. Υδατογράφημα στα events
     1.8. Pdf
@@ -14,6 +14,7 @@
     1.10. Κωδικοποιηση password
     1.11. Mobile and tablet
     1.12. Να δουλεύει στα ελληνικά
+    1.13. Εμφάνιση σε Χάσρτη
     
 Για όλα τα παραπάνω θα πρέπει να αναγνωρίζεται αν ο Χρήστης που μπαίνει στη σελίδα είναι Ανώνυμος ή Ταυτοποιημένος
 
@@ -21,9 +22,9 @@
 
     2.1. Register  -> ok
     2.2. Login   -> ok
-    2.3. Book Ticket
-    2.4. Add Favourites
-    2.5. Save Event
+    2.3. Book Ticket -> ok
+    2.4. Add Favourites -> ok
+    2.5. Save Event -> ok
     2.6. Change Password  -> ok
     2.7. View Profile -> ok
     2.8. Update Profile   -> ok ?
