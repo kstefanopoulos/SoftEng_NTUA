@@ -8,19 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,17 +22,11 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
 
 import register.AdministratorDTO;
 import register.CreditsForm;
@@ -59,11 +47,8 @@ public class MainController {
 	private OrganizerController oc;
 	@Autowired
     private ParentController pr; 
-	/*@Autowired 
-	private SmtpEmailSender sender; */ 
-	@Autowired 
+	@Autowired
     private AdministratorController ad; 
-
     ParentDTO parentdto = new ParentDTO(); 
     OrganizerDTO organizerdto = new OrganizerDTO();
     AdministratorDTO administratordto = new AdministratorDTO(); 
@@ -151,67 +136,8 @@ public class MainController {
 		}
     return "OurCompanyPage";
   }
-
  
- ///  RDF SERVICE ///
- 
- 
- @RequestMapping(value="/littlecherries/pdfservice")
- public String createPDF() throws FileNotFoundException, MalformedURLException {
-	 String dest = "C:\\Users\\vasil\\Desktop\\hello.pdf";       
-     PdfWriter writer = new PdfWriter(dest);           
-     
-     // Creating a PdfDocument       
-     PdfDocument pdf = new PdfDocument(writer); 
-    // Creating a Document       
-     Document document = new Document(pdf);  
-     String imFile = "C:\\Users\\vasil\\Downloads\\ch2\\ch2\\src\\main\\resources\\static\\logo.png";       
-     ImageData data = ImageDataFactory.create(imFile);              
-     
-     // Creating an Image object        
-     Image image = new Image(data);                        
-     
-     // Adding image to the document       
-     document.add(image);              
-     
-     String para1 = "Hello World !" ; 
-     String para2 = "Hello Little Cherries !"; 
-     
-     // Creating Paragraphs       
-     Paragraph paragraph1 = new Paragraph(para1);             
-     Paragraph paragraph2 = new Paragraph(para2);              
-     
-     // Adding paragraphs to document       
-     document.add(paragraph1);       
-     document.add(paragraph2);           
-     
-     // Closing the document       
-     document.close();       
-     
-     return "pdfservice" ;
-     
-  } 
- 
- 
- /// EMAIL SERVICE /// 
- /*
- @RequestMapping(value="/littlecherries/pdfservice/emailit", method=RequestMethod.POST)
- public String SendByEmail() throws MessagingException{
-	 
-	   String Subject = "LittleCherries Ticket!"; 
-	   String Text = "Hello Cherry!! " ; 
-	   try{ 
-		   sender.send("tassopoulouvasiliki@gmail.com",Subject,Text); }
-	  catch(MessagingException e){
-		  
-		  e.printStackTrace();
-	  }
-	   
-	   return "emailservice"; 
- }
- 
-*/ 
-@RequestMapping(value = "/littlecherries/events")
+ @RequestMapping(value = "/littlecherries/events")
  public String eventsindex(Model model) {
 	 
 	List<event> list = new ArrayList<event>();
@@ -301,13 +227,18 @@ private organizer createOrganizerAccount(OrganizerDTO accountDto, BindingResult 
 
 
 
-//////// PARENT ////////////////////
+  //////// PARENT /////////
 
-@RequestMapping(value = "/littlecherries/parents/register", method = RequestMethod.POST)
+
+
+@RequestMapping(value = "/littlecherries/parents/register", method = RequestMethod.GET)
 	public String showRegistrationFormParent(WebRequest request, Model model ) {
 	 model.addAttribute("parent", parentdto);
 	    return "register-gonea";
 }
+
+
+
 private parent createParentAccount(ParentDTO accountDto, BindingResult result) {
     parent registered = null;
     registered = pr.createParent(accountDto.getEmail(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),accountDto.getPassword(),accountDto.getPhonenumber(),accountDto.getStreetname(),
@@ -316,7 +247,7 @@ private parent createParentAccount(ParentDTO accountDto, BindingResult result) {
     return registered;
 }
 
-@RequestMapping(value = "/littlecherries/parents/register", method = RequestMethod.GET)
+@RequestMapping(value = "/littlecherries/parents/register", method = RequestMethod.POST)
 public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Valid ParentDTO accountDto, 
       BindingResult result, WebRequest request, Errors errors, final RedirectAttributes redirectAttributes) {    
        parent registered = new parent(); 
@@ -345,7 +276,7 @@ public String loginPage(Model model){
 
 
 
-///// ORGANIZER PARENT AND ADMIN LOGIN //////
+///// ORGANIZER AND PARENT AND ADMIN  LOGIN //////
 
 @RequestMapping(value ="/littlecherries/login" ,method=RequestMethod.POST)
 public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential") UserCredentials myuserCredentials,
@@ -357,25 +288,31 @@ public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential")
 	//ModelAndView modelAndView = new ModelAndView("welcome");
 	organizer org = oc.getOrganizerByEmailAndPassw(myuserCredentials.getEmail(), myuserCredentials.getPassword());
 	parent par = pr.getParentByEmailAndPassw(myuserCredentials.getEmail(), myuserCredentials.getPassword());
-	
-	 if(org!= null){
-		redirectAttributes.addFlashAttribute("user", org);
-		userCredentials=myuserCredentials;
-		userCredentials.setType(1);
-		return "redirect:/littlecherries/organizers/showprofile";
-	}else if(par!=null){
-			redirectAttributes.addFlashAttribute("user", par);
-			userCredentials=myuserCredentials;
-			userCredentials.setType(0);
-			return "redirect:/littlecherries/parents/showprofile";
-		}
-	
-		return "registration";
-	}
-
+	administrator adm = ad.getAdministratorByEmailAndPassw(myuserCredentials.getEmail(), myuserCredentials.getPassword());
 
 	
-
+			if(org!= null){
+					redirectAttributes.addFlashAttribute("user", org);
+					userCredentials=myuserCredentials;
+					userCredentials.setType(0);
+					return "redirect:/littlecherries/organizers/showprofile";
+			}else if(par!=null){
+					redirectAttributes.addFlashAttribute("user", par);
+					userCredentials=myuserCredentials;
+					userCredentials.setType(1);
+					return "redirect:/littlecherries/parents/showprofile";
+			}else if(adm!=null){
+				    redirectAttributes.addFlashAttribute("user", adm);
+					userCredentials=myuserCredentials;
+					userCredentials.setType(2);
+					return "redirect:/littlecherries/administrators/showprofile";
+			}else{ 
+				
+				    return "registration"; 
+			}
+			 
+}
+	
 /////////  PROFILE AND ACTION STUFF  ///////////////
 
 
@@ -761,6 +698,121 @@ public String ParentLoadCreditsPost(Model model, @ModelAttribute("crform") @Vali
 		}
 		return "registration";
 }
+
+
+/////////////  ADMINISTRATOR STUFF ///////////////
+
+
+// οκ 
+@RequestMapping(value ="/littlecherries/administrators/showprofile" ,method=RequestMethod.GET)
+public String showProfileAdmins(Model model) {
+	if (userCredentials == null)
+		return "registration";
+	administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+	if (adm != null) {
+		model.addAttribute("user",adm);
+		return "profile-admin";
+	}else{
+	return "login";
+}}	
+
+
+// οκ
+@RequestMapping(value = "/littlecherries/administrators/logout", method = RequestMethod.GET) 
+public String Adminlogout() {
+	userCredentials=null;
+	return "redirect:/littlecherries";
+}
+
+@RequestMapping(value="/littlecherries/administrators/viewparents" , method = RequestMethod.GET)
+	public String AdministratorViewParents(Model model){
+		if (userCredentials == null)
+			return "registration";
+		administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
+		if (adm!=null){
+			model.addAttribute("user",adm);
+			Iterable<parent> pars = ad.AdmingetAllparents(); 
+			model.addAttribute("parents", pars); 
+			return "viewparentspage" ; 
+	
+		}else{
+			
+			return "registration"; 
+		}
+}
+
+@RequestMapping(value="/littlecherries/administrators/vieworganizers" , method = RequestMethod.GET)
+		public String AdministratorViewOrganizers(Model model){
+			if (userCredentials == null)
+				return "registration";
+			administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
+			if (adm!=null){
+				model.addAttribute("user",adm);
+				Iterable<organizer> orgs = ad.AdmingetAllorganizers(); 
+				model.addAttribute("organizers", orgs); 
+				return "vieworganizers" ; 
+		
+			}else{
+				
+				return "registration"; 
+			}
+			
+		}
+		
+			
+			
+@RequestMapping(value="/littlecherries/administrators/viewadministrators" , method = RequestMethod.GET)
+	public String AdministratorViewAdministrators(Model model){
+				if (userCredentials == null)
+					return "registration";
+				administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
+				if (adm!=null){
+					model.addAttribute("user",adm);
+					Iterable<administrator> ads = ad.getAllAdministrators(); 
+					model.addAttribute("administrators", ads); 
+					return "viewadministrators" ; 
+			
+				}else{
+					
+					return "registration"; 
+				}
+}
+	
+@RequestMapping(value="/littlecherries/administrators/viewrestrictions" , method = RequestMethod.GET)
+public String AdministratorViewRestriction(Model model){
+			if (userCredentials == null)
+				return "registration";
+			administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
+			if (adm!=null){
+				model.addAttribute("user",adm);
+				Iterable<restriction> rs = ad.AdmingetAllrestrictions(); 
+				model.addAttribute("restriction", rs); 
+				return "viewrestrictions" ; 
+		
+			}else{
+				
+				return "registration"; 
+			}
+}
+	
+/*
+@RequestMapping(value="/littlecherries/administrators/viewevents" , method = RequestMethod.GET)
+public String AdministratorViewEvents(Model model){
+			if (userCredentials == null)
+				return "registration";
+			administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
+			if (adm!=null){
+				model.addAttribute("user",adm);
+				//Iterable<events> ads = ad.getAllEvents(); 
+				model.addAttribute("administrators", ads); 
+				return "viewrestrictions" ; 
+		
+			}else{
+				
+				return "registration"; 
+			}
+}
+	*/  
 
 
 

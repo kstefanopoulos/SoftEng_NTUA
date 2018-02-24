@@ -1,6 +1,7 @@
 package ch2;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,12 @@ public class AdministratorController {
 	
 	@Autowired
 	private AdministratorRepository aRepository;
+	@Autowired 
 	private ParentRepository pRepository ; 
+	@Autowired
 	private OrganizerRepository oRepository ; 
+	@Autowired 
+	private RestrictionRepository rRepository; 
 	
 	@GetMapping(path = "/add")
 	public @ResponseBody
@@ -56,6 +61,14 @@ Iterable<organizer> AdmingetAllorganizers(){
 	return oRepository.findAll() ; 
 }
 
+@GetMapping(path="/allrestrictions")
+public @ResponseBody 
+Iterable<restriction> AdmingetAllrestrictions(){ 
+	return rRepository.findAll() ; 
+}
+
+
+
 @GetMapping(path = "findOneParent")
 public @ResponseBody
 parent AdmingetΑParent(@RequestParam String pem) {
@@ -77,7 +90,7 @@ organizer AdmingetΑnOrganizer(@RequestParam String oem) {
 
 @GetMapping(path = "findOneAdmin")
 public @ResponseBody
-administrator AdmingetΑnAdmin(@RequestParam String aem) {
+administrator getΑnAdmin( @RequestParam String aem) {
 	// This returns a JSON or XML with the user
 	if (aRepository.findOne(aem)==null) 
 		return null; //something else here
@@ -85,11 +98,9 @@ administrator AdmingetΑnAdmin(@RequestParam String aem) {
 }
 
 
-
-
 public administrator getAdministratorByEmailAndPassw (String aem, String passw) {
 	
-	administrator adm  = this.AdmingetΑnAdmin(aem);
+	administrator adm  = this.getΑnAdmin(aem);
 	if (adm != null) {
 		if (adm.getPassword().equals(passw))
 			return adm;
@@ -97,7 +108,6 @@ public administrator getAdministratorByEmailAndPassw (String aem, String passw) 
 	}
 	return null;
 }
-
 
 
 

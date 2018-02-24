@@ -174,8 +174,8 @@ body {
     <br><h1>Log-in</h1></br>
   <form name="f" th:action="@{/littlecherries/login}" th:object="${userCredential}" method="post">
  
-    <input type="text" name="user" placeholder="Username"/>
-    <input type="password" name="pass" placeholder="Password"/>
+    <input type="text" name="email" placeholder="Username"/>
+    <input type="password" name="password" placeholder="Password"/>
     <input type="submit" name="login" class="login login-submit" value="login"/>
  
   </form>

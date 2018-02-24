@@ -15,7 +15,7 @@ public class administrator {
 	private String phone_number;
 	private String account;
 	
-	//public administrator() {}
+	public administrator() {}
 	
 	public administrator(String em, String fn, String ln, String un, String pas, String pn) {
 		

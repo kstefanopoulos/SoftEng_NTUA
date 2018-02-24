@@ -32,19 +32,15 @@ public class eventinfo {
 	
 	public int availabletickets;
 	
-	public Time starttime;
+	public Date starttime;
 	
-	public int duration;
-
 	public eventinfo () {}
 	
-	public eventinfo(Date eventdate, int availabletickets,
-			int duration) {
+	public eventinfo(Date eventdate, int availabletickets, Date starttime) {
 		
 		this.eventdate = eventdate;
 		this.availabletickets = availabletickets;
-		//this.starttime = 
-		this.duration = 2;
+		this.starttime = starttime;
 	}
 
 	public int getEventinfoId() {
@@ -79,20 +75,12 @@ public class eventinfo {
 		this.availabletickets = availabletickets;
 	}
 
-	public Time getStarttime() {
+	public Date getStarttime() {
 		return starttime;
 	}
 
-	public void setStarttime(Time starttime) {
+	public void setStarttime(Date starttime) {
 		this.starttime = starttime;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
 	}
 	
 	
