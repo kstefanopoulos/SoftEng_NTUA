@@ -20,12 +20,12 @@ public class bucket {
 	public int event_card;
 	public int overall_cost;
 	
-    @OneToOne(mappedBy = "parentbucket")
+    @OneToOne(mappedBy = "parentbucket", cascade = CascadeType.ALL)
     @JsonIgnore
     public parent myparent;
 	public String pemail;
 	
-    @OneToMany(mappedBy = "abucket")
+    @OneToMany(mappedBy = "abucket", cascade = CascadeType.ALL)
     private Set<consistsof> contains;
 
     

@@ -1,6 +1,8 @@
 package ch2;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -15,18 +17,18 @@ public class willattend implements Serializable {
 	
 	@ManyToOne
     @JoinColumn(name = "pemail")
-	@JsonIgnore
 	public parent aparent;
 	
 	@ManyToOne
     @JoinColumn(name = "eventid")
+	@JsonIgnore
 	public event anevent;
 	
-	public willattend() {}
+	public Date date;
 	
-	public willattend(int id) {
-		this.id=id;
-	}
+	public Date time;
+	
+	public willattend() {}
 
 	public int getId() {
 		return id;
@@ -51,6 +53,22 @@ public class willattend implements Serializable {
 
 	public void setAnevent(event anevent) {
 		this.anevent = anevent;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
 	}
 
 	

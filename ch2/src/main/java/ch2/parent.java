@@ -30,10 +30,10 @@ public class parent {
     @JoinColumn(name = "bucketid")
 	private bucket parentbucket;
 	
-    @OneToMany(mappedBy = "aparent")
+    @OneToMany(mappedBy = "aparent", cascade = CascadeType.ALL)
 	private Set<willattend> willattend;
 	
-    @OneToMany(mappedBy = "aparent")
+    @OneToMany(mappedBy = "aparent", cascade = CascadeType.ALL)
     private Set<hasattended> hasattended;
 	
 	public parent () {}
@@ -161,7 +161,7 @@ public class parent {
 		return willattend;
 	}
 
-	public void setWillttend(Set<willattend> willattend) {
+	public void setWillattend(Set<willattend> willattend) {
 		this.willattend = willattend;
 	}
 

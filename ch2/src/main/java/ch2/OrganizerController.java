@@ -105,7 +105,6 @@ public class OrganizerController {
 	
 	
 	
-	@GetMapping(path = "/myevents")
 	public @ResponseBody Iterable<event> getAllEvents(@RequestParam String oem) {
 		// This returns a JSON or XML with the users
 		organizer org=oRepository.findOne(oem);
@@ -114,8 +113,7 @@ public class OrganizerController {
 		else return null;
 	}
 	
-	@GetMapping(path = "/myevents/single")
-	public @ResponseBody event getAnEvent(@RequestParam String oem,@RequestParam Integer evid) {
+	public event getAnEvent(@RequestParam String oem,@RequestParam Integer evid) {
 		// This returns a JSON or XML with the users
 		organizer org=oRepository.findOne(oem);
 		if (org!=null) {
