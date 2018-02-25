@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Events Page</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+  
+  
+  
+  
+<style type="text/css">
+
+table, th, td{
+	border: 1px solid white;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
+</style>
+</head>
+  
+<body>
+
+
+<!-- Head Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+<!-- Navigation Menu --> 
+
+<nav class="navbar navbar-reversed  roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+    <div th:unless="${org==null}">
+      		<li><a th:utext="${org.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      		<li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    </div>
+    <div th:unless="${par==null}">
+      		<li><a th:utext="${par.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      		<li><a th:href="@{/littlecherries/parents/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+     </div>
+     <div th:if="${org==null}">
+     	<div th:if="${par==null}">
+         <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+   </div> </div>
+   </div>
+    </ul>		
+  </div>
+</nav>
+
+<div  class="container"> 
+	<div class="row info">
+	<div class="col-sm-4">
+		<li>Τίτλος: <span th:utext="${event.event_name}">..</span></li>
+		<li>Οδός: <span th:utext="${event.street_name}">..</span></li>
+		<li>Αριθμός: <span th:utext="${event.street_number}">..</span></li>
+		<li>Πόλη: <span th:utext="${event.town}">..</span></li>
+		<li>Από: <span th:utext="${event.startage}">..</span></li>
+		<li>Eώς: <span th:utext="${event.endage}">..</span></li>
+		<li>Περιγραφή Εκδήλωσης <span th:utext="${event.event_description}">..</span></li>
+	</div>
+	
+	<div class="col-sm-4">
+	<img style="img2" th:src="@{/images/Insert-picture-here.jpg}" alt="event-picture" height="300px" width="300px">
+    </div>
+	
+	<div class="col-sm-4" th:unless="${org==null}">
+		<div th:if="${org==myorg}">
+			<p><button class="button1 text" style="font-size:25px; width:60%; position:relative; left:200px;">Πληροφορίες</button></p>
+	</div>	
+	</div>
+	
+	
+	
+	<div>
+        <table class="table table-striped">
+			<thead>
+				<th>Ημερομηνία</th>
+				<th>Διαθέσιμα Εισιτήρια</th>
+				<th>Ώρα Έναρξης</th>
+				<th>Αξιολόγηση</th>
+			</thead>
+			<tbody>	
+			<tr th:each= "eventinfo : ${event.eventinfos}">
+				<td th:text="${eventinfo.eventdate}"></td>
+				<td th:text ="${eventinfo.availabletickets}"></td>
+				<td th:text="${eventinfo.starttime}"></td> 
+				<td th:text="${event.evaluation}"> <div class="star-rating">
+					<input id="star-5" type="radio" name="rating" value="star-5">
+					<label for="star-5" title="5 stars">
+						<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>
+					</label>
+					<input id="star-4" type="radio" name="rating" value="star-4">
+					<label for="star-4" title="4 stars">
+						<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>
+					</label>
+					<input id="star-3" type="radio" name="rating" value="star-3">
+					<label for="star-3" title="3 stars">
+						<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>
+					</label>
+					<input id="star-2" type="radio" name="rating" value="star-2">
+					<label for="star-2" title="2 stars">
+						<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>
+					</label>
+					<input id="star-1" type="radio" name="rating" value="star-1">
+					<label for="star-1" title="1 star">
+						<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>
+					</label>
+					</div>
+				</td>
+			</tr>
+			</tbody>
+	  </table>
+    </div> 
+	</div>
+	</div>
+	
+	<div  class="container"> 
+	<div class="row info">
+	
+	<div class="col-sm-6">
+	<div th:unless="${par==null}">
+	
+		<p><button><a th:href="@{/littlecherries/parents/{eventid}/buyticket(eventid=${event.eventid})}" type="button" class="btn btn-primary">Κράτηση</a></button></p>
+		<button><a th:href="@{/littlecherries/parents/{eventid}/save(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στο Καλάθι</a></button>
+		<p><button><a th:href="@{/littlecherries/parents/{eventid}/saveasfav(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στα Αγαπημένα</a></button></p>
+		</div>
+	</div>
+	
+	
+	<div class="col-sm-6">
+	<div class="info" align="center">
+		<div id = "map" class ="info" style="width:350px;height:350px;background-color:#ffffff;border-radius: 10px;"> </div>
+	</div>		
+
+	<script>
+	function myMap() {
+	  var mapCanvas = document.getElementById("map");
+	  var mapOptions = {
+		center: new google.maps.LatLng(37.965748, 23.708142), zoom: 10
+	  };
+	  var map = new google.maps.Map(mapCanvas, mapOptions);
+	}
+	</script>
+	<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaUbDLWOas_hXAs3BopNMxLJhgqW56dZU&callback=myMap"></script>
+	</div>
+	</div>
+	</div>
+
+</body>
+</html>
