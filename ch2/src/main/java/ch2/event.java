@@ -46,6 +46,7 @@ public class event {
 	public int evaluation;
 	public int isdone;
 	public int duration;
+	public int tickets;
 	
     @OneToMany(mappedBy = "anevent")
     @JsonIgnore
@@ -76,6 +77,7 @@ public class event {
 		this.isdone=0;
 		this.eventinfos= new HashSet<eventinfo>();
 		this.duration=d;
+		this.tickets=0;
 	}
 
 	public int getEventId() {
@@ -272,6 +274,14 @@ public class event {
 
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+
+	public int getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(int tickets) {
+		this.tickets = tickets;
 	} 
 
 		

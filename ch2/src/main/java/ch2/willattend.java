@@ -28,6 +28,10 @@ public class willattend implements Serializable {
 	
 	public Date time;
 	
+	public int valid;
+	
+	public int tickets;
+	
 	public willattend() {}
 
 	public int getId() {
@@ -71,5 +75,22 @@ public class willattend implements Serializable {
 		this.time = time;
 	}
 
+	public int getValid() {
+		return valid;
+	}
+
+	public void setValid(int valid) {
+		this.valid = valid;
+	}
+
+	public int getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(int tickets) {
+		this.tickets = tickets;
+	}
+
+	
 	
 }

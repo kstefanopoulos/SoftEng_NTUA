@@ -21,9 +21,13 @@ public class hasattended implements Serializable {
 	@ManyToOne
     @JoinColumn(name = "eventid")
 	public event anevent;
-	public int isfavorite;
 	
-	public hasattended() {}
+	public int isfavorite;
+	public int rating;
+	
+	public hasattended() {
+		this.rating=0;
+	}
 	
 	public hasattended(int id) {
 		this.id=id;
@@ -60,6 +64,14 @@ public class hasattended implements Serializable {
 
 	public void setIsfavorite(int isfavorite) {
 		this.isfavorite = isfavorite;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 	
 	

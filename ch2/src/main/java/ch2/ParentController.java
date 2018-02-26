@@ -39,29 +39,6 @@ public class ParentController {
 		}
 	}
 	
-	@GetMapping(path = "/add")
-	public @ResponseBody
-	String addNewUser(@RequestParam String pem, @RequestParam String fn,
-			@RequestParam String ln, @RequestParam String un,
-			@RequestParam String pas, @RequestParam String pn,
-			@RequestParam String sname, @RequestParam int snumber,
-			@RequestParam String t, @RequestParam String pc) {
-
-		if (pRepository.findOne(pem)!=null) 
-			return "Parent with this Email already exists!";
-		else {
-			parent np = new parent(pem, fn, ln, un, pas, pn, sname, snumber, t, pc);
-			pRepository.save(np);
-			bucket b= new bucket(np,0,0);
-			b.setPemail(pem);
-			//b.setBucketId(12);
-		    np.setParentbucket(b);
-			pRepository.save(np);
-			return "New Parent Saved";
-			//everything else with setters
-		}
-	}
-
 	@GetMapping(path = "/all")
 	public @ResponseBody
 	Iterable<parent> getAllParents() {

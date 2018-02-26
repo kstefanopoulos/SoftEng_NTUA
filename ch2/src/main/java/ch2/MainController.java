@@ -65,6 +65,7 @@ public class MainController {
     Row row;
     event ev;
     ReservForm rform;
+    ratedto rdto;
 
     @RequestMapping(value="/littlecherries")
 	public String mainindex(Model model) {
@@ -190,8 +191,20 @@ public class MainController {
 			if (org != null) 
 				model.addAttribute("org",org);
 			else{
-				if(par!=null)
+				if(par!=null) {
 					model.addAttribute("par",par); 
+					Set<hasattended> ha = par.getHasattended();
+					hasattended hi=null;
+					for (hasattended h : ha) {
+						if (h.getAnevent().getEventId() == eventid) {
+							if (h.getRating() == 0)
+								rdto=new ratedto();
+								model.addAttribute("canrate",1);
+								model.addAttribute("myrate",rdto);
+						}
+					}
+						
+				}
 				else{ 
 					
 					if(adm != null )
@@ -211,12 +224,80 @@ public class MainController {
 		}
 	 if (e== null)
 		 return "redirect:/littlecherries/events";
+	 Set<consistsof> cs = e.getContained();
+	 model.addAttribute("timessaved",cs.size());
+	 model.addAttribute("ticketssold", e.getTickets());
 	 model.addAttribute("myorg",myorg);
 	 model.addAttribute("event",e);
 	 return "single_event";
 	 
 	 
  }
+ 
+ @RequestMapping(value = "/littlecherries/events/{eventid}", method = RequestMethod.POST)
+ public String EvaluateEvent(Model model, @ModelAttribute("eventid") int eventid, @ModelAttribute("rdto") @Valid ratedto rdto, 
+	      BindingResult result, WebRequest request, Errors errors, final RedirectAttributes redirectAttributes) {
+	 
+	 
+	 event e= null;
+	 organizer myorg=null;
+	 Iterable<organizer> Organizers=oc.getAllOrganizers();
+	 for (organizer o: Organizers) {
+				e = oc.getAnEvent(o.getOemail(), eventid);
+				if (e != null)  {
+					myorg=o;
+					break; }
+	}
+	if (e== null)
+			return "redirect:/littlecherries/events";
+
+	 if (userCredentials == null)
+			model.addAttribute("user",null);
+		else {
+			organizer org = oc.getOrganizerByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+			parent par = pr.getParentByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+			administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+			if (org != null) 
+				model.addAttribute("org",org);
+			else{
+				if(par!=null) {
+					model.addAttribute("par",par); 
+					Set<hasattended> ha = par.getHasattended();
+					hasattended hi=null;
+					for (hasattended h : ha) {
+						if (h.getAnevent().getEventId() == eventid) 
+							hi=h;
+						    hi.setRating(rdto.getRate());
+						    pr.UpdateUser(par.getPemail());
+					}
+					Set<hasattended> he = e.getHasattended();
+					int users=0;
+					int sum=0;
+					for (hasattended h : he) {
+						sum+=h.getRating();
+						if (h.getRating() > 0) 
+							users+=1;
+					}
+					if (users>0){
+						int avg=sum/users;
+						e.setEvaluation(avg);
+						oc.UpdateUser(myorg.getOemail());
+					}
+				}
+				else{ 
+					
+					if(adm != null )
+						model.addAttribute("user",adm);
+					
+				}
+			} 
+		}
+	 model.addAttribute("myorg",myorg);
+	 model.addAttribute("event",e);
+	 return "single_event";
+	} 
+ 
+ 
  
  ////// REGISTRATION ///////////
  
@@ -305,7 +386,7 @@ public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Val
     if (registered==null)
     	return "UnsuccessfulRegistrationPage";
     redirectAttributes.addFlashAttribute("flashUser", registered);
-    return "redirect:/littlecherries/registerSucsessful"; }
+    return "redirect:/littlecherries/registerSuccessful"; }
 }
 
 	
@@ -338,36 +419,77 @@ public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential")
 		userCredentials.setType(1);
 		return "redirect:/littlecherries/organizers/showprofile";
 	}else if(par!=null){
-		    Set<willattend> wa= par.getWillattend();
-		    Set<hasattended> ha= par.getHasattended();
-
-		    Date today=new Date();
-		    if (wa != null) {
-			    for (willattend i : wa) {
-			    	Date evday= i.getDate();
-			    	if (today.after(evday))    {             //if the event date has passed 
-			    		
-			    		wa.remove(i);
-			    		hasattended h= new hasattended();
-			    		h.setAnevent(i.getAnevent());
-			    		h.setAparent(par);
-			    		ha.add(h);
-			    		
-			    	}
-			    }
-			    par.setHasattended(ha);
-			    par.setWillattend(wa);
-			    pr.UpdateUser(par.getPemail()); }
-			redirectAttributes.addFlashAttribute("user", par);
-			userCredentials=myuserCredentials;
-			userCredentials.setType(0);
-			return "redirect:/littlecherries/parents/showprofile";
+		Set<willattend> toremove = new HashSet<willattend>();
+		Set<willattend> wa= par.getWillattend();
+	    Set<hasattended> ha= par.getHasattended();
+	    Date today=new Date();
+	    if (wa.size() > 0) {
+		    for (willattend i : wa) {
+		    	if (i.getValid()==1) {
+		    		Date evday= i.getDate();
+		    		if (today.after(evday))    {             //if the event date has passed 
+		    			toremove.add(i);
+		    			i.setValid(0);
+		    		}
+		    	}
+		    }
+			check_and_remove(toremove,par,wa,ha);
+		    wa.removeAll(toremove);
+		    par.setHasattended(ha);
+		    par.setWillattend(wa);
+		    pr.UpdateUser(par.getPemail());
+		}
+		redirectAttributes.addFlashAttribute("user", par);
+		userCredentials=myuserCredentials;
+		userCredentials.setType(0);
+		return "redirect:/littlecherries/parents/showprofile";
 		}
 	
 		return "registration";
 	}
 	
-
+public void check_and_remove(Set<willattend> rem, parent par, Set<willattend> wa, Set<hasattended> ha) {
+	
+	for (willattend i : rem) {
+		//remove this from the parent
+		int f=0;  // 0->not found, 1->found
+		event e= i.getAnevent();
+		for (hasattended h : ha) {
+			if (e.getEventId()==h.getAnevent().getEventId()) {
+				f=1;
+				break;
+		} }
+		if (f==0) {
+			hasattended h= new hasattended();
+			h.setAnevent(i.getAnevent());
+			h.setAparent(par);
+			ha.add(h); }
+		//remove this from the event e
+		organizer myorg=e.getMyorganizer();
+		Set<willattend> ew = e.getWillbeattented();
+		willattend wi;
+		for (willattend w: ew) {
+			if (w.getId()==i.getId()) {
+				wi=w;
+				w.setValid(0);
+				ew.remove(w);
+			}
+		}
+		f=0;
+		Set<hasattended> eh = e.getHasattended();
+		for (hasattended h : eh) {
+			if (h.getAparent().getPemail().equals(par.getPemail())) {
+				f=1;
+				break;
+		} }
+		if (f==0) {
+			hasattended h= new hasattended();
+			h.setAnevent(i.getAnevent());
+			h.setAparent(par);
+			eh.add(h); }
+		oc.UpdateUser(myorg.getOemail());
+  }
+}
 	
 
 ////// ADMIN LOGIN ///////////////
@@ -631,6 +753,22 @@ public String SaveΕvent (Model model) throws ParseException {
 		return "redirect:/littlecherries/organizers/viewmyevents"; }
 }
 
+@RequestMapping(value="@{/littlecherries/organizers/viewstatistics}", method= RequestMethod.GET)
+public String ViewStatistics(Model model) {
+	if (userCredentials == null)
+		return "registration";
+	organizer org= oc.getΑnOrganizer(userCredentials.getEmail());
+	if (org==null)
+		return "registration";
+	Set<event> myev = org.getEvents();
+	List<event> myevents = new ArrayList<event> ();
+	for (event e: myevents)
+		myevents.add(e);
+	model.addAttribute("myevents",myevents);
+	model.addAttribute("user",org);
+	return "view_statistics";
+}
+
 /////////////////////  PARENT'S STUFF   ////////////////////////  
 
 @RequestMapping(value ="/littlecherries/parents/showprofile" ,method=RequestMethod.GET)
@@ -638,7 +776,7 @@ public String ParentshowProfile(Model model) {
 	if (userCredentials == null)
 		return "registration";
 	parent par = pr.getParentByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
-	if (par!= null) {
+	if (par!= null) {	    
 		model.addAttribute("user",par);
 		return "profile-gonea";  
 	}
@@ -758,8 +896,8 @@ public String ParentLoadCreditsPost(Model model, @ModelAttribute("crform") @Vali
 			parent par= pr.getΑParent(userCredentials.getEmail());
 	    	if (par==null)
 	    		return "registration";
-	    	int prev=par.getBalance();
-	    	int curr=prev + crform.getPoints() ;
+	    	float prev=par.getBalance();
+	    	float curr=prev + crform.getPoints() ;
 	    	par.setBalance(curr);
 	    	SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String mydate = localDateFormat.format(new Date());
@@ -873,7 +1011,7 @@ public String ParentBuyTc(Model model, @ModelAttribute("eventid") int eventid,@M
 		 if (e== null)
 			 return "redirect:/littlecherries/events";  
 
-	int totalcost = rform.getNumberoftickets() * e.getEvent_cost();
+	float totalcost = rform.getNumberoftickets() * e.getEvent_cost();
 	if (totalcost > par.getBalance()) {
 		model.addAttribute("user",par);
 		return "after_reservation_failure"; }
@@ -894,6 +1032,8 @@ public String ParentBuyTc(Model model, @ModelAttribute("eventid") int eventid,@M
 	wa.setAparent(par);
 	wa.setDate(sel.getEventdate());
 	wa.setTime(sel.getStarttime());
+	wa.setValid(1);
+	wa.setTickets(rform.getNumberoftickets());
 	/*******************************************************/
 	Set<willattend> pwa = par.getWillattend();
 	pwa.add(wa);
@@ -909,6 +1049,9 @@ public String ParentBuyTc(Model model, @ModelAttribute("eventid") int eventid,@M
 	Set<willattend> ewa = e.getWillbeattented();
 	ewa.add(wa);
 	e.setWillbeattented(ewa);
+	e.setTickets(e.getTickets() + rform.getNumberoftickets());
+	float d = (float)(or.getBalance() + totalcost * 0.9);
+	or.setBalance(d);
 	oc.UpdateUser(or.getOemail());
 	model.addAttribute("user",par);
 	model.addAttribute("event",e);
@@ -1057,6 +1200,7 @@ public String ParentViewsGoneEvents (Model model) {
 			myevents.add(i.getAnevent());
 		}
 		model.addAttribute("list",myevents);
+		model.addAttribute("ha",ha);
 		return "view_history"; }
 
 	return "registration";
@@ -1072,7 +1216,8 @@ public String ParentViewsFutureEvents (Model model) {
 		List<event> myevents = new ArrayList<event> ();
 		Set<willattend> wa = par.getWillattend();
 		for (willattend i : wa) {
-			myevents.add(i.getAnevent());
+			if (i.getValid() == 1)
+				myevents.add(i.getAnevent());
 		}
 		model.addAttribute("list",myevents);
 		return "view_events_to_go"; }

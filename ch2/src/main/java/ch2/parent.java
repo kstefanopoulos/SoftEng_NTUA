@@ -18,7 +18,7 @@ public class parent {
 	private String username;
 	private String password;
 	private String phone_number;
-	private int balance;
+	private float balance;
 	private Date last_transaction_date;
 	private String street_name;
 	private int street_number;
@@ -105,11 +105,11 @@ public class parent {
 		return street_name;
 	}
 
-	public int getBalance() {
+	public float getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(float balance) {
 		this.balance = balance;
 	}
 

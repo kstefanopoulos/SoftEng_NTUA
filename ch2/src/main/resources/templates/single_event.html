@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Events Page</title>
+  <title>Single Event Page</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -10,17 +10,10 @@
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
   
+  
+  
+  
 <style type="text/css">
-	.starRate {position:relative; margin:20px; overflow:hidden; zoom:1;}
-	.starRate ul {width:160px; margin:0; padding:0;}
-	.starRate li {display:inline; list-style:none;}
-	.starRate a, .starRate b {background:url(star_rate.gif) left top repeat-x;}
-	.starRate a {float:right; margin:0 80px 0 -144px; width:80px; height:16px; background-position:left 16px; color:#000; text-decoration:none;}
-	.starRate a:hover {background-position:left -32px;}
-	.starRate b {position:absolute; z-index:-1; width:80px; height:16px; background-position:left -16px;}
-	.starRate div b {left:0px; bottom:0px; background-position:left top;}
-	.starRate a span {position:absolute; left:-300px;}
-	.starRate a:hover span {left:90px; width:100%;}
 
 table, th, td{
 	border: 1px solid white;
@@ -97,47 +90,101 @@ table, th, td{
 		<li>Περιγραφή Εκδήλωσης <span th:utext="${event.event_description}">..</span></li>
 	</div>
 	
+	<div th:unless="${par==null}">
+		<div th:unless="${canrate==null}">
+	<form th:action="@{/littlecherries/events/{eventid}(eventid=${event.eventid})}" th:object="${myrate}" method="POST" enctype="utf8">	
+		<input id="star-5" type="radio" name="rate" value="5">
+		<label for="star-5" title="5 stars">
+		<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>5
+		</label>
+		<input id="star-4" type="radio" name="rate" value="4">
+		<label for="star-4" title="4 stars">
+		<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>4
+		</label>
+		<input id="star-3" type="radio" name="rate" value="3">
+		<label for="star-3" title="3 stars">
+		<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>3
+		</label>
+		<input id="star-2" type="radio" name="rate" value="2">
+		<label for="star-2" title="2 stars">
+		<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>2
+		</label>
+		<input id="star-1" type="radio" name="rate" value="1">
+		<label for="star-1" title="1 star">
+		<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>1
+		</label>	
+		<input type="submit" value="Submit Evaluation" onclick="return confirm('Θελετε να oριστικοποιήσετε την αξιολόγησή σας?')"/>
+		
+	</form>
+	</div>
+	</div>
+	
+	</div>
+	<div class="col-sm-4">
+	<img style="img2" th:src="@{/images/Insert-picture-here.jpg}" alt="event-picture" height="300px" width="300px">
+    </div>
+	
+	<div class="col-sm-4" th:unless="${org==null}">
+		<div th:if="${org==myorg}">
+			<li>Αριθμός Εισητηρίων που έχουν πουληθεί: <span th:utext="${ticketssold}">..</span></li>
+			<li>Αριθμός Φορών που Αποθηκεύτηκε από κάποιον χρήστη: <span th:utext="${timessaved}">..</span></li>
+		</div>	
+	</div>
+	
+	
+	
 	<div>
         <table class="table table-striped">
 			<thead>
 				<th>Ημερομηνία</th>
 				<th>Διαθέσιμα Εισιτήρια</th>
-				<th>Ώρα Έναρξης</th>			
+				<th>Ώρα Έναρξης</th>
+				<th>Αξιολόγηση</th>
 			</thead>
 			<tbody>	
 			<tr th:each= "eventinfo : ${event.eventinfos}">
 				<td th:text="${eventinfo.eventdate}"></td>
 				<td th:text ="${eventinfo.availabletickets}"></td>
 				<td th:text="${eventinfo.starttime}"></td> 
+				<td th:text="${event.evaluation}"></td>
+				
 			</tr>
 			</tbody>
 	  </table>
-      </div> 
-	
-	
-	<div class="rating">
-			<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+    </div> 
 	</div>
-			
-	<div class="col-sm-4">
-	<img style="img2" th:src="@{/images/Insert-picture-here.jpg}" alt="event-picture" height="300px" width="300px">
-   </div>
-	<div th:unless="${par==null}">
-		<div class="col-sm-4">
-		<button><a th:href="@{/littlecherries/parents/{eventid}/buyticket(eventid=${event.eventid})}" type="button" class="btn btn-primary">Κράτηση</a></button>
-		<button><a th:href="@{/littlecherries/parents/{eventid}/save(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στο Καλάθι</a></button>
-		<button><a th:href="@{/littlecherries/parents/{eventid}/saveasfav(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στα Αγαπημένα</a></button>
+	</div>
+	
+	<div  class="container"> 
+	<div class="row info">
+	
+	<div class="col-sm-6">
+		<div th:unless="${par==null}">
+	
+			<p><button><a th:href="@{/littlecherries/parents/{eventid}/buyticket(eventid=${event.eventid})}" type="button" class="btn btn-primary">Κράτηση</a></button></p>
+			<button><a th:href="@{/littlecherries/parents/{eventid}/save(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στο Καλάθι</a></button>
+			<p><button><a th:href="@{/littlecherries/parents/{eventid}/saveasfav(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στα Αγαπημένα</a></button></p>
+		</div>
+	
 		
-		<p><button class="button1 text" style="font-size:25px; width:60%; position:relative; left:200px;">Αξιολόγηση</button></p>
-		</div>
+	<div class="col-sm-6">
+	<div class="info" align="center">
+		<div id = "map" class ="info" style="width:350px;height:350px;background-color:#ffffff;border-radius: 10px;"> </div>
+	</div>		
+
+	<script>
+	function myMap() {
+	  var mapCanvas = document.getElementById("map");
+	  var mapOptions = {
+		center: new google.maps.LatLng(37.965748, 23.708142), zoom: 10
+	  };
+	  var map = new google.maps.Map(mapCanvas, mapOptions);
+	}
+	</script>
+	<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaUbDLWOas_hXAs3BopNMxLJhgqW56dZU&callback=myMap"></script>
+	</div> 
 	</div>
-	
-	<div th:unless="${org==null}">
-		<div th:if="${org==myorg}">
-		<div class="col-sm-4">
-			<p><button class="button1 text" style="font-size:25px; width:60%; position:relative; left:200px;">Πληροφορίες</button></p>
-		</div>
-	</div>	
-</div>
+	</div>
+
 </body>
 </html>

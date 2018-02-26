@@ -18,7 +18,7 @@ public class organizer {
 	private String username;
 	private String password;
 	private String phone_number;
-	private int balance;  //starts from 0
+	private float balance;  //starts from 0
 	private String street_name;
 	private int street_number;
 	private String postal_code;
@@ -118,11 +118,11 @@ public class organizer {
 		this.phone_number = phone_number;
 	}
 	
-	public int getBalance() {
+	public float getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(float balance) {
 		this.balance = balance;
 	}
 
