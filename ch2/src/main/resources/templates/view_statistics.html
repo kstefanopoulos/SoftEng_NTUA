@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Events Page</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+
+<style>
+
+
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
+</style>
+  
+  </head>
+
+<script>
+ function sum(p1,p2) {
+	 return p1*p2
+ }
+</script>
+  
+<body>
+
+
+<!-- Head Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+<!-- Navigation Menu --> 
+
+<nav class="navbar navbar-reversed  roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li class="active"><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+    </ul>	
+  </div>
+</nav>
+
+<h4>Στατιστικά Στοιχεία για τις εκδηλώσεις σας για τις τελευταίες 30 ημέρες</h4>
+
+<div  class="container" align="center"> 
+	<div class="row info">
+	</div>    
+        <table class="table table-striped">
+			<thead>
+				<th>Όνομα Εκδήλωσης</th>
+				<th>Τιμή Εισητηρίου</th>
+				<th>Αριθμός Εισητηρίων που πουλήθηκαν</th>
+				<th>Πόντοι</th>	
+				<th>Χρηματικό Ισοδύναμο</th>			
+						
+			</thead>
+			<tbody>	
+				<tr th:each= "statistics : ${myevents}">
+						<td th:text="${statistics.event_name}"></td>
+						<td th:text ="${statistics.event_cost}"></td>
+						<td th:text="${statistics.tickets_sold}"></td> 
+						<td th:text="${statistics.credits_won}"></td> 
+						<td th:text="${statistics.money_won}"></td> 
+				</tr> 
+		    
+			</tbody>
+	  </table>
+	 
+</div>
+	
+</body>
+</html>

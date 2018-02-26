@@ -2,6 +2,7 @@ package ch2;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class willattend implements Serializable {
+public class willattend implements Serializable, Comparable<willattend>{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -89,6 +90,12 @@ public class willattend implements Serializable {
 
 	public void setTickets(int tickets) {
 		this.tickets = tickets;
+	}
+
+	public int compareTo(willattend o) {
+		// TODO Auto-generated method stub
+		return this.date.compareTo(o.date);
+
 	}
 
 	

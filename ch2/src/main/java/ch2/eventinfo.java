@@ -3,6 +3,7 @@ package ch2;
 import javax.persistence.*;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Set;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-public class eventinfo {
+public class eventinfo  {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -93,7 +94,6 @@ public class eventinfo {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
 	
 	
 

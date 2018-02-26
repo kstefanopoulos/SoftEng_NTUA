@@ -2,6 +2,7 @@ package ch2;
 
 import javax.persistence.*;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-public class event {
+public class event implements Comparable<event> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,6 +48,7 @@ public class event {
 	public int isdone;
 	public int duration;
 	public int tickets;
+	public Date createdat;
 	
     @OneToMany(mappedBy = "anevent")
     @JsonIgnore
@@ -177,24 +179,6 @@ public class event {
 	public void setEvent_description(String event_description) {
 		this.event_description = event_description;
 	}
-
-
-	public String getlongtitude() {
-		return longitude; 
-	}
-
-	public void setlongtitude(String lo) {
-		this.longitude = lo;
-	}
-
-	
-	public String getlatitude() {
-		return latitude; 
-	}
-
-	public void setlatitude(String la) {
-		this.latitude = la;
-	}
 	
 	public int getEvaluation() {
 		return evaluation;
@@ -282,7 +266,22 @@ public class event {
 
 	public void setTickets(int tickets) {
 		this.tickets = tickets;
-	} 
+	}
+
+	public Date getCreatedat() {
+		return createdat;
+	}
+
+	public void setCreatedat(Date createdat) {
+		this.createdat = createdat;
+	}
+
+	public int compareTo(event o) {
+		// TODO Auto-generated method stub
+		return this.createdat.compareTo(o.createdat);
+	}
+	
+	
 
 		
 	

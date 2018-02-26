@@ -62,6 +62,7 @@
      	<div th:if="${par==null}">
          <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
    </div> </div>
+   </div>
     </ul>
 		
   </div>
@@ -71,10 +72,26 @@
 
 <div class="container"  align="center">
 
-<p> Page Content Here </p> 
+<p><h2> Είπαν για εμάς... </h2></p>
+<p><h3><i>"blablablablablablabla"</i></h3></p>
 
 
 </div> 
+
+
+<div class="container"  align="center">
+<p><h2> 
+	<th:block  th:each= "event : ${events}">
+		<div class="col-sm-4 info">
+			<img style="img2" th:src="@{'/' + event_images + '/' + ${event.eventid} + .png}" height="300px" width="300px"></img>
+    		<a th:text="${event.event_name}" th:href="@{/littlecherries/events/{eventid}(eventid=${event.eventid})}"></a>
+    	</div>
+ </h2></p> 
+	
+</div> 
+
+
+
 
 
 <!-- FootNote -->

@@ -85,7 +85,7 @@ table, th, td{
 <div class="container" align="center"> 
 	<div class="row info">
 	<form th:action="@{/littlecherries/organizers/addevent}" th:object="${event}" method="POST" enctype="utf8">	
-	<div class="col-sm-4" style="color:grey; font-size:20px"> 
+	<div class="row-sm-4" style="color:grey; font-size:20px"> 
 		<h3 align="left"> Τίτλος Event:  <input class="text2" name="title" th:required="required"></input></h3>
 		<h3 align="left"> Τιμή Εισιτηρίου: <input class="text2" name="price" th:required="required" th:type="number"></h3>
 		

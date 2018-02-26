@@ -132,7 +132,6 @@ table, th, td{
 	</div>
 	
 	
-	
 	<div>
         <table class="table table-striped">
 			<thead>
@@ -140,6 +139,8 @@ table, th, td{
 				<th>Διαθέσιμα Εισιτήρια</th>
 				<th>Ώρα Έναρξης</th>
 				<th>Αξιολόγηση</th>
+				<th>Συντεταγμένες</th>
+				
 			</thead>
 			<tbody>	
 			<tr th:each= "eventinfo : ${event.eventinfos}">
@@ -147,11 +148,11 @@ table, th, td{
 				<td th:text ="${eventinfo.availabletickets}"></td>
 				<td th:text="${eventinfo.starttime}"></td> 
 				<td th:text="${event.evaluation}"></td>
+				<td th:text="${lat}"></td>
 				
 			</tr>
 			</tbody>
 	  </table>
-    </div> 
 	</div>
 	</div>
 	
@@ -172,16 +173,63 @@ table, th, td{
 		<div id = "map" class ="info" style="width:350px;height:350px;background-color:#ffffff;border-radius: 10px;"> </div>
 	</div>		
 
-	<script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	var k = [[${lat}]];
+	var l = [[${longi}]];
+
+	/*]]>*/
+	var markerLat=[], markerLong=[];
+	
+	markerLat = [
+			k,
+
+
+	    ];
+	markerLong = [
+	              
+				l,		             
+
+	         ];
+	
 	function myMap() {
-	  var mapCanvas = document.getElementById("map");
-	  var mapOptions = {
-		center: new google.maps.LatLng(37.965748, 23.708142), zoom: 10
-	  };
-	  var map = new google.maps.Map(mapCanvas, mapOptions);
+		var map;
+        var initlatlng = new google.maps.LatLng(37.965748, 23.708142);
+	    var mapOptions = {
+	        center: new google.maps.LatLng(37.965748, 23.708142), zoom: 10, mapTypeId: google.maps.MapTypeId.ROADMAP
+
+	    };
+	    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+	    var infowindow = new google.maps.InfoWindow(); 
+        var marker, i;
+        
+     
+        for (i = 0; i < markerLat.length; i++) {
+           marker = new google.maps.Marker({
+                position: new google.maps.LatLng(markerLat[i], markerLong[i]),
+                map: map
+            });
+        
+        	google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            	return function() {
+                	infowindow.setContent(markers[i]);
+                	infowindow.open(map, marker);
+            	}
+        		})	(marker, i));
+
+	   }
+	
 	}
+    google.maps.event.addDomListener(window, 'load', myMap);
+
+
 	</script>
+
 	<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaUbDLWOas_hXAs3BopNMxLJhgqW56dZU&callback=myMap"></script>
+	
+
+    
+	
 	</div> 
 	</div>
 	</div>

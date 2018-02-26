@@ -1,11 +1,29 @@
 package ch2;
 
+import java.net.URLConnection;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.XPathConstants;
+
+import org.w3c.dom.Document;
 
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,6 +58,8 @@ import register.ReservForm;
 import register.Row;
 import register.Rowlist;
 
+import java.util.Collections;
+
 
 @Controller
 //@RequestMapping("/")
@@ -59,6 +79,7 @@ public class MainController {
     ChangePasswordForm changepsw = new ChangePasswordForm();
     CreditsForm crform = new CreditsForm();
     UserCredentials userCredentials;
+    
 
     EventDTO eventdto = new EventDTO();
     Rowlist list ;
@@ -89,6 +110,24 @@ public class MainController {
 			}
 		
 			}
+		
+		 List<event> list = new ArrayList<event>();
+		 List<event> final_list = new ArrayList<event>();
+
+		 Iterable<organizer> Organizers=oc.getAllOrganizers();
+		 for (organizer o: Organizers) {
+				Set<event> ev=o.getEvents();
+				for (event e: ev) {
+					list.add(e);
+				}
+		}
+		Collections.sort(list);
+		if (list.size() < 4)
+			final_list = list;
+		else
+			final_list = list.subList(0,2);
+		
+		model.addAttribute("events",final_list);
 		return "mainpage";
   }
   
@@ -138,6 +177,7 @@ public class MainController {
 			}
 		}
 		}
+
     return "OurCompanyPage";
   }
  
@@ -194,7 +234,6 @@ public class MainController {
 				if(par!=null) {
 					model.addAttribute("par",par); 
 					Set<hasattended> ha = par.getHasattended();
-					hasattended hi=null;
 					for (hasattended h : ha) {
 						if (h.getAnevent().getEventId() == eventid) {
 							if (h.getRating() == 0)
@@ -224,7 +263,11 @@ public class MainController {
 		}
 	 if (e== null)
 		 return "redirect:/littlecherries/events";
+	 float lat = Float.parseFloat(e.getLatitude());
+	 float longi = Float.parseFloat(e.getLongitude());
 	 Set<consistsof> cs = e.getContained();
+	 model.addAttribute("lat",lat);
+	 model.addAttribute("longi",longi);
 	 model.addAttribute("timessaved",cs.size());
 	 model.addAttribute("ticketssold", e.getTickets());
 	 model.addAttribute("myorg",myorg);
@@ -422,7 +465,7 @@ public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential")
 		Set<willattend> toremove = new HashSet<willattend>();
 		Set<willattend> wa= par.getWillattend();
 	    Set<hasattended> ha= par.getHasattended();
-	    Date today=new Date();
+	    Date today= new Date();
 	    if (wa.size() > 0) {
 		    for (willattend i : wa) {
 		    	if (i.getValid()==1) {
@@ -657,7 +700,7 @@ public String OrganizerAddsEvent(Model model) {
 
 @RequestMapping(value = "/littlecherries/organizers/addevent", method = RequestMethod.POST) 
 public String OrganizerCreatesEvent(Model model, @ModelAttribute("eventdto") @Valid EventDTO eventDto, 
-	      BindingResult result, WebRequest request, Errors errors) throws ParseException {    
+	      BindingResult result, WebRequest request, Errors errors) throws Exception {    
 	
 		if (userCredentials == null)
 			return "registration";
@@ -675,6 +718,10 @@ public String OrganizerCreatesEvent(Model model, @ModelAttribute("eventdto") @Va
 		if (e==null)
 			return "redirect:/littlecherries/organizers/addevent";
 	    ev=e;
+	    String postcode = eventDto.getStreetname() + ' ' +  eventDto.getStreetnumber() + ' ' + eventDto.getTown() + ' ' + eventDto.getPostalcode() ;
+	    String latLongs[] = getLatLongPositions(postcode);
+	    ev.setLatitude(latLongs[0]);
+	    ev.setLongitude(latLongs[1]);
 	    list = new Rowlist();
 	    model.addAttribute("event", e);
 		return "redirect:/littlecherries/organizers/addevent/edit";  
@@ -741,11 +788,9 @@ public String SaveΕvent (Model model) throws ParseException {
 	else {
 		Set<eventinfo> newset= new HashSet<eventinfo>();
 		for (Row r : list.getMyRows()) {
-			//SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm");
-			//String mytime = localDateFormat.format(r.getTime().getTime());
-			//Date ttime = (Date)localDateFormat.parse(mytime);
 			eventinfo ei = new eventinfo(r.getDate(),r.getTickets(), r.getTime());
 			newset.add(ei); }
+			ev.createdat = new Date();
 			oc.saveNewEvent(org.getOemail(), ev, newset);
 			model.addAttribute("user",org);
 			Set<event> ev=org.getEvents();
@@ -753,20 +798,50 @@ public String SaveΕvent (Model model) throws ParseException {
 		return "redirect:/littlecherries/organizers/viewmyevents"; }
 }
 
-@RequestMapping(value="@{/littlecherries/organizers/viewstatistics}", method= RequestMethod.GET)
+@RequestMapping(value="/littlecherries/organizers/viewstatistics", method= RequestMethod.GET)
 public String ViewStatistics(Model model) {
 	if (userCredentials == null)
 		return "registration";
 	organizer org= oc.getΑnOrganizer(userCredentials.getEmail());
 	if (org==null)
 		return "registration";
+	Date now = new Date();
+	Calendar cal = new GregorianCalendar();
+	cal.setTime(now);
+	cal.add(Calendar.DAY_OF_MONTH, -30);
+	Date startdate = cal.getTime();
+	//return startdate.toString();
+	
 	Set<event> myev = org.getEvents();
-	List<event> myevents = new ArrayList<event> ();
-	for (event e: myevents)
-		myevents.add(e);
-	model.addAttribute("myevents",myevents);
+	List<statistics> toshow = new ArrayList<statistics>();
+	for (event e: myev) {
+		int f=0;                               //0-> passed, 1-> not passed
+		Set<eventinfo> evinfos = e.getEventinfos();
+		for (eventinfo ei: evinfos) {
+			if (startdate.before(ei.getEventdate())) {
+				f=1;                           //found one!
+				break; }
+			
+		}
+		if (f==1)  {     			//organizer will view statistics about it
+			Set<willattend> evattend = e.getWillbeattented();
+			List<willattend> evattend_list = new ArrayList<willattend>();
+			for (willattend w: evattend)
+				evattend_list.add(w);
+			int mytickets = 0;
+			for (willattend wi: evattend_list) {
+				if (startdate.before(wi.getDate()) || startdate.equals(wi.getDate())) 
+					mytickets += wi.getTickets();
+			}
+			double credits= e.getEvent_cost() * mytickets * 0.9 ;
+			statistics new_stat = new statistics(e.getEvent_name(),e.getEvent_cost(),mytickets, credits, credits);
+			toshow.add(new_stat);
+		}
+	}
+		
+	model.addAttribute("myevents",toshow);
 	model.addAttribute("user",org);
-	return "view_statistics";
+	return "view_statistics"; 
 }
 
 /////////////////////  PARENT'S STUFF   ////////////////////////  
@@ -1225,5 +1300,37 @@ public String ParentViewsFutureEvents (Model model) {
 	return "registration";
 	}
 
+public static String[] getLatLongPositions(String address) throws Exception
+{
+  int responseCode = 0;
+  String api = "http://maps.googleapis.com/maps/api/geocode/xml?address=" + URLEncoder.encode(address, "UTF-8") + "&sensor=true";
+  URL url = new URL(api);
+  HttpURLConnection httpConnection = (HttpURLConnection)url.openConnection();
+  httpConnection.connect();
+  responseCode = httpConnection.getResponseCode();
+  if(responseCode == 200)
+  {
+    DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();;
+    Document document = builder.parse(httpConnection.getInputStream());
+    XPathFactory xPathfactory = XPathFactory.newInstance();
+    XPath xpath = xPathfactory.newXPath();
+    XPathExpression expr = xpath.compile("/GeocodeResponse/status");
+    String status = (String)expr.evaluate(document, XPathConstants.STRING);
+    if(status.equals("OK"))
+    {
+       expr = xpath.compile("//geometry/location/lat");
+       String latitude = (String)expr.evaluate(document, XPathConstants.STRING);
+       expr = xpath.compile("//geometry/location/lng");
+       String longitude = (String)expr.evaluate(document, XPathConstants.STRING);
+       return new String[] {latitude, longitude};
+    }
+    else
+    {
+       throw new Exception("Error from the API - response status: "+status);
+    }
+  }
+  return null;
+}
 
 }
+
