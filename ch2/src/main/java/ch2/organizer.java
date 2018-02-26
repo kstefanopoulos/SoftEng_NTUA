@@ -17,23 +17,25 @@ public class organizer {
 	private String last_name;
 	private String username;
 	private String password;
-	private String phone_number;
-	private int balance;  //starts from 0
+	private String  phone_number;
+	private float balance;  //starts from 0
 	private String street_name;
-	private int street_number;
+	private String street_number;
 	private String postal_code;
 	private String town;
 	private String afm;
 	private Date registration_date;
 	private int evaluation; //starts from 0
-	//private int proffoto;
+	private int restrictions; 
 	
-    @OneToMany(mappedBy = "myorganizer", cascade = CascadeType.ALL)
+
+
+	@OneToMany(mappedBy = "myorganizer", cascade = CascadeType.ALL)
     private Set<event> events;
 	
 	public organizer() {}
 	
-	public organizer(String oem, String cn, String ba, String fn, String ln, String u, String p, String pn, String sname, int snumber, String pc, String t, String afm) {
+	public organizer(String oem, String cn, String ba, String fn, String ln, String u, String p, String pn, String sname, String snumber, String pc, String t, String afm,int res ) {
 		
 		this.oemail=oem;
 		this.company_name=cn;
@@ -51,8 +53,18 @@ public class organizer {
 		this.afm=afm;
 		this.registration_date=new Date();
 		this.evaluation=0;
-		//this.proffoto=foto;
+		this.restrictions = res  ; 
+	
 	}
+	
+    public int getRestrictions() {
+		return restrictions;
+	}
+
+	public void setRestrictions(int restrictions) {
+		this.restrictions = restrictions;
+	}
+	
 	
 	public String getOemail() {
 		return oemail;
@@ -118,7 +130,7 @@ public class organizer {
 		this.phone_number = phone_number;
 	}
 	
-	public int getBalance() {
+	public float getBalance() {
 		return balance;
 	}
 
@@ -134,11 +146,11 @@ public class organizer {
 		this.street_name = street_name;
 	}
 
-	public int getStreet_number() {
+	public String getStreet_number() {
 		return street_number;
 	}
 
-	public void setStreet_number(int street_number) {
+	public void setStreet_number(String street_number) {
 		this.street_number = street_number;
 	}
 

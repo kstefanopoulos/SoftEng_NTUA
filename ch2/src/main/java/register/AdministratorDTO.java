@@ -6,26 +6,43 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class AdministratorDTO {
 
-	  @NotNull
+      @NotEmpty 
+      @NotNull 
+	  private String Email ; 
+	
+      
 	  @NotEmpty
+	  @NotNull
 	  private String firstname ;
 
-	  @NotNull
 	  @NotEmpty
+	  @NotNull
 	  private String lastname ;
 	     
-	  @NotNull
+
 	  @NotEmpty
+	  @NotNull
 	  private String username;
 	  
-	  @NotNull
+	 
 	  @NotEmpty
+	  @NotNull
 	  private String password;
 	
-	  @NotNull
+	  
 	  @NotEmpty
+	  @NotNull
 	  private String phonenumber;
 
+	  
+	  public String getEmail() {
+		return Email;
+	}
+
+	public void setEmail(String email) {
+		Email = email;
+	}
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -50,7 +67,7 @@ public class AdministratorDTO {
 		this.username = username;
 	}
 
-	public String getPassword() {
+	public String getPassword() { 
 		return password;
 	}
 
@@ -64,5 +81,5 @@ public class AdministratorDTO {
 
 	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
-	}
+	} 
 }

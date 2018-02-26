@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import register.AdministratorDTO;
+import register.BlockedDTO;
 import register.CreditsForm;
 import register.EventDTO;
 import register.OrganizerDTO;
@@ -49,9 +51,14 @@ public class MainController {
     private ParentController pr; 
 	@Autowired
     private AdministratorController ad; 
+	@Autowired 
+	private RestrictionController rs ; 
+	@Autowired 
+	private UserController us ; 
     ParentDTO parentdto = new ParentDTO(); 
     OrganizerDTO organizerdto = new OrganizerDTO();
     AdministratorDTO administratordto = new AdministratorDTO(); 
+    BlockedDTO blockeddto = new BlockedDTO(); 
     OrganizerToUpdate orgupdate = new OrganizerToUpdate();
     ParentToUpdate parupdate = new ParentToUpdate(); 
     ChangePasswordForm changepsw = new ChangePasswordForm();
@@ -79,7 +86,7 @@ public class MainController {
 				else{ 
 					
 					if(adm != null )
-						model.addAttribute("user",adm);
+						model.addAttribute("adm",adm);
 					
 				}
 			}
@@ -104,7 +111,7 @@ public class MainController {
 				else{ 
 					
 					if(adm != null )
-						model.addAttribute("user",adm);
+						model.addAttribute("adm",adm);
 					
 				}
 			}
@@ -129,7 +136,7 @@ public class MainController {
 			else{ 
 				
 				if(adm != null )
-					model.addAttribute("user",adm);
+					model.addAttribute("adm",adm);
 				
 			}
 		}
@@ -165,7 +172,7 @@ public class MainController {
 			else{ 
 				
 				if(adm != null )
-					model.addAttribute("user",adm);
+					model.addAttribute("adm",adm);
 				
 			}
 		}
@@ -220,7 +227,7 @@ public class MainController {
 private organizer createOrganizerAccount(OrganizerDTO accountDto, BindingResult result) {
     organizer registered = null;
     registered=oc.addNewOrganizer(accountDto.getEmail(),accountDto.getCompanyname(),accountDto.getBankacount(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),accountDto.getPassword(),
-    		accountDto.getPhonenumber(),accountDto.getStreetname(),accountDto.getStreetnumber(),accountDto.getPostalcode(),accountDto.getTown(),accountDto.getAfm());
+    		accountDto.getPhonenumber(),accountDto.getStreetname(),accountDto.getStreetnumber(),accountDto.getPostalcode(),accountDto.getTown(),accountDto.getAfm(),0);
     
     return registered;
 }
@@ -242,7 +249,7 @@ private organizer createOrganizerAccount(OrganizerDTO accountDto, BindingResult 
 private parent createParentAccount(ParentDTO accountDto, BindingResult result) {
     parent registered = null;
     registered = pr.createParent(accountDto.getEmail(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),accountDto.getPassword(),accountDto.getPhonenumber(),accountDto.getStreetname(),
-    		accountDto.getStreetnumber(),accountDto.getTown(),accountDto.getPostalcode());
+    		accountDto.getStreetnumber(),accountDto.getTown(),accountDto.getPostalcode(),0);
     
     return registered;
 }
@@ -262,7 +269,7 @@ public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Val
     if (registered==null)
     	return "UnsuccessfulRegistrationPage";
     redirectAttributes.addFlashAttribute("flashUser", registered);
-    return "redirect:/littlecherries/ecessful"; }
+    return "redirect:/littlecherries/registerSucessful"; }
 }
 
 	
@@ -724,6 +731,9 @@ public String Adminlogout() {
 	return "redirect:/littlecherries";
 }
 
+// DASHBOARD  
+
+//OK 
 @RequestMapping(value="/littlecherries/administrators/viewparents" , method = RequestMethod.GET)
 	public String AdministratorViewParents(Model model){
 		if (userCredentials == null)
@@ -731,10 +741,9 @@ public String Adminlogout() {
 		administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
 		if (adm!=null){
 			model.addAttribute("user",adm);
-			Iterable<parent> pars = ad.AdmingetAllparents(); 
-			model.addAttribute("parents", pars); 
+			Iterable<parent> pars = pr.getAllParents(); 
+		    model.addAttribute("parents", pars); 
 			return "viewparentspage" ; 
-	
 		}else{
 			
 			return "registration"; 
@@ -748,7 +757,7 @@ public String Adminlogout() {
 			administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
 			if (adm!=null){
 				model.addAttribute("user",adm);
-				Iterable<organizer> orgs = ad.AdmingetAllorganizers(); 
+				Iterable<organizer> orgs = oc.getAllOrganizers() ;  
 				model.addAttribute("organizers", orgs); 
 				return "vieworganizers" ; 
 		
@@ -767,10 +776,19 @@ public String Adminlogout() {
 					return "registration";
 				administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
 				if (adm!=null){
+					
+
 					model.addAttribute("user",adm);
 					Iterable<administrator> ads = ad.getAllAdministrators(); 
-					model.addAttribute("administrators", ads); 
-					return "viewadministrators" ; 
+					model.addAttribute("administrators", ads);
+					
+					if (adm.getRestrictions()== 6 ){
+					   	
+						return "viewadminswithoutadding" ; 
+						
+					}else
+					 
+						return "viewadministrators" ; 
 			
 				}else{
 					
@@ -785,9 +803,9 @@ public String AdministratorViewRestriction(Model model){
 			administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
 			if (adm!=null){
 				model.addAttribute("user",adm);
-				Iterable<restriction> rs = ad.AdmingetAllrestrictions(); 
-				model.addAttribute("restriction", rs); 
-				return "viewrestrictions" ; 
+				Iterable<restrictions> R = rs.getAllRestrictions(); 
+				model.addAttribute("restrictions", R); 
+				return "login" ; 
 		
 			}else{
 				
@@ -795,27 +813,181 @@ public String AdministratorViewRestriction(Model model){
 			}
 }
 	
-/*
 @RequestMapping(value="/littlecherries/administrators/viewevents" , method = RequestMethod.GET)
 public String AdministratorViewEvents(Model model){
-			if (userCredentials == null)
-				return "registration";
-			administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
-			if (adm!=null){
-				model.addAttribute("user",adm);
-				//Iterable<events> ads = ad.getAllEvents(); 
-				model.addAttribute("administrators", ads); 
-				return "viewrestrictions" ; 
 		
-			}else{
+	List<event> list = new ArrayList<event>(); 
+	
+	Iterable<organizer> Organizers = oc.getAllOrganizers(); 
+	for(organizer o:Organizers){
+		
+		Set<event> ev = o.getEvents();
+		for(event e: ev) 
+			list.add(e); 
+    }
+	
+	model.addAttribute("events", list);
+	
+	if(userCredentials == null){
+			model.addAttribute("user", null); 
+	        return "registration"; }
+	else{
+
+		organizer org = oc.getOrganizerByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+		parent par = pr.getParentByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+		administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+		if (org != null){
+			model.addAttribute("org",org);
+			return "EventPage";}
+		else{
+			if(par!=null){
+				model.addAttribute("par",par); 
+				return "EventPage"; }
+			else{ 
 				
-				return "registration"; 
+				if(adm != null )
+					model.addAttribute("user",adm);
+				
 			}
+		}
+	
+		}
+  
+	 return "viewevents"; 
+		
+	}
+@RequestMapping(value = "/littlecherries/administrators/addnewadmin", method = RequestMethod.GET) 
+public String AdminAddsAdmin(Model model) {
+	if (userCredentials == null)
+		return "registration";
+	administrator adm=ad.getΑnAdmin(userCredentials.getEmail());
+	if (adm==null)
+		return "registration";
+	else {
+	
+		model.addAttribute("admin", administratordto);
+		model.addAttribute("user",adm);
+		return "createadmin";
+	}
 }
-	*/  
+
+@RequestMapping(value = "/littlecherries/administrators/addnewadmin", method = RequestMethod.POST) 
+public String AdminCreatesAdmin(Model model, @ModelAttribute("administratordto") @Valid AdministratorDTO administratorDto, 
+	      BindingResult result, WebRequest request, Errors errors) throws ParseException {    
+	
+		if (userCredentials == null)
+			return "registration";
+		//if (result.hasErrors())return "login"; 
+		administrator adm= ad.getΑnAdmin(userCredentials.getEmail());
+		if (adm==null)
+			return "registration";
+   
+	administrator a = ad.createNewAdmin(administratorDto.getEmail(), administratorDto.getFirstname(), administratorDto.getLastname() , administratorDto.getUsername(),
+				administratorDto.getPassword(),administratorDto.getPhonenumber(),6) ; 
+		
+		//administrator a = ad.createNewAdmin(administratorDto.getEmail() , "", "", "", "", "",6);
+		if (a==null)
+			return "redirect:/littlecherries/administrators/addnewadmin";
+	   
+		return "redirect:/littlecherries/administrators/showprofile";  
+	}
+
+
+/// RESTRICTIONS // 
+
+@RequestMapping(value = "/littlecherries/administrators/adminrights", method = RequestMethod.GET) 
+public String AdminSetsRestrictions(Model model) {
+	if (userCredentials == null)
+		return "registration";
+	administrator adm=ad.getΑnAdmin(userCredentials.getEmail());
+	if (adm==null )
+		return "registration";
+	else {
+	
+		model.addAttribute("blocked", blockeddto);
+		model.addAttribute("user",adm);
+		return "assignrestrictions";
+	}
+}
+
+
+@RequestMapping(value = "/littlecherries/administrators/adminrights", method = RequestMethod.POST)
+	public String AdminAssignsRestrictions(Model model, @ModelAttribute("blockeddto") @Valid BlockedDTO blockedDto, 
+	      BindingResult result, WebRequest request, Errors errors) throws ParseException {    
+	
+		if (userCredentials == null)
+			return "registration";
+		//if (result.hasErrors())return "login"; 
+		administrator adm= ad.getΑnAdmin(userCredentials.getEmail());
+		if (adm==null)
+			return "registration";
+		else{
+			
+		    String usermail = blockedDto.getEmail(); 
+		    int res = blockedDto.getRenum(); 
+		    
+		    int type = us.getTypeByEmail(usermail) ;  
+			
+		    if (type==0 && (res==1 || res ==2 || res == 3 || res == 7) ) {  // parent 
+		    	   parent p; 
+		    	   p = pr.getParentByEmail(usermail) ; 
+		    	   p = pr.UpdateParentRestrictions(usermail,res); 
+		    	   model.addAttribute("user",adm); 
+		    	   return "successfulrestrictionparents" ;
+		    	
+		    	
+		    }else if(type == 1 && (res==4 || res == 7) ){ //organizer
+		     organizer o ;	
+		     o = oc.getOrganizerByEmail(usermail); 
+		     o = oc.UpdateOrganizerRestrictions(usermail,res) ; 
+		     model.addAttribute("user",adm); 
+		     return "successfulrestrictionorganizers";
+		    	
+		    }else if(type==2 && (res == 5 || res == 6 || res == 7) ){  // admin 
+		    	
+		    	 administrator a; 
+			     a = ad.getAdminByEmail(usermail); 
+			     a = ad.UpdateAdminRestrictions(usermail,res) ; 
+			     model.addAttribute("user",adm); 
+			     return "successfulrestrictionadmins";  // mporei kai show profile sthn synexeia 
+			    	
+		    	
+		    }else{
+		    	
+		    	return "usernotfound" ; 
+		    }
+			
+			
+		}
+        
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 }
+
+
+
+
+
+
+
+
+

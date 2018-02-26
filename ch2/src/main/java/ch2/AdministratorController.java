@@ -14,27 +14,27 @@ public class AdministratorController {
 	
 	@Autowired
 	private AdministratorRepository aRepository;
-	@Autowired 
-	private ParentRepository pRepository ; 
+	@Autowired
+	private ParentRepository pRepository ;
 	@Autowired
 	private OrganizerRepository oRepository ; 
-	@Autowired 
+	@Autowired
 	private RestrictionRepository rRepository; 
 	
 	@GetMapping(path = "/add")
 	public @ResponseBody
 	String addNewAdmin(@RequestParam String aem, @RequestParam String fn,
 			@RequestParam String ln, @RequestParam String un,
-			@RequestParam String pas, @RequestParam String pn){
+			@RequestParam String pas, @RequestParam String pn, @RequestParam int res){
 
 		if (aRepository.findOne(aem)!=null) 
 			return "Administrator with this Email already exists!";
 		else {
-			administrator na = new administrator(aem, fn, ln, un, pas, pn); 
+			administrator na = new administrator(aem,fn, ln, un, pas, pn, res); 
 			aRepository.save(na);
 			aRepository.save(na);
 			return "New Administrator Created";
-			//everything else with setters
+			
 		}
 	}
 	
@@ -63,7 +63,7 @@ Iterable<organizer> AdmingetAllorganizers(){
 
 @GetMapping(path="/allrestrictions")
 public @ResponseBody 
-Iterable<restriction> AdmingetAllrestrictions(){ 
+Iterable<restrictions> AdmingetAllrestrictions(){ 
 	return rRepository.findAll() ; 
 }
 
@@ -109,6 +109,33 @@ public administrator getAdministratorByEmailAndPassw (String aem, String passw) 
 	return null;
 }
 
+public administrator createNewAdmin(String email ,String fn, String ln, String un, String pas,String pn,int res) {
+
+		administrator newad = new administrator(email,fn,ln,un,pas,pn,res);
+		aRepository.save(newad); 
+		return newad;
+	}
+
+
+public administrator getAdminByEmail (String aem) {
+	
+	administrator adm  = this.getΑnAdmin(aem);
+	if (adm != null) {
+			return adm;
+			
+	}
+	return null;
+}
+
+public administrator UpdateAdminRestrictions(String aem,int res){
+	
+	administrator a = aRepository.findOne(aem);
+	a.setRestrictions(res);
+	if(a==null) return null ; 
+	aRepository.save(a) ; 
+	return a ; 
+	
+}
 
 
 

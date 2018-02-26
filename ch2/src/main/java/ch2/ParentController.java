@@ -23,12 +23,12 @@ public class ParentController {
 			 String ln,  String un,
 			 String pas,  String pn,
 			 String sname,  int snumber,
-			 String pc,  String t) {
+			 String pc,  String t, int res ) {
 
 		if (pRepository.findOne(pem)!=null) 
 			return null;
 		else {
-			parent pa = new parent(pem, fn, ln, un, pas, pn, sname, snumber,pc,t);
+			parent pa = new parent(pem, fn, ln, un, pas, pn, sname, snumber,pc,t, res);
 			pRepository.save(pa);
 			bucket b= new bucket(pa,0,0);
 			b.setPemail(pem);
@@ -50,7 +50,7 @@ public class ParentController {
 		if (pRepository.findOne(pem)!=null) 
 			return "Parent with this Email already exists!";
 		else {
-			parent np = new parent(pem, fn, ln, un, pas, pn, sname, snumber, t, pc);
+			parent np = new parent(pem, fn, ln, un, pas, pn, sname, snumber, t, pc,0);
 			pRepository.save(np);
 			bucket b= new bucket(np,0,0);
 			b.setPemail(pem);
@@ -99,6 +99,17 @@ public class ParentController {
 		return p;
 	}
 	
+	public parent UpdateParentRestrictions(String pem,int res){
+		
+		parent p=pRepository.findOne(pem);
+		p.setRestrictions(res);
+		if(p==null) return null ; 
+		pRepository.save(p) ; 
+		return p ; 
+		
+	}
+	
+	
 	public parent getParentByEmailAndPassw (String pem, String passw) {
 		
 		parent par= this.getΑParent(pem);
@@ -110,6 +121,18 @@ public class ParentController {
 		return null;
 	}
 	
+	
+	
+	public parent getParentByEmail(String pem) {
+		
+		parent par = this.getΑParent(pem);
+		if (par!=null){
+		    return par ; 	
+		}
+			
+		return null; 
+		
+	} 
 	
 	
 	

@@ -45,6 +45,7 @@
 
 
 <!-- Navigation Menu --> 
+<nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
     <ul class="nav navbar-nav roz">
@@ -71,6 +72,7 @@
   </div>
 </nav>
 
+
 <div class = "container"> 
 <div class = "row" > 
 <div class = "col-sm-10"> 
@@ -79,19 +81,28 @@
 
 <a th:href ="@{/littlecherries/administrators/showprofile}" type="button" class="btn btn-primary" > Πίσω </a>
 </div>
+<div class = "col-sm-1"> 
 
 
+</div>
 
+</div>
 
 <div class ="container"> 
-    <h2 allign="center"> Περιορισμοί </h2>
+    <h2> Διαχειριστές </h2>
 		<table class="table table-striped"> 
 		    <tr> 
-		        <th> Περιγραφή <th> 	
+		        <th> Όνομα </th> 
+		    	<th> Επίθετο </th>
+		    	<th> Τηλέφωνο </th>
+		    	<th> Email </th>
+		    	
 		    </tr>
-			<tr th:each= "event : ${restrictions}">
-			    <td th:text="${event.description}"></td>
-				
+			<tr th:each= "a : ${administrators}">
+			    <td th:text="${a.first_name}"></td>
+				<td th:text="${a.last_name}"></td>
+			    <td th:text="${a.phone_number}"></td>	
+			    <td th:text="${a.email}"></td>
 			   
 			</tr>
 		 </table>
@@ -102,6 +113,9 @@
 
 </body>
 </html>
+
+
+
 
 
 

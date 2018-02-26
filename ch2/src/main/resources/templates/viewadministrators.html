@@ -60,34 +60,59 @@
 		</li>
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
-	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+ 	 
+ 
+     	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
       <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
     
+    </ul>
+   </div>
     </ul>		
   </div>
 </nav>
 
-<div class = "container-fluid"> 
+
+<div class = "container"> 
 <div class = "row" > 
 <div class = "col-sm-10"> 
 </div>
-<div class = "col-sm-2"> 
+<div class = "col-sm-1"> 
 
 <a th:href ="@{/littlecherries/administrators/showprofile}" type="button" class="btn btn-primary" > Πίσω </a>
 </div>
+<div class = "col-sm-1"> 
+
+<a th:href ="@{/littlecherries/administrators/addnewadmin}" type="button" class="btn btn-primary" > Προσθήκη Νέου Διαχειριστή </a>
+</div>
 
 </div>
 
+<div class ="container"> 
+    <h2> Διαχειριστές </h2>
+		<table class="table table-striped"> 
+		    <tr> 
+		        <th> Όνομα </th> 
+		    	<th> Επίθετο </th>
+		    	<th> Τηλέφωνο </th>
+		    	<th> Email </th>
+		    	
+		    </tr>
+			<tr th:each= "a : ${administrators}">
+			    <td th:text="${a.first_name}"></td>
+				<td th:text="${a.last_name}"></td>
+			    <td th:text="${a.phone_number}"></td>	
+			    <td th:text="${a.email}"></td>
+			   
+			</tr>
+		 </table>
 
-<div class ="container-fluid"> 
-
-
-<h2> You are on View Administrators Page </h2>
-
-
+</div>
 </div> 
 
+
+</body>
+</html>
 
 
 

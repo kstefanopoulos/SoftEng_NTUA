@@ -218,13 +218,14 @@
 <ul>
    <li class='active has-sub roz'><a href='#'><span>Χρήστες</span></a> 
       <ul>
-       <li class='has-sub'><a th:href="@{/littlecherries/administrators/viewparents}">Γονείς</a></li> 
-         <li class='has-sub'><a th:href="@{/littlecherries/administrators/viewroganizers}">Διοργανωτές</a></li>
-		 <li class='has-sub'><a th:href="@{/littlecherries/administrators/viewadministrators}">Διαχειριστές</a></li>  
+       <li class='last'><a th:href="@{/littlecherries/administrators/viewparents}">Γονείς</a></li> 
+         <li class='last'><a th:href="@{/littlecherries/administrators/vieworganizers}">Διοργανωτές</a></li>
+		 <li class='last'><a th:href="@{/littlecherries/administrators/viewadministrators}">Διαχειριστές</a></li>  
 		 
       </ul> </li>
   <li class='last'><a th:href="@{/littlecherries/administrators/viewevents}">Εκδηλώσεις</a> </li>
-   <li class='last'><a th:href="@{/littlecherries/administrators/viewrestrictions}">Περιορισμοί</a> </li> 
+  <li class='last'><a th:href="@{/littlecherries/administrators/viewrestrictions}">Περιορισμοί</a> </li> 
+  <li class='last'><a th:href="@{/littlecherries/administrators/adminrights}">Διαχείριση Δικαιωμάτων</a> </li>
 </ul>
 </div> 
 </div>
@@ -232,15 +233,10 @@
 <div id ="adminnfo">   
    <h3 color ="black"> Προσωπικά Στοιχεία </h3> 
 			 
-			<h4> Όνομα : Κοσμάς </h4>
-	
-			 
-			<h4> Επίθετο : Στεφανόπουλος </h4>
-						 
-			<h4> Τηλέφωνο : 6978874512 </h4> 
-			
-			 
-			<h4> Email : admin@littlecherries.gr </h4>
+			<h4 th:utext="${user.first_name}"> </h4>
+			<h4 th:utext="${user.last_name}"> </h4>	 
+			<h4  th:utext="${user.phone_number}"></h4>
+			<h4  th:utext="${user.email}"> </h4>
 </div> 
 
 </div>
@@ -264,10 +260,6 @@
 
 <!-- FootNote -->
 
-
-<div class="container-fluid info "  align="center"> 
- <footer>&copy; Copyright 2017 Little Cherries</footer>
-</div> 
 
 </body>
 

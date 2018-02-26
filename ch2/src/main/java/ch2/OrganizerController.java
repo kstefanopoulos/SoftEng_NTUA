@@ -24,13 +24,13 @@ public class OrganizerController {
 	public organizer addNewOrganizer(String oem, String cn, String ba, String fn,
 			 String ln,  String un,
 			 String pas,  String pn,
-			 String sname,  int snumber,
-			 String pc,  String t, String afm) {
+			 String sname,  String snumber,
+			 String pc,  String t, String afm, int res ) {
 
 		if (oRepository.findOne(oem)!=null) 
 			return null;
 		else {
-			organizer no = new organizer(oem,cn, ba, fn, ln, un, pas, pn, sname, snumber,pc,t,afm);
+			organizer no = new organizer(oem,cn, ba, fn, ln, un, pas, pn, sname, snumber,pc,t,afm, res);
 			oRepository.save(no);
 			no.setEvents(null);
 			oRepository.save(no);
@@ -139,6 +139,33 @@ public class OrganizerController {
 		return null;
 	}
 
+	public organizer UpdateOrganizerRestrictions(String oem,int res){
+		
+		organizer o = oRepository.findOne(oem);
+		o.setRestrictions(res);
+		if(o==null) return null ; 
+		oRepository.save(o) ; 
+		return o ; 
+		
+	}
+	
+	
+	
+	public organizer getOrganizerByEmail(String oem) {
+		
+		organizer org = this.getΑnOrganizer(oem);
+		if ( org!=null){
+		    return org ; 	
+		}
+			
+		return null; 
+		
+		
+		
+	}
+	
+	
+	
 }
 
 

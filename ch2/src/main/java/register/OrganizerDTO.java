@@ -29,7 +29,8 @@ public class OrganizerDTO {
 	  private String town;
 	  
 	  @NotNull
-	  private int streetnumber;
+	  @NotEmpty 
+	  private String streetnumber;
 	  
 	  @NotNull
 	  @NotEmpty
@@ -164,11 +165,11 @@ public class OrganizerDTO {
 		this.streetname = streetname;
 	}
 
-	public int getStreetnumber() {
+	public  String getStreetnumber() {
 		return streetnumber;
 	}
 
-	public void setStreetnumber(int streetnumber) {
+	public void setStreetnumber(String streetnumber) {
 		this.streetnumber = streetnumber;
 	}
 	  

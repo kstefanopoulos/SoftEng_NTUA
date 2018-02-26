@@ -14,20 +14,32 @@ public class administrator {
 	private String password;
 	private String phone_number;
 	private String account;
-	
+	private int restrictions; 
+
+
 	public administrator() {}
 	
-	public administrator(String em, String fn, String ln, String un, String pas, String pn) {
+	public administrator( String em ,String fn, String ln, String un, String pas, String pn, int res ) {
 		
-		this.email=em;
+		this.email=em ; 
 		this.first_name=fn;
 		this.last_name=ln;
 		this.username=un;
 		this.password=pas;
 		this.phone_number=pn;
-		
+		this.restrictions=res ; 
 	}
 
+	
+	
+	public int getRestrictions() {
+		return restrictions;
+	}
+
+	public void setRestrictions(int restrictions) {
+		this.restrictions = restrictions;
+	}
+	
 	public String getEmail() {
 		return email;
 	}

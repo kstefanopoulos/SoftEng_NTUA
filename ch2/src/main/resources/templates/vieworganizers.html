@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Organizer Profile</title>
+  <title>View Organizers</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -60,35 +60,66 @@
 		</li>
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
-	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+ 	 
+ 
+     	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
       <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
     
+    </ul>
+   </div>
     </ul>		
   </div>
 </nav>
 
 <div class = "container"> 
 <div class = "row" > 
-<div class = "col-sm-10"> 
+<div class = "col-sm-11"> 
 </div>
-<div class = "col-sm-2"> 
+<div class = "col-sm-1"> 
 
 <a th:href ="@{/littlecherries/administrators/showprofile}" type="button" class="btn btn-primary" > Πίσω </a>
 </div>
 
 </div>
 
+<div class ="container"> 
+    <h2> Διοργανωτές  </h2>
+		<table class="table table-striped"> 
+		    <tr> 
+		        <th> Εταιρία <th> 
+		    	<th> Όνομα </th>
+		    	<th> Επίθετο </th>
+		    	<th> Email </th>
+		    	<th> Τηλέφωνο </th>
+		    	<th> Πόλη </th>
+		    	<th> Οδός </th>
+		    	<th> Αριθμός </th>
+		        <th> Τ.Κ </th> 
+		        <th> Υπόλοιπο </th>
+		        <th> Ημερομηνίας Εγγραφής</th>
+		    </tr>
+			<tr th:each= "organizer : ${organizers}">
+			   <td th:text="${organizer.company_name}"></td>
+			  <td th:text="${organizer.first_name}"></td>
+			    <td th:text="${organizer.last_name}"></td>	
+			    <td th:text="${organizer.oemail }"></td>
+			    <td th:text="${organizer.phone_number}"></td>		
+			    <td th:text="${organizer.town}"></td>
+			    <td th:text="${organizer.street_name}"></td>
+			    <td th:text="${organizer.street_number}"></td>
+			    <td th:text="${organizer.postal_code }"></td>
+			    <td th:number="${organizer.balance }"></td>
+			      <td th:text="${organizer.registration_date}"></td>
+			</tr>
+		 </table>
 
-<div class ="container-fluid"> 
-
-
-<h2> You are on View Organizers Page </h2>
-
-
+</div>
 </div> 
 
 
+</body>
+</html>
 
 
 

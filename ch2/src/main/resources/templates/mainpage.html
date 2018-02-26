@@ -57,10 +57,16 @@
       		<li><a th:utext="${par.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
       		<li><a th:href="@{/littlecherries/parents/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
      </div>
+     <div th:unless="${adm==null}">
+      		<li><a th:utext="${adm.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      		<li><a th:href="@{/littlecherries/administrators/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+     </div>
      <div th:if="${org==null}">
      	<div th:if="${par==null}">
+     	<div th:if="${adm==nul}">
          <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
        </div> 
+     </div>
      </div>
     </ul>
   </div>

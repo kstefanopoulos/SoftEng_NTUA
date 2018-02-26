@@ -91,23 +91,23 @@ background-color:  #ffffff;
 
 <!-- Navigation Menu --> 
 
-<nav class="navbar navbar-reversed  roz">
+<nav class="navbar navbar-reversed roz">
   <div class="container-fluid roz">
   
     <ul class="nav navbar-nav roz">
 		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
-		<li class="active"><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="active" ><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
 		<li class="dropdown roz">
-			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
+			<a href="javascript:void(0)" class="dropbtn">H Εταιρία μας</a>
 			<div class="dropdown-content roz">
 				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
-				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Όραμά μας</a>
 			</div>
 		</li>
-      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
+      <li  ><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
- 	 <div th:unless="${org==null}">
+    <div th:unless="${org==null}">
       		<li><a th:utext="${org.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
       		<li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
     </div>
@@ -115,12 +115,18 @@ background-color:  #ffffff;
       		<li><a th:utext="${par.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
       		<li><a th:href="@{/littlecherries/parents/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
      </div>
+     <div th:unless="${adm==null}">
+      		<li><a th:utext="${adm.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      		<li><a th:href="@{/littlecherries/administrators/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+     </div>
      <div th:if="${org==null}">
      	<div th:if="${par==null}">
+     	<div th:if="${adm==null}">
          <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
-   </div> </div>
-   </div>
-    </ul>		
+       </div> 
+     </div>
+     </div>
+    </ul>
   </div>
 </nav>
 
