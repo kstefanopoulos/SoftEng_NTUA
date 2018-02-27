@@ -17,6 +17,7 @@ public class parent {
 	private String last_name;
 	private String username;
 	private String password;
+	private byte[] salt;
 	private String phone_number;
 	private int balance;
 	private Date last_transaction_date;
@@ -38,13 +39,14 @@ public class parent {
 	
 	public parent () {}
 
-	public parent(String pem, String fn, String ln, String un, String pas, String pn, String sname, int snumber, String t, String pc) {
+	public parent(String pem, String fn, String ln, String un, String pas, byte[] salt, String pn, String sname, int snumber, String t, String pc) {
 		
 			this.pemail=pem;
 			this.first_name = fn;
 			this.last_name = ln;
 			this.username=un;
 			this.password = pas;
+			this.salt = salt;
 			this.phone_number= pn;
 			this.street_name = sname;
 			this.street_number = snumber;
@@ -91,6 +93,14 @@ public class parent {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public byte[] getSalt() {
+		return salt;
+	}
+
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
 	}
 
 	public String getPhone_number() {

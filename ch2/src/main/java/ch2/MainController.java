@@ -38,6 +38,7 @@ import register.ParentToUpdate;
 import register.Row;
 import register.Rowlist;
 
+import config.PasswordEncryptionService;
 
 @Controller
 //@RequestMapping("/")
@@ -49,6 +50,9 @@ public class MainController {
     private ParentController pr; 
 	@Autowired
     private AdministratorController ad; 
+	
+	PasswordEncryptionService encryption_service  = new PasswordEncryptionService(); 
+    
     ParentDTO parentdto = new ParentDTO(); 
     OrganizerDTO organizerdto = new OrganizerDTO();
     AdministratorDTO administratordto = new AdministratorDTO(); 
@@ -219,7 +223,11 @@ public class MainController {
 
 private organizer createOrganizerAccount(OrganizerDTO accountDto, BindingResult result) {
     organizer registered = null;
-    registered=oc.addNewOrganizer(accountDto.getEmail(),accountDto.getCompanyname(),accountDto.getBankacount(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),accountDto.getPassword(),
+    byte[] salt;
+    String hashed_password;
+    salt = encryption_service.generateSalt();
+    hashed_password = encryption_service.getEncryptedPassword(accountDto.getPassword(), salt);
+    registered=oc.addNewOrganizer(accountDto.getEmail(),accountDto.getCompanyname(),accountDto.getBankacount(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),hashed_password, salt,
     		accountDto.getPhonenumber(),accountDto.getStreetname(),accountDto.getStreetnumber(),accountDto.getPostalcode(),accountDto.getTown(),accountDto.getAfm());
     
     return registered;
@@ -241,7 +249,11 @@ private organizer createOrganizerAccount(OrganizerDTO accountDto, BindingResult 
 
 private parent createParentAccount(ParentDTO accountDto, BindingResult result) {
     parent registered = null;
-    registered = pr.createParent(accountDto.getEmail(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),accountDto.getPassword(),accountDto.getPhonenumber(),accountDto.getStreetname(),
+    byte[] salt;
+    String hashed_password;
+    salt = encryption_service.generateSalt();
+    hashed_password = encryption_service.getEncryptedPassword(accountDto.getPassword(), salt);
+    registered = pr.createParent(accountDto.getEmail(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),hashed_password,salt,accountDto.getPhonenumber(),accountDto.getStreetname(),
     		accountDto.getStreetnumber(),accountDto.getTown(),accountDto.getPostalcode());
     
     return registered;
@@ -262,7 +274,7 @@ public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Val
     if (registered==null)
     	return "UnsuccessfulRegistrationPage";
     redirectAttributes.addFlashAttribute("flashUser", registered);
-    return "redirect:/littlecherries/ecessful"; }
+    return "redirect:/littlecherries/registerSucsessful";}
 }
 
 	
@@ -286,10 +298,13 @@ public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential")
 		return "registration";
 	}
 	//ModelAndView modelAndView = new ModelAndView("welcome");
+	//System.out.println("Attempted org email pass " +myuserCredentials.getEmail());
+	//System.out.println(myuserCredentials.getPassword());
 	organizer org = oc.getOrganizerByEmailAndPassw(myuserCredentials.getEmail(), myuserCredentials.getPassword());
 	parent par = pr.getParentByEmailAndPassw(myuserCredentials.getEmail(), myuserCredentials.getPassword());
 	
 	 if(org!= null){
+		//System.out.println("found org registration");
 		redirectAttributes.addFlashAttribute("user", org);
 		userCredentials=myuserCredentials;
 		userCredentials.setType(1);
@@ -429,7 +444,7 @@ public String ChangePassword(Model model, @ModelAttribute("changepsw") @Valid Ch
 		  if (org != null && org.getOemail().equals(accountDto.getEmail())) {
 			  if (accountDto.getOld().equals(org.getPassword()) && accountDto.getFirst().equals(accountDto.getSecond())) {
 				  userCredentials.setPassword(accountDto.getFirst());
-				  org.setPassword(accountDto.getFirst());
+				  org.setPassword(encryption_service.getEncryptedPassword(accountDto.getFirst(), org.getSalt()) );
 			  	  oc.UpdateUser(org.getOemail());
 			  	  model.addAttribute("par",null);
 			  	  model.addAttribute("org",org);

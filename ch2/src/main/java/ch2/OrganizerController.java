@@ -1,6 +1,7 @@
 package ch2;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,11 +9,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import config.PasswordEncryptionService;
+
 import java.util.Date;
 
 //to do: update with some of the fields, try-catch
 import java.util.Set;
-
 @Controller
 @RequestMapping(path = "/organizers")
 
@@ -21,16 +23,22 @@ public class OrganizerController {
 	@Autowired
 	private OrganizerRepository oRepository;
 	
+	/*@Bean
+	public PasswordEncryptionService encryption_service() {
+	    return super.encryption_service();
+	}*/
+	
 	public organizer addNewOrganizer(String oem, String cn, String ba, String fn,
 			 String ln,  String un,
-			 String pas,  String pn,
+			 String pas,  byte[] salt, String pn,
 			 String sname,  int snumber,
 			 String pc,  String t, String afm) {
+		//System.out.println("Pass to be stored by controller " + pas);
 
 		if (oRepository.findOne(oem)!=null) 
 			return null;
 		else {
-			organizer no = new organizer(oem,cn, ba, fn, ln, un, pas, pn, sname, snumber,pc,t,afm);
+			organizer no = new organizer(oem,cn, ba, fn, ln, un, pas, salt,  pn, sname, snumber,pc,t,afm);
 			oRepository.save(no);
 			no.setEvents(null);
 			oRepository.save(no);
@@ -129,11 +137,23 @@ public class OrganizerController {
 	}
 	
 	public organizer getOrganizerByEmailAndPassw (String oem, String passw) {
-	
+
+		PasswordEncryptionService encryption_service = new PasswordEncryptionService(); 
+		
 		organizer org= this.getΑnOrganizer(oem);
 		if (org != null) {
-			if (org.getPassword().equals(passw))
+			//System.out.println("found");
+			String encryptedPassword = org.getPassword();
+			//System.out.println("pass hashed equals to :"+ encryption_service.getEncryptedPassword("pass", encryption_service.generateSalt()));
+			//System.out.println("attempted pass hashed equals to :"+ encryption_service.getEncryptedPassword(passw, encryption_service.generateSalt()));
+			
+			//System.out.println("pass getter:"+ encryptedPassword);
+			//System.out.println("email getter:"+ org.getOemail());
+			//System.out.println("pass:"+ encryption_service.getEncryptedPassword(passw, org.getSalt()));
+			if (/*org.getPassword().equals(passw)*/ encryption_service.authenticate(passw, encryptedPassword, org.getSalt())) {
+				//System.out.println("correct pass!!!");	
 				return org;
+			}
 				
 		}
 		return null;

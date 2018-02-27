@@ -4,19 +4,21 @@ import java.util.Date;
 import javax.persistence.*;
 import java.util.Set;
 
+import config.PasswordEncryptionService;
+
 
 @Entity
 public class organizer {
 	
 	@Id
 	private String oemail;
-	
 	private String company_name;
 	private String bank_account;
 	private String first_name;
 	private String last_name;
 	private String username;
 	private String password;
+	private byte[] salt;
 	private String phone_number;
 	private int balance;  //starts from 0
 	private String street_name;
@@ -33,7 +35,7 @@ public class organizer {
 	
 	public organizer() {}
 	
-	public organizer(String oem, String cn, String ba, String fn, String ln, String u, String p, String pn, String sname, int snumber, String pc, String t, String afm) {
+	public organizer(String oem, String cn, String ba, String fn, String ln, String u, String p, byte[] sa, String pn, String sname, int snumber, String pc, String t, String afm) {
 		
 		this.oemail=oem;
 		this.company_name=cn;
@@ -42,6 +44,7 @@ public class organizer {
 		this.last_name=ln;
 		this.username=u;
 		this.password=p;
+		this.salt = sa;
 		this.phone_number=pn;
 		this.balance=0;
 		this.street_name=sname;
@@ -105,9 +108,20 @@ public class organizer {
 	public String getPassword() {
 		return password;
 	}
+	
+	public byte[] getSalt() {
+		return salt;
+	}
+	/*public boolean verifyPassword(String password) {
+		
+	}*/
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
 	}
 
 	public String getPhone_number() {
