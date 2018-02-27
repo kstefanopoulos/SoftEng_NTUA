@@ -78,6 +78,7 @@ public class MainController {
     ParentToUpdate parupdate = new ParentToUpdate(); 
     ChangePasswordForm changepsw = new ChangePasswordForm();
     CreditsForm crform = new CreditsForm();
+    SearchDto sdto = new SearchDto();
     UserCredentials userCredentials;
     
 
@@ -181,19 +182,27 @@ public class MainController {
     return "OurCompanyPage";
   }
  
- @RequestMapping(value = "/littlecherries/events")
+ @RequestMapping(value = "/littlecherries/events", method= RequestMethod.GET)
  public String eventsindex(Model model) {
 	 
 	List<event> list = new ArrayList<event>();
+	List <String> lat_list = new ArrayList<String>();;
+	List <String> long_list = new ArrayList<String>();;
 
 	Iterable<organizer> Organizers=oc.getAllOrganizers();
 	for (organizer o: Organizers) {
 		Set<event> ev=o.getEvents();
 		for (event e: ev) {
 			list.add(e);
-		}
+			lat_list.add(e.getLatitude());
+			long_list.add(e.getLongitude());
+			}
 	}
+	
+	model.addAttribute("lat", lat_list);
+	model.addAttribute("longi",long_list);
     model.addAttribute("events", list);
+    model.addAttribute("searchform", sdto);
 
     if (userCredentials == null)
 		model.addAttribute("user",null);
@@ -217,6 +226,120 @@ public class MainController {
 		}
     return "EventPage";
  }
+ 
+ @RequestMapping(value = "/littlecherries/events", method= RequestMethod.POST)
+ public String SearchEvents(Model model, @ModelAttribute("sdto") SearchDto sdto, 
+	      BindingResult result, WebRequest request, Errors errors, final RedirectAttributes redirectAttributes) throws Exception {
+
+	 /* who is the user */
+	 if (userCredentials == null)
+			model.addAttribute("user",null);
+		else {
+			organizer org = oc.getOrganizerByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+			parent par = pr.getParentByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+			administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+			if (org != null) 
+				model.addAttribute("org",org);
+			else{
+				if(par!=null)
+					model.addAttribute("par",par); 
+				else{ 
+					
+					if(adm != null )
+						model.addAttribute("user",adm);
+					
+				}
+			}
+
+		
+		}
+	 /* to begin, get all events */
+	 
+	 List<event> list = new ArrayList<event>();
+
+		Iterable<organizer> Organizers=oc.getAllOrganizers();
+		for (organizer o: Organizers) {
+			Set<event> ev=o.getEvents();
+			for (event e: ev) {
+				list.add(e);
+			}
+		}
+	 
+	 /* check filters (4 cases) */
+		
+	List<event> filteredlist = new ArrayList<event>() ;  // to help us
+		
+	/* category */
+	if (!sdto.getCategory().equals("All")) {
+		for (event e: list) 
+			if (e.getEvent_class().equals(sdto.getCategory()))
+				filteredlist.add(e);
+		list = filteredlist;
+	}
+	
+	/*ages*/
+	int stage, endage;
+	stage=Integer.parseInt(sdto.getStartage());
+	endage=Integer.parseInt(sdto.getEndage());
+		
+	filteredlist=new ArrayList<event>() ;
+	if (list.size() > 0)
+			for (event e: list) {
+				if (!(e.getStartage()>endage)  && !(e.getEndage() < stage))
+					filteredlist.add(e);
+				//return "two";
+			}
+	list=filteredlist;
+	
+	/*cost*/
+	int cost = Integer.parseInt(sdto.getMaxcost());
+	filteredlist=new ArrayList<event>() ;
+	if (list.size() > 0)
+		for (event e: list) {
+			if (cost >= e.getEvent_cost())
+				filteredlist.add(e);
+			//return "two";
+		}
+	list=filteredlist;
+	
+	/* distance */
+	
+	if (sdto.getStreetname() != "" && sdto.getStreetnumber() != "" && sdto.getTown() != "") {
+		String address = sdto.getStreetname() + " " + sdto.getStreetnumber() + " " + sdto.getTown() ;
+		String center_points[] = getLatLongPositions(address);
+		float center_lat = Float.parseFloat(center_points[0]);
+		float center_long = Float.parseFloat(center_points[1]);
+		float width = (float)(Float.parseFloat(sdto.getWidth()) * 1000.0) ;
+		//return center_points[0] + center_points[1];
+		
+		filteredlist=new ArrayList<event>() ;
+		if (list.size() > 0)
+			for (event e: list) {
+				float distance= distFrom(center_lat, center_long, Float.parseFloat(e.getLatitude()), Float.parseFloat(e.getLongitude()) );
+				if (distance <= width)
+					filteredlist.add(e);
+			} 
+	}
+		
+	
+	if (filteredlist.size() > 0) {
+		List <String> lat_list = new ArrayList<String>();;
+		List <String> long_list = new ArrayList<String>();;
+		for (event e: filteredlist) {
+			lat_list.add(e.getLatitude());
+			long_list.add(e.getLongitude());
+		}
+		model.addAttribute("events",filteredlist);
+		model.addAttribute("lat", lat_list);
+		model.addAttribute("longi",long_list);
+		return "EventPage";
+	}
+	else 
+		return "UnsuccessfulSearch";
+	
+	 
+ }
+ 
  
  @RequestMapping(value = "/littlecherries/events/{eventid}", method = RequestMethod.GET)
  public String viewEvent(Model model, @ModelAttribute("eventid") int eventid) {
@@ -1324,13 +1447,29 @@ public static String[] getLatLongPositions(String address) throws Exception
        String longitude = (String)expr.evaluate(document, XPathConstants.STRING);
        return new String[] {latitude, longitude};
     }
-    else
-    {
-       throw new Exception("Error from the API - response status: "+status);
-    }
+   
+    	else if(status.equals("OVER_QUERY_LIMIT"))
+    	{
+    	    Thread.sleep(1000);
+    	    return getLatLongPositions(address);
+    	} 
+    
   }
   return null;
 }
+
+public static float distFrom(float lat1, float lng1, float lat2, float lng2) {
+    double earthRadius = 6371000; //meters
+    double dLat = Math.toRadians(lat2-lat1);
+    double dLng = Math.toRadians(lng2-lng1);
+    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+               Math.sin(dLng/2) * Math.sin(dLng/2);
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    float dist = (float) (earthRadius * c);
+
+    return dist;
+    }
 
 }
 
