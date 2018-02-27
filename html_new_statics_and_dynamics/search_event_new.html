@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Little Cherries</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
+  <link rel="stylesheet" href="desktop_style.css"> 
+
+<style>
+
+
+table, th, td{
+	border: 1px solid grey;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
+
+</style>
+  
+  </head>
+
+  
+<body>
+
+
+<!-- Head Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img src= "logo.png"  width="200" height="100" >
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+<!-- Navigation Menu --> 
+
+<nav class="navbar navbar-reversed roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li class="dropdown roz"><a href="#">Αρχική</a></li>
+		<li><a href="#file:///C:/Users/%CE%94%CE%B1%CE%BD%CE%AC%CE%B7/Desktop/StaticPages/StaticPages/EventPage.html">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn">H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a href="#file:///C:/Users/%CE%94%CE%B1%CE%BD%CE%AC%CE%B7/Desktop/StaticPages/StaticPages/OurCompanyPage.html">Ποιοί Είμαστε</a>
+				<a href="#file:///C:/Users/%CE%94%CE%B1%CE%BD%CE%AC%CE%B7/Desktop/StaticPages/StaticPages/OurCompanyPage.html">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li><a href="#file:///C:/Users/%CE%94%CE%B1%CE%BD%CE%AC%CE%B7/Desktop/StaticPages/StaticPages/CommunicationPage.html">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+		<li><a href="#file:///.\SignUp.html"><span class="glyphicon glyphicon-user"></span> *username*</a></li>
+	</ul>		
+  </div>
+</nav>
+
+
+
+
+<div class="container flex-container"> 
+	<div class="row info">
+	<div class="col-sm-4" style="color:grey; font-size:20px" align="left">
+		<div><h3><u>Όροι Αναζήτησης</u></h3></div>
+		
+		<div>
+		<p><b> Ημερομηνία: </b>
+		<form action="/action_page.php">
+			<input type="date" name="createdAt" required>
+		</form></p>
+		</div>
+		
+		
+		<div>
+		<p><b> Ηλικίες: </b>
+		Από
+		<select>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select> 
+		έως
+		<select>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select></p>
+		</div>
+		
+		
+		<div>
+		<p><b> Κατηγορία: </b>
+		<select>
+			<option value="theatre">Θέατρο</option>
+			<option value="cinema">Σινεμά</option>
+			<option value="games">Παιχνίδι</option>
+			<option value="music">Μουσική</option>
+		</select></p>
+		</div>
+		
+		<div>
+		<p><b> Κόστος: </b>
+		Από
+		<select>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select> 
+		έως
+		<select>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select></p>
+		</div>
+		
+		<div>
+		<p><b> Περιοχή: </b>
+		<select>
+			<option value="athens">Αθήνα</option>
+			<option value="thesniki">Θεσσαλονίκη</option>
+			<option value="patra">Πάτρα</option>
+			<option value="heraklion">Ηράκλειο</option>
+		</select></p>
+		</div>
+		
+		<div>
+		<p><b> Απόσταση έως: </b>
+		<select>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select> 
+		km </p>
+		</div>
+		
+		<div>
+		<button class="button2 text" style="font-size:25px; width:60%; position:relative; bottom:-20px;">Αναζήτηση</button>
+		</div>
+	</div>
+	<div class="col-sm-8" align="center" style="color:grey; font-size:20px">
+		<div>
+			<button class="button4 text" style="font-size:25px; width:100%;">Αποτελέσματα σε λίστα</button>
+			<button class="button4 text" style="font-size:25px; width:100%;">Αποτελέσματα σε χάρτη</button>
+		</div>
+		
+		<div>
+			<img id="img2" src="random.jpg" alt="Insert photo here"> 
+			<p><a>*Name of Event*</a></p>
+		</div>
+		<div>
+			<img id="img2" src="random.jpg" alt="Insert photo here"> 
+			<p><a>*Name of Event*</a></p>
+		</div>
+		<div>
+			<img id="img2" src="random.jpg" alt="Insert photo here"> 
+			<p><a>*Name of Event*</a></p>
+		</div>
+		<div>	
+			<img id="img2" src="random.jpg" alt="Insert photo here"> 
+			<p><a>*Name of Event*</a></p>
+		</div>
+	</div>
+</div>
+</div>
+	
+	
+	
+</body>
+</html>
