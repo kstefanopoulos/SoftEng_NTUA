@@ -750,6 +750,7 @@ public String Adminlogout() {
 		}
 }
 
+// add events of each organizer
 @RequestMapping(value="/littlecherries/administrators/vieworganizers" , method = RequestMethod.GET)
 		public String AdministratorViewOrganizers(Model model){
 			if (userCredentials == null)
@@ -903,13 +904,14 @@ public String AdminSetsRestrictions(Model model) {
 	if (adm==null )
 		return "registration";
 	else {
-	
+		
 		model.addAttribute("blocked", blockeddto);
 		model.addAttribute("user",adm);
+		Iterable<restrictions> R = rs.getAllRestrictions(); 
+		model.addAttribute("restrictions", R); 
 		return "assignrestrictions";
 	}
 }
-
 
 @RequestMapping(value = "/littlecherries/administrators/adminrights", method = RequestMethod.POST)
 	public String AdminAssignsRestrictions(Model model, @ModelAttribute("blockeddto") @Valid BlockedDTO blockedDto, 

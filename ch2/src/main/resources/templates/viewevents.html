@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Organizer Profile</title>
+  <title>Εκδηλώσεις</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -85,7 +85,7 @@
     <h2> Εκδηλώσεις </h2>
 		<table class="table table-striped"> 
 		    <tr> 
-		        <th> Όνομα <th> 
+		        <th> Όνομα </th> 
 		    	<th> Όνομα Διοργανωτή</th>
 		    	<th> Κόστος </th>
 		    	<th> Κατηγορία Εκδήλωσης </th>
@@ -93,6 +93,7 @@
 		    	<th> Διάρκεια </th>
 		    	<th> Πόλη </th>
 		    	<th> Οδός </th>
+		    	<th> Αριθμός </th> 
 		    	
 		    </tr>
 			<tr th:each= "event : ${events}">

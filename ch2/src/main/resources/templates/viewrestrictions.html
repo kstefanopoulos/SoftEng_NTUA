@@ -87,11 +87,12 @@
     <h2 allign="center"> Περιορισμοί </h2>
 		<table class="table table-striped"> 
 		    <tr> 
-		        <th> Περιγραφή <th> 	
+		        <th> Περιγραφή </th> 
+		        <th> Id </th>	
 		    </tr>
-			<tr th:each= "event : ${restrictions}">
-			    <td th:text="${event.description}"></td>
-				
+			<tr th:each= "res :${restrictions}">
+			    <td th:text="${res.description}"></td>
+				<td th:text="${res.renum}"></td>
 			   
 			</tr>
 		 </table>

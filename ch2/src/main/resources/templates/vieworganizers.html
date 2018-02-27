@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>View Organizers</title>
+  <title>Προβολή Διοργανωτών</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -87,8 +87,8 @@
     <h2> Διοργανωτές  </h2>
 		<table class="table table-striped"> 
 		    <tr> 
-		        <th> Εταιρία <th> 
-		    	<th> Όνομα </th>
+		        <th> Εταιρία </th> 
+		    <!-- 	<th> Όνομα </th>  -->
 		    	<th> Επίθετο </th>
 		    	<th> Email </th>
 		    	<th> Τηλέφωνο </th>
@@ -100,8 +100,8 @@
 		        <th> Ημερομηνίας Εγγραφής</th>
 		    </tr>
 			<tr th:each= "organizer : ${organizers}">
-			   <td th:text="${organizer.company_name}"></td>
-			  <td th:text="${organizer.first_name}"></td>
+			    <td th:text="${organizer.company_name}"> <a th:href="${/littlecherries/administrator/viewcompanyevents}"  type="button" class="btn btn-primary"> </a> </td>
+			 <!--    <td th:text="${organizer.first_name}"></td> --> 
 			    <td th:text="${organizer.last_name}"></td>	
 			    <td th:text="${organizer.oemail }"></td>
 			    <td th:text="${organizer.phone_number}"></td>		
@@ -110,7 +110,8 @@
 			    <td th:text="${organizer.street_number}"></td>
 			    <td th:text="${organizer.postal_code }"></td>
 			    <td th:number="${organizer.balance }"></td>
-			      <td th:text="${organizer.registration_date}"></td>
+			    <td th:text="${organizer.registration_date}"></td>
+			  
 			</tr>
 		 </table>
 

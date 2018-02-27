@@ -35,6 +35,16 @@ public class restrictions  {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+
+	public int getRenum() {
+		return renum;
+	}
+
+
+	public void setRenum(int renum) {
+		this.renum = renum;
 	} 
 	
 	

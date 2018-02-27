@@ -407,6 +407,10 @@ body {
 
 </div>
 
+
+
+<div class="row"> 
+<div class ="col-sm-6"> 
 <div class="main-agileits">
 	<h3 class="sub-head">Περιορισμός Χρήστη</h3>
 		<div class="sub-main">	
@@ -424,13 +428,26 @@ body {
 		</div>
 		<div class="clear"></div>
 </div>
+</div>
+<div class="col-sm-6"> 
+<div class ="container"> 
+    <h2 allign="center"> Περιορισμοί </h2>
+		<table class="table table-striped"> 
+		    <tr> 
+		        <th> Περιγραφή </th> 
+		        <th> Id </th>	
+		    </tr>
+			<tr th:each= "res : ${restrictions}">
+			    <td th:text="${res.description}"></td>
+				<td th:text="${res.renum}"></td>
+			   
+			</tr>
+		 </table>
 
+</div>
 
-
-
-
-
-
+</div>
+</div>
 
 </body> 
 </html> 
