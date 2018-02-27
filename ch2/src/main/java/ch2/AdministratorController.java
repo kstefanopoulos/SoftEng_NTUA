@@ -1,6 +1,7 @@
 package ch2;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,23 +14,27 @@ public class AdministratorController {
 	
 	@Autowired
 	private AdministratorRepository aRepository;
-	private ParentRepository pRepository ; 
+	@Autowired
+	private ParentRepository pRepository ;
+	@Autowired
 	private OrganizerRepository oRepository ; 
+	@Autowired
+	private RestrictionRepository rRepository; 
 	
 	@GetMapping(path = "/add")
 	public @ResponseBody
 	String addNewAdmin(@RequestParam String aem, @RequestParam String fn,
 			@RequestParam String ln, @RequestParam String un,
-			@RequestParam String pas, @RequestParam String pn){
+			@RequestParam String pas, @RequestParam String pn, @RequestParam int res){
 
 		if (aRepository.findOne(aem)!=null) 
 			return "Administrator with this Email already exists!";
 		else {
-			administrator na = new administrator(aem, fn, ln, un, pas, pn); 
+			administrator na = new administrator(aem,fn, ln, un, pas, pn, res); 
 			aRepository.save(na);
 			aRepository.save(na);
 			return "New Administrator Created";
-			//everything else with setters
+			
 		}
 	}
 	
@@ -56,6 +61,14 @@ Iterable<organizer> AdmingetAllorganizers(){
 	return oRepository.findAll() ; 
 }
 
+@GetMapping(path="/allrestrictions")
+public @ResponseBody 
+Iterable<restrictions> AdmingetAllrestrictions(){ 
+	return rRepository.findAll() ; 
+}
+
+
+
 @GetMapping(path = "findOneParent")
 public @ResponseBody
 parent AdmingetΑParent(@RequestParam String pem) {
@@ -77,7 +90,7 @@ organizer AdmingetΑnOrganizer(@RequestParam String oem) {
 
 @GetMapping(path = "findOneAdmin")
 public @ResponseBody
-administrator AdmingetΑnAdmin(@RequestParam String aem) {
+administrator getΑnAdmin( @RequestParam String aem) {
 	// This returns a JSON or XML with the user
 	if (aRepository.findOne(aem)==null) 
 		return null; //something else here
@@ -85,11 +98,9 @@ administrator AdmingetΑnAdmin(@RequestParam String aem) {
 }
 
 
-
-
 public administrator getAdministratorByEmailAndPassw (String aem, String passw) {
 	
-	administrator adm  = this.AdmingetΑnAdmin(aem);
+	administrator adm  = this.getΑnAdmin(aem);
 	if (adm != null) {
 		if (adm.getPassword().equals(passw))
 			return adm;
@@ -98,7 +109,33 @@ public administrator getAdministratorByEmailAndPassw (String aem, String passw) 
 	return null;
 }
 
+public administrator createNewAdmin(String email ,String fn, String ln, String un, String pas,String pn,int res) {
 
+		administrator newad = new administrator(email,fn,ln,un,pas,pn,res);
+		aRepository.save(newad); 
+		return newad;
+	}
+
+
+public administrator getAdminByEmail (String aem) {
+	
+	administrator adm  = this.getΑnAdmin(aem);
+	if (adm != null) {
+			return adm;
+			
+	}
+	return null;
+}
+
+public administrator UpdateAdminRestrictions(String aem,int res){
+	
+	administrator a = aRepository.findOne(aem);
+	a.setRestrictions(res);
+	if(a==null) return null ; 
+	aRepository.save(a) ; 
+	return a ; 
+	
+}
 
 
 

@@ -88,13 +88,15 @@ table, th, td{
 		<li>Από: <span th:utext="${event.startage}">..</span></li>
 		<li>Eώς: <span th:utext="${event.endage}">..</span></li>
 		<li>Περιγραφή Εκδήλωσης <span th:utext="${event.event_description}">..</span></li>
+		<li>Αξιολόγηση: <span th:utext="${event.evaluation}">..</span></li>
+		
 	</div>
 	
 	<div th:unless="${par==null}">
 		<div th:unless="${canrate==null}">
 	<form th:action="@{/littlecherries/events/{eventid}(eventid=${event.eventid})}" th:object="${myrate}" method="POST" enctype="utf8">	
-		<input id="star-5" type="radio" name="rate" value="5">
-		<label for="star-5" title="5 stars">
+		<input id="star-fiveInput" type="radio" name="rate" value="5">
+		<label for="star-fiveInput" title="5 stars">
 		<big><big><i class="active fa fa-star" aria-hidden="true"></i></big></big>5
 		</label>
 		<input id="star-4" type="radio" name="rate" value="4">
@@ -137,19 +139,13 @@ table, th, td{
 			<thead>
 				<th>Ημερομηνία</th>
 				<th>Διαθέσιμα Εισιτήρια</th>
-				<th>Ώρα Έναρξης</th>
-				<th>Αξιολόγηση</th>
-				<th>Συντεταγμένες</th>
-				
+				<th>Ώρα Έναρξης</th>				
 			</thead>
 			<tbody>	
 			<tr th:each= "eventinfo : ${event.eventinfos}">
 				<td th:text="${eventinfo.eventdate}"></td>
 				<td th:text ="${eventinfo.availabletickets}"></td>
-				<td th:text="${eventinfo.starttime}"></td> 
-				<td th:text="${event.evaluation}"></td>
-				<td th:text="${lat}"></td>
-				
+				<td th:text="${eventinfo.starttime}"></td> 				
 			</tr>
 			</tbody>
 	  </table>
@@ -163,10 +159,14 @@ table, th, td{
 		<div th:unless="${par==null}">
 	
 			<p><button><a th:href="@{/littlecherries/parents/{eventid}/buyticket(eventid=${event.eventid})}" type="button" class="btn btn-primary">Κράτηση</a></button></p>
-			<button><a th:href="@{/littlecherries/parents/{eventid}/save(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στο Καλάθι</a></button>
-			<p><button><a th:href="@{/littlecherries/parents/{eventid}/saveasfav(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στα Αγαπημένα</a></button></p>
+			<div th:if="${sav==null}">
+				<button><a th:href="@{/littlecherries/parents/{eventid}/save(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στο Καλάθι</a></button>
+			</div>
+			<div th:if="${fav==null}">
+				<p><button><a th:href="@{/littlecherries/parents/{eventid}/saveasfav(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στα Αγαπημένα</a></button></p>
+		    </div>
 		</div>
-	
+	</div>
 		
 	<div class="col-sm-6">
 	<div class="info" align="center">

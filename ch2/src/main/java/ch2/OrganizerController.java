@@ -2,11 +2,15 @@ package ch2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import register.OrganizerDTO;
 
 import java.util.Date;
 
@@ -25,12 +29,12 @@ public class OrganizerController {
 			 String ln,  String un,
 			 String pas,  String pn,
 			 String sname,  int snumber,
-			 String pc,  String t, String afm) {
+			 String pc,  String t, String afm, int res) {
 
 		if (oRepository.findOne(oem)!=null) 
 			return null;
 		else {
-			organizer no = new organizer(oem,cn, ba, fn, ln, un, pas, pn, sname, snumber,pc,t,afm);
+			organizer no = new organizer(oem,cn, ba, fn, ln, un, pas, pn, sname, snumber,pc,t,afm,res);
 			oRepository.save(no);
 			no.setEvents(null);
 			oRepository.save(no);
@@ -40,7 +44,15 @@ public class OrganizerController {
 		}
 	}
 
+	public organizer createOrganizerAccount(OrganizerDTO accountDto, BindingResult result) {
+	    organizer registered = null;
+	    registered=addNewOrganizer(accountDto.getEmail(),accountDto.getCompanyname(),accountDto.getBankacount(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),accountDto.getPassword(),
+	    		accountDto.getPhonenumber(),accountDto.getStreetname(),accountDto.getStreetnumber(),accountDto.getPostalcode(),accountDto.getTown(),accountDto.getAfm(),0);
+	    
+	    return registered;
+	}
 
+	
 	@GetMapping(path = "/all")
 	public @ResponseBody
 	Iterable<organizer> getAllOrganizers() {
@@ -81,9 +93,9 @@ public class OrganizerController {
 	}
 	
 	public event createNewEvent(String oem, String en, int ec, String sname, int snumber,
-			String pc, String t, int sa, int ea, int d) {
+			String pc, String t, int sa, int ea, int d, String cat) {
 
-			event ne = new event(en,ec,sname, snumber,pc,t,sa,ea, d);
+			event ne = new event(en,ec,sname, snumber,pc,t,sa,ea, d,cat);
 			return ne;
 		}
 	
@@ -136,6 +148,8 @@ public class OrganizerController {
 		}
 		return null;
 	}
+	
+	
 
 }
 

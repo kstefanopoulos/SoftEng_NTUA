@@ -2,11 +2,14 @@ package ch2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import register.ParentDTO;
 
 import java.util.Date;
 
@@ -23,12 +26,12 @@ public class ParentController {
 			 String ln,  String un,
 			 String pas,  String pn,
 			 String sname,  int snumber,
-			 String pc,  String t) {
+			 String pc,  String t, int res) {
 
 		if (pRepository.findOne(pem)!=null) 
 			return null;
 		else {
-			parent pa = new parent(pem, fn, ln, un, pas, pn, sname, snumber,pc,t);
+			parent pa = new parent(pem, fn, ln, un, pas, pn, sname, snumber,pc,t, res);
 			pRepository.save(pa);
 			bucket b= new bucket(pa,0,0);
 			b.setPemail(pem);
@@ -37,6 +40,14 @@ public class ParentController {
 			pRepository.save(pa);
 			return pa;
 		}
+	}
+	
+	public parent createParentAccount(ParentDTO accountDto, BindingResult result) {
+	    parent registered = null;
+	    registered = createParent(accountDto.getEmail(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),accountDto.getPassword(),accountDto.getPhonenumber(),accountDto.getStreetname(),
+	    		accountDto.getStreetnumber(),accountDto.getTown(),accountDto.getPostalcode(),0);
+	    
+	    return registered;
 	}
 	
 	@GetMapping(path = "/all")

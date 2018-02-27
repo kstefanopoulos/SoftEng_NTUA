@@ -64,7 +64,7 @@ public class event implements Comparable<event> {
 
 	public event() {}
 	
-	public event (String en, int ec, String sname, int snumber, String pc, String t, int sa, int ea, int d) {
+	public event (String en, int ec, String sname, int snumber, String pc, String t, int sa, int ea, int d,String cat) {
 		
 		//this.myorganizer =o;
 		this.event_name=en;
@@ -80,6 +80,7 @@ public class event implements Comparable<event> {
 		this.eventinfos= new HashSet<eventinfo>();
 		this.duration=d;
 		this.tickets=0;
+		this.event_class = cat;
 	}
 
 	public int getEventId() {

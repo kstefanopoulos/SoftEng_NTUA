@@ -26,6 +26,9 @@ public class organizer {
 	private String afm;
 	private Date registration_date;
 	private int evaluation; //starts from 0
+	private int restrictions; 
+
+
 	//private int proffoto;
 	
     @OneToMany(mappedBy = "myorganizer", cascade = CascadeType.ALL)
@@ -33,7 +36,7 @@ public class organizer {
 	
 	public organizer() {}
 	
-	public organizer(String oem, String cn, String ba, String fn, String ln, String u, String p, String pn, String sname, int snumber, String pc, String t, String afm) {
+	public organizer(String oem, String cn, String ba, String fn, String ln, String u, String p, String pn, String sname, int snumber, String pc, String t, String afm, int res) {
 		
 		this.oemail=oem;
 		this.company_name=cn;
@@ -51,6 +54,7 @@ public class organizer {
 		this.afm=afm;
 		this.registration_date=new Date();
 		this.evaluation=0;
+		this.restrictions=res;
 		//this.proffoto=foto;
 	}
 	
@@ -189,6 +193,14 @@ public class organizer {
 
 	public void setEvents(Set<event> events) {
 		this.events = events;
+	}
+
+	public int getRestrictions() {
+		return restrictions;
+	}
+
+	public void setRestrictions(int restrictions) {
+		this.restrictions = restrictions;
 	}
 	
 	

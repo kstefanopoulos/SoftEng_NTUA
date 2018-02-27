@@ -92,6 +92,10 @@ table, th, td{
 		<p><h3 align="center"><b> Ηλικίες </b></h3></p>
 		<h3 align="left"> Από: <input class="text2" name="startage"  th:required="required" th:type="number"></h3>
 		<h3 align="left"> Εώς: <input class="text2" name="endage" th:required="required" th:type="number"></h3>
+				
+		<h3 align="left"> Κατηγορία Event: <select name="category">
+			<option th:each="str : ${categories}" th:value="${str}" th:text="${str}"></option>			
+		</select></p>
 		
 	</div>
 	 

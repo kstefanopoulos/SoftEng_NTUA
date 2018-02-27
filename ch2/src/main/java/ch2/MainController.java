@@ -22,6 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -88,6 +89,13 @@ public class MainController {
     event ev;
     ReservForm rform;
     ratedto rdto;
+    
+    List<String> categories = Arrays.asList("All", "Theater", "Cinema", "Games", "Music", "Dance", "Sport", "Workshop");
+    List<String> startages = Arrays.asList("1","2","3","4","5","6","7","8","9","10");
+    List<String> endages = Arrays.asList("15","14","13","12","11","10","9","8","7","6","5","4","3","2");
+    List<String> maxcosts = Arrays.asList("60","50","40","30","20","10","5");
+    List<String> distances = Arrays.asList("20","15","10","5","2");
+
 
     @RequestMapping(value="/littlecherries")
 	public String mainindex(Model model) {
@@ -198,7 +206,12 @@ public class MainController {
 			long_list.add(e.getLongitude());
 			}
 	}
-	
+	model.addAttribute("categories",categories);
+	model.addAttribute("startages",startages);
+	model.addAttribute("endages",endages);
+	model.addAttribute("maxcosts",maxcosts);
+	model.addAttribute("distances",distances);
+
 	model.addAttribute("lat", lat_list);
 	model.addAttribute("longi",long_list);
     model.addAttribute("events", list);
@@ -275,6 +288,7 @@ public class MainController {
 			if (e.getEvent_class().equals(sdto.getCategory()))
 				filteredlist.add(e);
 		list = filteredlist;
+		
 	}
 	
 	/*ages*/
@@ -306,7 +320,8 @@ public class MainController {
 	
 	if (sdto.getStreetname() != "" && sdto.getStreetnumber() != "" && sdto.getTown() != "") {
 		String address = sdto.getStreetname() + " " + sdto.getStreetnumber() + " " + sdto.getTown() ;
-		String center_points[] = getLatLongPositions(address);
+		FindLocation fl = new FindLocation();
+		String center_points[] = fl.getLatLongPositions(address);
 		float center_lat = Float.parseFloat(center_points[0]);
 		float center_long = Float.parseFloat(center_points[1]);
 		float width = (float)(Float.parseFloat(sdto.getWidth()) * 1000.0) ;
@@ -315,10 +330,11 @@ public class MainController {
 		filteredlist=new ArrayList<event>() ;
 		if (list.size() > 0)
 			for (event e: list) {
-				float distance= distFrom(center_lat, center_long, Float.parseFloat(e.getLatitude()), Float.parseFloat(e.getLongitude()) );
+				float distance= fl.distFrom(center_lat, center_long, Float.parseFloat(e.getLatitude()), Float.parseFloat(e.getLongitude()) );
 				if (distance <= width)
 					filteredlist.add(e);
 			} 
+		model.addAttribute("addr",address);
 	}
 		
 	
@@ -329,6 +345,20 @@ public class MainController {
 			lat_list.add(e.getLatitude());
 			long_list.add(e.getLongitude());
 		}
+		model.addAttribute("categories",categories);
+		model.addAttribute("startages",startages);
+		model.addAttribute("endages",endages);
+		model.addAttribute("maxcosts",maxcosts);
+		model.addAttribute("distances",distances);
+
+		model.addAttribute("cat",sdto.getCategory());
+		model.addAttribute("sage",sdto.getStartage());
+		model.addAttribute("eage",sdto.getEndage());
+		model.addAttribute("cost",sdto.getMaxcost());
+		model.addAttribute("w",sdto.getWidth());
+
+		
+		model.addAttribute("filters","1");
 		model.addAttribute("events",filteredlist);
 		model.addAttribute("lat", lat_list);
 		model.addAttribute("longi",long_list);
@@ -359,10 +389,21 @@ public class MainController {
 					Set<hasattended> ha = par.getHasattended();
 					for (hasattended h : ha) {
 						if (h.getAnevent().getEventId() == eventid) {
-							if (h.getRating() == 0)
+							if (h.getRating() == 0) {
 								rdto=new ratedto();
 								model.addAttribute("canrate",1);
 								model.addAttribute("myrate",rdto);
+							}
+						}
+					}
+					bucket b = par.getParentbucket();
+					Set<consistsof> bc = b.getContains();
+					for (consistsof c : bc) {
+						if (c.getAnevent().getEventId() == eventid) {
+							if (c.getIsfavourite()==1) 
+								model.addAttribute("fav",1);
+							model.addAttribute("sav",1); 
+							
 						}
 					}
 						
@@ -497,7 +538,7 @@ public class MainController {
 	    	return "register-paroxou";
 	    }
 	    else {
-	        registered = createOrganizerAccount(accountDto, result);
+	        registered = oc.createOrganizerAccount(accountDto, result);
 	     
 	    if (registered==null)
 	    	return "UnsuccessfulRegistrationPage";
@@ -506,15 +547,6 @@ public class MainController {
 	    return "redirect:/littlecherries/organizers/registerSuccessful"; }
 	    // rest of the implementation
 	}
-
-private organizer createOrganizerAccount(OrganizerDTO accountDto, BindingResult result) {
-    organizer registered = null;
-    registered=oc.addNewOrganizer(accountDto.getEmail(),accountDto.getCompanyname(),accountDto.getBankacount(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),accountDto.getPassword(),
-    		accountDto.getPhonenumber(),accountDto.getStreetname(),accountDto.getStreetnumber(),accountDto.getPostalcode(),accountDto.getTown(),accountDto.getAfm());
-    
-    return registered;
-}
-
 
 
 //////// PARENT ////////////////////
@@ -528,15 +560,6 @@ private organizer createOrganizerAccount(OrganizerDTO accountDto, BindingResult 
 }
 
 
-
-private parent createParentAccount(ParentDTO accountDto, BindingResult result) {
-    parent registered = null;
-    registered = pr.createParent(accountDto.getEmail(),accountDto.getFirstname(),accountDto.getLastname(),accountDto.getUsername(),accountDto.getPassword(),accountDto.getPhonenumber(),accountDto.getStreetname(),
-    		accountDto.getStreetnumber(),accountDto.getTown(),accountDto.getPostalcode());
-    
-    return registered;
-}
-
 @RequestMapping(value = "/littlecherries/parents/register", method = RequestMethod.POST)
 public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Valid ParentDTO accountDto, 
       BindingResult result, WebRequest request, Errors errors, final RedirectAttributes redirectAttributes) {    
@@ -547,7 +570,7 @@ public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Val
     	return "register-gonea";
     }
     else {
-        registered = createParentAccount(accountDto, result);
+        registered = pr.createParentAccount(accountDto, result);
      
     if (registered==null)
     	return "UnsuccessfulRegistrationPage";
@@ -599,7 +622,8 @@ public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential")
 		    		}
 		    	}
 		    }
-			check_and_remove(toremove,par,wa,ha);
+		    HelpMethods hm = new HelpMethods();
+			hm.check_and_remove(toremove,par,wa,ha,oc);
 		    wa.removeAll(toremove);
 		    par.setHasattended(ha);
 		    par.setWillattend(wa);
@@ -614,49 +638,7 @@ public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential")
 		return "registration";
 	}
 	
-public void check_and_remove(Set<willattend> rem, parent par, Set<willattend> wa, Set<hasattended> ha) {
-	
-	for (willattend i : rem) {
-		//remove this from the parent
-		int f=0;  // 0->not found, 1->found
-		event e= i.getAnevent();
-		for (hasattended h : ha) {
-			if (e.getEventId()==h.getAnevent().getEventId()) {
-				f=1;
-				break;
-		} }
-		if (f==0) {
-			hasattended h= new hasattended();
-			h.setAnevent(i.getAnevent());
-			h.setAparent(par);
-			ha.add(h); }
-		//remove this from the event e
-		organizer myorg=e.getMyorganizer();
-		Set<willattend> ew = e.getWillbeattented();
-		willattend wi;
-		for (willattend w: ew) {
-			if (w.getId()==i.getId()) {
-				wi=w;
-				w.setValid(0);
-				ew.remove(w);
-			}
-		}
-		f=0;
-		Set<hasattended> eh = e.getHasattended();
-		for (hasattended h : eh) {
-			if (h.getAparent().getPemail().equals(par.getPemail())) {
-				f=1;
-				break;
-		} }
-		if (f==0) {
-			hasattended h= new hasattended();
-			h.setAnevent(i.getAnevent());
-			h.setAparent(par);
-			eh.add(h); }
-		oc.UpdateUser(myorg.getOemail());
-  }
-}
-	
+
 
 ////// ADMIN LOGIN ///////////////
 
@@ -815,6 +797,7 @@ public String OrganizerAddsEvent(Model model) {
 	if (org==null)
 		return "registration";
 	else {
+		model.addAttribute("categories",categories);
 		model.addAttribute("event", eventdto);
 		model.addAttribute("user",org);
 		return "event_creation";
@@ -837,12 +820,13 @@ public String OrganizerCreatesEvent(Model model, @ModelAttribute("eventdto") @Va
    
 		event e = oc.createNewEvent(org.getOemail(), eventDto.getTitle(), eventDto.getPrice(), eventDto.getStreetname(),
 				eventDto.getStreetnumber(), eventDto.getPostalcode(), eventDto.getTown(), eventDto.getStartage(),
-				eventDto.getEndage(),eventDto.getDuration());
+				eventDto.getEndage(),eventDto.getDuration(),eventDto.getCategory());
 		if (e==null)
 			return "redirect:/littlecherries/organizers/addevent";
 	    ev=e;
 	    String postcode = eventDto.getStreetname() + ' ' +  eventDto.getStreetnumber() + ' ' + eventDto.getTown() + ' ' + eventDto.getPostalcode() ;
-	    String latLongs[] = getLatLongPositions(postcode);
+	    FindLocation fg = new FindLocation();
+	    String latLongs[] = fg.getLatLongPositions(postcode);
 	    ev.setLatitude(latLongs[0]);
 	    ev.setLongitude(latLongs[1]);
 	    list = new Rowlist();
@@ -1422,54 +1406,6 @@ public String ParentViewsFutureEvents (Model model) {
 
 	return "registration";
 	}
-
-public static String[] getLatLongPositions(String address) throws Exception
-{
-  int responseCode = 0;
-  String api = "http://maps.googleapis.com/maps/api/geocode/xml?address=" + URLEncoder.encode(address, "UTF-8") + "&sensor=true";
-  URL url = new URL(api);
-  HttpURLConnection httpConnection = (HttpURLConnection)url.openConnection();
-  httpConnection.connect();
-  responseCode = httpConnection.getResponseCode();
-  if(responseCode == 200)
-  {
-    DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();;
-    Document document = builder.parse(httpConnection.getInputStream());
-    XPathFactory xPathfactory = XPathFactory.newInstance();
-    XPath xpath = xPathfactory.newXPath();
-    XPathExpression expr = xpath.compile("/GeocodeResponse/status");
-    String status = (String)expr.evaluate(document, XPathConstants.STRING);
-    if(status.equals("OK"))
-    {
-       expr = xpath.compile("//geometry/location/lat");
-       String latitude = (String)expr.evaluate(document, XPathConstants.STRING);
-       expr = xpath.compile("//geometry/location/lng");
-       String longitude = (String)expr.evaluate(document, XPathConstants.STRING);
-       return new String[] {latitude, longitude};
-    }
-   
-    	else if(status.equals("OVER_QUERY_LIMIT"))
-    	{
-    	    Thread.sleep(1000);
-    	    return getLatLongPositions(address);
-    	} 
-    
-  }
-  return null;
-}
-
-public static float distFrom(float lat1, float lng1, float lat2, float lng2) {
-    double earthRadius = 6371000; //meters
-    double dLat = Math.toRadians(lat2-lat1);
-    double dLng = Math.toRadians(lng2-lng1);
-    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-               Math.sin(dLng/2) * Math.sin(dLng/2);
-    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    float dist = (float) (earthRadius * c);
-
-    return dist;
-    }
 
 }
 

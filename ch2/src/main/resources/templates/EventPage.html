@@ -140,83 +140,49 @@ background-color:  #ffffff;
 		<p><b> Ηλικίες: </b>
 		Από
 		<select name= "startage">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-			<option value="10">10</option>
-			
+			<option th:each="str : ${startages}" th:value="${str}" th:text="${str}"  th:selected="(${str} == ${sage})"></option>
 		</select> 
 		έως
 		<select name = "endage">
-			<option value="15">15</option>
-			<option value="14">14</option>
-			<option value="13">13</option>
-			<option value="12">12</option>
-			<option value="11">11</option>
-			<option value="10">10</option>
-			<option value="9">9</option>
-			<option value="8">8</option>
-			<option value="7">7</option>
-			<option value="6">6</option>
-			<option value="5">5</option>
-			<option value="4">4</option>
-			<option value="3">3</option>
-			<option value="2">2</option>
-						
+			<option th:each="str : ${endages}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${eage})"></option>
 		</select></p>
 		<p><b> Κατηγορία: </b>
 		<select name="category">
-			<option value="All">All </option>
-			<option value="Theatre">Theater</option>
-			<option value="Cinema">Cinema</option>
-			<option value="Games">Game</option>
-			<option value="Music">Music</option>
-			<option value="Dance">Dance</option>
-			<option value="Sport">Sport</option>
-			<option value="Workshop">Workshop</option>
-			
+			<option th:each="str : ${categories}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${cat})"></option>			
 		</select></p>
 		<p><b> Κόστος: </b> 
 		Eώς
 		<select name="maxcost">
-			<option value="60">60</option>
-			<option value="50">50</option>
-			<option value="40">40</option>
-			<option value="30">30</option>
-			<option value="20">20</option>
-			<option value="10">10</option>
-			<option value="5">5</option>
-			
-			
+			<option th:each="str : ${maxcosts}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${cost})"></option>
 		</select></p>
-		<p><b> Περιοχή: </b>
-			<h3 align="left"> Οδός</h3>
-			<input class="text2" name="streetname"> </input>
-			
-			<h3 align="left"> Αριθμός</h3>
-			<input class="text2" name="streetnumber"></input>
-			
-			<h3 align="left"> Πόλη</h3>
-			<input class="text2" name="town"></input>
-			
+		<p>
+		<div th:if="${filters==null}">
+		
+			<b> Περιοχή: </b>
+				<h3 align="left"> Οδός</h3>
+				<input class="text2" name="streetname"> </input>
+				
+				<h3 align="left"> Αριθμός</h3>
+				<input class="text2" name="streetnumber"></input>
+				
+				<h3 align="left"> Πόλη</h3>
+				<input class="text2" name="town"></input>
+		</div>
+		<div th:unless="${filters==null}">
+				<div th:unless="${addr==null}">
+		
+			<li>Διεύθυνση: <span th:utext="${addr}">..</span></li>
+			</div>
+		</div>
 		</p>
 		<p><b> Απόσταση έως: </b>
 		<select name="width">
-			<option value="20">20</option>
-			<option value="15">15</option>
-			<option value="10">10</option>
-			<option value="5">5</option>
-			<option value="2">2</option>
+		    <option th:each="str : ${distances}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${w})"></option>
 		</select> 
 		km </p>
+		<div th:if="${filters==null}">
 		<button class="button1 text align-bottom" style="font-size:25px; bottom:-250px; width:50%">Αναζήτηση</button>		
-	
+	    </div>
 	</div>
 </form>
 
@@ -242,8 +208,9 @@ background-color:  #ffffff;
                <td th:text="${event.event_name}"></td>
             </tr>
       </table> -->
-	<button><a th:href="@{/littlecherries/events}" class="button2 text">Reset Φίλτρων</a></button>
-
+     <div th:unless="${filters==null}">
+     	<button><a th:href="@{/littlecherries/events}" class="button2 text">Reset Φίλτρων</a></button>
+	 </div>
 </div>
 
 <div class="col-sm-6">

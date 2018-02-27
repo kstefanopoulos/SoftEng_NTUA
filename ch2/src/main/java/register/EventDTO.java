@@ -27,6 +27,10 @@ public class EventDTO {
 	  @NotNull
 	  @NotEmpty
 	  private String town ;
+	  
+	  @NotNull
+	  @NotEmpty
+	  private String category ;
 	 
 	  
 	  @NotNull
@@ -115,6 +119,14 @@ public class EventDTO {
 
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	  
 	

@@ -24,6 +24,9 @@ public class parent {
 	private int street_number;
 	private String town;
 	private String postal_code;
+	private int restrictions; 
+
+
 	
 
 	@OneToOne(cascade = {CascadeType.ALL})
@@ -38,7 +41,7 @@ public class parent {
 	
 	public parent () {}
 
-	public parent(String pem, String fn, String ln, String un, String pas, String pn, String sname, int snumber, String t, String pc) {
+	public parent(String pem, String fn, String ln, String un, String pas, String pn, String sname, int snumber, String t, String pc, int res) {
 		
 			this.pemail=pem;
 			this.first_name = fn;
@@ -50,7 +53,7 @@ public class parent {
 			this.street_number = snumber;
 			this.town = t;
 			this.postal_code = pc;
-		
+		    this.restrictions = res;
 	}
 
 	public String getPemail() {
@@ -171,6 +174,14 @@ public class parent {
 
 	public void setHasattended(Set<hasattended> hasattended) {
 		this.hasattended = hasattended;
+	}
+
+	public int getRestrictions() {
+		return restrictions;
+	}
+
+	public void setRestrictions(int restrictions) {
+		this.restrictions = restrictions;
 	}
 
   
