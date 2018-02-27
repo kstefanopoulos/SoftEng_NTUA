@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Register</title>
+  <title>Προσθήκη Νέου Διαχειριστή</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
@@ -337,7 +337,6 @@ body {
 /*--//Responsive--*/
  </style>
   
-  
 </head>
 
   
@@ -362,6 +361,7 @@ body {
 
 
 <!-- Navigation Menu --> 
+
 <nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
@@ -377,8 +377,14 @@ body {
 		</li>
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
-	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+ 	 
+ 
+     	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    
+    </ul>
+   </div>
     </ul>		
   </div>
 </nav>
@@ -386,39 +392,30 @@ body {
 <!-- Content -->
 
 <div class="main-agileits">
-	<h2 class="sub-head">Sign Up</h2>
+	<h3 class="sub-head">Νέος Διαχειριστής</h3>
 		<div class="sub-main">	
-			<form th:action="@{/littlecherries/parents/register}" th:object="${parent}" method="POST" enctype="utf8">
+			<form th:action="@{/littlecherries/administrators/addnewadmin}" th:object="${admin}" method="POST" enctype="utf8">
+			    <input placeholder="Email" name="Email" class="name" type="text" th:required="required"></input> 
+				<p th:each="error: ${#fields.errors('Email')}"
+          		th:text="${error}">Validation error</p>
 				<input placeholder="Ονομα" name="firstname" class="name" type="text" th:required="required"></input> 
 				<p th:each="error: ${#fields.errors('firstname')}"
           		th:text="${error}">Validation error</p>
-				<input placeholder="Επίθετο" name="lastname" class="name2" type="text" th:required="required"></input> 
+			<input placeholder="Επίθετο" name="lastname" class="name" type="text" th:required="required"></input> 
 				<p th:each="error: ${#fields.errors('lastname')}"
           		th:text="${error}">Validation error</p>
-				<input placeholder="username" name="username" class="name2" type="text" th:required="required"></input>
+				<input placeholder="username" name="username" class="name" type="text" th:required="required"></input>
 				<p th:each="error: ${#fields.errors('username')}"
           		th:text="${error}">Validation error</p>
 				<input placeholder="Τηλέφωνο" name="phonenumber" class="number" type="text" th:required="required"></input> 
 				<p th:each="error: ${#fields.errors('phonenumber')}"
           		th:text="${error}">Validation error</p>	
-				<input placeholder="Πόλη" name="town" class="name" type="text" th:required="required"></input> 
-				<p th:each="error: ${#fields.errors('town')}"
-          		th:text="${error}">Validation error</p>	
-				<input placeholder="Οδός" name="streetname" class="mail" type="text" th:required="required"></input> 
-				<p th:each="error: ${#fields.errors('streetname')}"
-          		th:text="${error}">Validation error</p>	
-				<input placeholder="Αριθμός" name="streetnumber" class="number" type="text" th:required="required"></input> 
-				<p th:each="error: ${#fields.errors('streetnumber')}"
-          		th:text="${error}">Validation error</p>	
-				<input placeholder="Τ.Κ" name="postalcode" class="number" type="text" th:required="required"></input>	
-				<p th:each="error: ${#fields.errors('postalcode')}"
-          		th:text="${error}">Validation error</p>		
 				<input  placeholder="Password" name="password" class="pass" type="password" th:required="required"></input>
 				<p th:each="error: ${#fields.errors('password')}"
-          		th:text="${error}">Validation error</p>
+          		th:text="${error}">Validation error</p> 
 	
 				
-				<input type="submit" value="sign up"></input> 
+				<input type="submit" value="Δημιουργία"></input> 
 			</form>
 		</div>
 		<div class="clear"></div>
@@ -427,7 +424,7 @@ body {
 
 
 
-
+	
 
 
 

@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Sign in</title>
+  <title>Add Event Failed</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
-  <link rel="stylesheet" th:href="@{/css/style.css}"></link>
-  
- <style>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
 
-.btn-primary{ 
- background-color : #BA55D3; 
- 
- }
- 
+<style>
 
+
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
 </style>
   
-  
-</head>
+  </head>
 
-  
-  
+<script>
+ function sum(p1,p2) {
+	 return p1*p2
+ }
+</script>
   
 <body>
 
@@ -46,12 +49,13 @@
 </div>
 
 <!-- Navigation Menu --> 
+
 <nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
     <ul class="nav navbar-nav roz">
 		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
-		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="active"><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
 		<li class="dropdown roz">
 			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
 			<div class="dropdown-content roz">
@@ -62,38 +66,32 @@
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
-    </ul>		
+<li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/administrators/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    </ul>	
   </div>
 </nav>
 
+<div class="container info"  align="center">
+<h2 align="center"> Events-to-go </h2> 
 
-<!--  Page Content  -->
+	      <h2>Δυστυχώς, δεν έχετε το δικαίωμα να προσθέσετε διαχειριστή.</h2>
+	      <h2>Παρακαλούμε επικοινωνήστε μαζί μας (littlecherries2@gmail.com) για περισσότερες πληροφορίες</h2>
+	
 
-<div  class="container-fluid win" align="center"> 
-	<div class="row info">
-	  <div class="col-sm-2"></div>
-		<div class="col-sm-4 info" >
-			<h3 align="center"><b> Sign Up </b></h3>
-			<h3 align ="center"> 
-				Εγγραφείτε ως:
-			</h3>
-			
-			<a th:href="@{/littlecherries/parents/register}" type="button" class="btn btn-primary">Γονέας</a>
-			<a th:href="@{/littlecherries/organizers/register}" type="button" class="btn btn-primary">Πάροχος</a>
-		</div>
-		<div class="col-sm-4 info" >
-		<h3 align="center"><b> Login </b></h3>
-			<h3 align ="center"> 
-				Συνδεθείτε:
-			</h3>
-		<a th:href="@{/littlecherries/login}" type="button" class="btn btn-primary">Login</a>
-		</div>
-
-	</div>			
-  </div> 
+</div>
+	
+<!-- FootNote -->
 
 
+<div class="container-fluid info"  align="center"> 
+ <footer>&copy; Copyright 2017 Little Cherries</footer>
+</div> 
 
 </body>
+
+
+
+
+
 </html>

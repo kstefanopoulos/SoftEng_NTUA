@@ -98,7 +98,29 @@ public class ParentController {
 		return null;
 	}
 	
+	public parent getParentByEmail(String pem) {
+		
+		parent par = this.getΑParent(pem);
+		if (par!=null){
+		    return par ; 	
+		}
+			
+		return null; 
+		
+	} 
 	
+	public parent UpdateParentRestrictions(String pem,int res){
+		
+		parent p=pRepository.findOne(pem);
+		if (p==null) 
+			return null ; 
+		p.setRestrictions(res);
+		pRepository.save(p) ; 
+		return p ; 
+		
+	}
+
+
 	
 	
 }

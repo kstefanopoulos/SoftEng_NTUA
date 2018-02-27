@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Register</title>
+  <title>Organizer Profile</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-  <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-function hideURLbar(){ window.scrollTo(0,1); } </script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
-  <link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'></link> 
-  <link href='//fonts.googleapis.com/css?family=Raleway+Dots' rel='stylesheet' type='text/css'></link> 
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
-  
- <style>
+    
+  <style>
+
+.btn-primary{ 
+ background-color : #BA55D3; 
+ 
+ }
  
  /*--
 Author: W3layouts
@@ -336,15 +337,16 @@ body {
 }
 /*--//Responsive--*/
  </style>
+
+
   
-  
+    
+    
 </head>
-
-  
-<body>
-
-
-<!-- Head Content. Logo - Company Name -->
+    
+   <body>
+   
+   <!-- Head Content. Logo - Company Name -->
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
@@ -362,6 +364,7 @@ body {
 
 
 <!-- Navigation Menu --> 
+
 <nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
@@ -377,60 +380,74 @@ body {
 		</li>
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
-	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+ 	 
+ 
+     	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/administrators/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    
+    </ul>
+   </div>
     </ul>		
   </div>
 </nav>
 
-<!-- Content -->
 
-<div class="main-agileits">
-	<h2 class="sub-head">Sign Up</h2>
-		<div class="sub-main">	
-			<form th:action="@{/littlecherries/parents/register}" th:object="${parent}" method="POST" enctype="utf8">
-				<input placeholder="Ονομα" name="firstname" class="name" type="text" th:required="required"></input> 
-				<p th:each="error: ${#fields.errors('firstname')}"
-          		th:text="${error}">Validation error</p>
-				<input placeholder="Επίθετο" name="lastname" class="name2" type="text" th:required="required"></input> 
-				<p th:each="error: ${#fields.errors('lastname')}"
-          		th:text="${error}">Validation error</p>
-				<input placeholder="username" name="username" class="name2" type="text" th:required="required"></input>
-				<p th:each="error: ${#fields.errors('username')}"
-          		th:text="${error}">Validation error</p>
-				<input placeholder="Τηλέφωνο" name="phonenumber" class="number" type="text" th:required="required"></input> 
-				<p th:each="error: ${#fields.errors('phonenumber')}"
-          		th:text="${error}">Validation error</p>	
-				<input placeholder="Πόλη" name="town" class="name" type="text" th:required="required"></input> 
-				<p th:each="error: ${#fields.errors('town')}"
-          		th:text="${error}">Validation error</p>	
-				<input placeholder="Οδός" name="streetname" class="mail" type="text" th:required="required"></input> 
-				<p th:each="error: ${#fields.errors('streetname')}"
-          		th:text="${error}">Validation error</p>	
-				<input placeholder="Αριθμός" name="streetnumber" class="number" type="text" th:required="required"></input> 
-				<p th:each="error: ${#fields.errors('streetnumber')}"
-          		th:text="${error}">Validation error</p>	
-				<input placeholder="Τ.Κ" name="postalcode" class="number" type="text" th:required="required"></input>	
-				<p th:each="error: ${#fields.errors('postalcode')}"
-          		th:text="${error}">Validation error</p>		
-				<input  placeholder="Password" name="password" class="pass" type="password" th:required="required"></input>
-				<p th:each="error: ${#fields.errors('password')}"
-          		th:text="${error}">Validation error</p>
-	
-				
-				<input type="submit" value="sign up"></input> 
-			</form>
-		</div>
-		<div class="clear"></div>
+<div class = "container"> 
+<div class = "row" > 
+<div class = "col-sm-10"> 
+</div>
+<div class = "col-sm-1"> 
+
+<a th:href ="@{/littlecherries/administrators/showprofile}" type="button" class="btn btn-primary" > Πίσω </a>
+</div>
+<div class = "col-sm-1"> 
+
+</div>
+
 </div>
 
 
 
+<div class="row"> 
+<div class ="col-sm-6"> 
+<div class="main-agileits">
+	<h3 class="sub-head">Περιορισμός Χρήστη</h3>
+		<div class="sub-main">	
+			<form th:action="@{/littlecherries/administrators/adminrights}" th:object="${blocked}" method="POST" enctype="utf8">
+			    <input placeholder="Email" name="Email" class="name" type="text2" th:required="required"></input> 
+				<p th:each="error: ${#fields.errors('Email')}"
+          		th:text="${error}">Validation error</p>
+				<input placeholder="Id Περιορισμού" name="renum" class="name" type="number" th:required="required"></input> 
+				<p th:each="error: ${#fields.errors('renum')}"
+          		th:text="${error}">Validation error</p>
+				
+				
+				<input type="submit" value="Υποβολή"></input> 
+			</form>
+		</div>
+		<div class="clear"></div>
+</div>
+</div>
+<div class="col-sm-6"> 
+<div class ="container"> 
+    <h2 allign="center"> Περιορισμοί </h2>
+		<table class="table table-striped"> 
+		    <tr> 
+		        <th> Περιγραφή </th> 
+		        <th> Id </th>	
+		    </tr>
+			<tr th:each= "res : ${restrictions}">
+			    <td th:text="${res.description}"></td>
+				<td th:text="${res.renum}"></td>
+			   
+			</tr>
+		 </table>
 
+</div>
 
+</div>
+</div>
 
-
-
-
-</body>
-</html>
+</body> 
+</html> 

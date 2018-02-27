@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Προβολή Διοργανωτών</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+    
+  <style>
+
+.btn-primary{ 
+ background-color : #BA55D3; 
+ 
+ }
+ 
+
+</style>
+  
+  
+    
+    
+</head>
+    
+   <body>
+   
+   <!-- Head Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+
+<!-- Navigation Menu --> 
+<nav class="navbar navbar-reversed  roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
+    </ul>
+ 	 
+ 
+     	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    
+    </ul>
+   </div>
+    </ul>		
+  </div>
+</nav>
+
+<div class = "container"> 
+<div class = "row" > 
+<div class = "col-sm-11"> 
+</div>
+<div class = "col-sm-1"> 
+
+<a th:href ="@{/littlecherries/administrators/showprofile}" type="button" class="btn btn-primary" > Πίσω </a>
+</div>
+
+</div>
+
+<div class ="container"> 
+    <h2> Διοργανωτές  </h2>
+		<table class="table table-striped"> 
+		    <tr> 
+		        <th> Εταιρία </th> 
+		    <!-- 	<th> Όνομα </th>  -->
+		    	<th> Επίθετο </th>
+		    	<th> Email </th>
+		    	<th> Τηλέφωνο </th>
+		    	<th> Πόλη </th>
+		    	<th> Οδός </th>
+		    	<th> Αριθμός </th>
+		        <th> Τ.Κ </th> 
+		        <th> Υπόλοιπο </th>
+		        <th> Ημερομηνίας Εγγραφής</th>
+		    </tr>
+			<tr th:each= "organizer : ${organizers}">
+			    <td th:text="${organizer.company_name}"> <a th:href="${/littlecherries/administrator/viewcompanyevents}"  type="button" class="btn btn-primary"> </a> </td>
+			 <!--    <td th:text="${organizer.first_name}"></td> --> 
+			    <td th:text="${organizer.last_name}"></td>	
+			    <td th:text="${organizer.oemail }"></td>
+			    <td th:text="${organizer.phone_number}"></td>		
+			    <td th:text="${organizer.town}"></td>
+			    <td th:text="${organizer.street_name}"></td>
+			    <td th:text="${organizer.street_number}"></td>
+			    <td th:text="${organizer.postal_code }"></td>
+			    <td th:number="${organizer.balance }"></td>
+			    <td th:text="${organizer.registration_date}"></td>
+			  
+			</tr>
+		 </table>
+
+</div>
+</div> 
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+   

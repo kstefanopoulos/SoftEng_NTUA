@@ -5,7 +5,12 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class AdministratorDTO {
+	
+	 @NotEmpty 
+     @NotNull 
+	  private String Email ; 
 
+	
 	  @NotNull
 	  @NotEmpty
 	  private String firstname ;
@@ -65,4 +70,14 @@ public class AdministratorDTO {
 	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
 	}
+
+	public String getEmail() {
+		return Email;
+	}
+
+	public void setEmail(String email) {
+		Email = email;
+	}
+	
+	
 }

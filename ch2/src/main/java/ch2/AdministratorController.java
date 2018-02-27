@@ -90,7 +90,7 @@ organizer AdmingetΑnOrganizer(@RequestParam String oem) {
 
 @GetMapping(path = "findOneAdmin")
 public @ResponseBody
-administrator getΑnAdmin( @RequestParam String aem) {
+administrator getΑnAdmin ( @RequestParam String aem) {
 	// This returns a JSON or XML with the user
 	if (aRepository.findOne(aem)==null) 
 		return null; //something else here

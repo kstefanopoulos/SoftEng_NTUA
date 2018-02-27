@@ -1,35 +1,21 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Sign in</title>
+  <title>Unsuccessful Load Credits</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
-  <link rel="stylesheet" th:href="@{/css/style.css}"></link>
-  
- <style>
-
-.btn-primary{ 
- background-color : #BA55D3; 
- 
- }
- 
-
-</style>
-  
-  
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+    
 </head>
-
-  
-  
-  
-<body>
-
-
-<!-- Head Content. Logo - Company Name -->
+    
+   <body>
+   
+   <!-- Head Content. Logo - Company Name -->
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
@@ -44,6 +30,7 @@
 			</div>
 		</div> 
 </div>
+
 
 <!-- Navigation Menu --> 
 <nav class="navbar navbar-reversed  roz">
@@ -66,34 +53,28 @@
     </ul>		
   </div>
 </nav>
+   
+<div class="container info"  align="center">
+<h2 align="center"> Events-to-go </h2> 
+
+	      <h2>Δυστυχώς, δεν μπορείτε να εισέλθετε στο προφίλ σας.</h2>
+	      <h2> Παρακαλούμε επικοινωνήστε μαζί μας (littlecherries2@gmail.com) για περισσότερες πληροφορίες</h2>
+	
+
+</div>
+</div>
+
+<!-- FootNote -->
 
 
-<!--  Page Content  -->
-
-<div  class="container-fluid win" align="center"> 
-	<div class="row info">
-	  <div class="col-sm-2"></div>
-		<div class="col-sm-4 info" >
-			<h3 align="center"><b> Sign Up </b></h3>
-			<h3 align ="center"> 
-				Εγγραφείτε ως:
-			</h3>
-			
-			<a th:href="@{/littlecherries/parents/register}" type="button" class="btn btn-primary">Γονέας</a>
-			<a th:href="@{/littlecherries/organizers/register}" type="button" class="btn btn-primary">Πάροχος</a>
-		</div>
-		<div class="col-sm-4 info" >
-		<h3 align="center"><b> Login </b></h3>
-			<h3 align ="center"> 
-				Συνδεθείτε:
-			</h3>
-		<a th:href="@{/littlecherries/login}" type="button" class="btn btn-primary">Login</a>
-		</div>
-
-	</div>			
-  </div> 
-
-
+<div class="container-fluid info"  align="center"> 
+ <footer>&copy; Copyright 2017 Little Cherries</footer>
+</div> 
 
 </body>
+
+
+
+
+
 </html>

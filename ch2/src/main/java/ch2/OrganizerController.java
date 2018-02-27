@@ -149,8 +149,29 @@ public class OrganizerController {
 		return null;
 	}
 	
+	public organizer UpdateOrganizerRestrictions(String oem,int res){
+		
+		organizer o = oRepository.findOne(oem);
+		if(o==null) 
+			return null ; 
+		o.setRestrictions(res);
+		oRepository.save(o) ; 
+		return o ; 
+		
+	}
 	
+	
+   public organizer getOrganizerByEmail(String oem) {
+		
+		organizer org = this.getΑnOrganizer(oem);
+		if ( org!=null){
+		    return org ; 	
+		}
+			
+		return null; 
+   }
 
+		
 }
 
 
