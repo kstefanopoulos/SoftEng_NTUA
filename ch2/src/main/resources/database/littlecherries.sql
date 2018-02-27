@@ -203,9 +203,11 @@ CREATE TABLE IF NOT EXISTS `eventinfo` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=100;
 
 
-INSERT INTO `eventinfo` (`eventinfoId`, `eventid`, `eventdate`, `availabletickets`, `starttime`) VALUES
-(110, 22, '2018-02-09', 5, '10:10:00'),
-(112, 32, '2018-02-28', 4, '00:11:00');
+INSERT INTO `eventinfo` (`eventinfoid`, `eventid`, `eventdate`, `availabletickets`, `starttime`, `active`) VALUES
+(119, 37, '2018-02-28', 4, '10:00:00', 0),
+(120, 37, '2018-03-01', 5, '10:00:00', 0),
+(121, 38, '2018-02-21', 5, '10:00:00', 0),
+(122, 39, '2018-02-28', 5, '10:10:00', 0);
 
 
 
