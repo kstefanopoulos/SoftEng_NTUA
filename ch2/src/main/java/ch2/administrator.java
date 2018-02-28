@@ -12,6 +12,7 @@ public class administrator {
 	private String last_name;
 	private String username;
 	private String password;
+	byte[] salt;
 	private String phone_number;
 	private String account;
 	private int restrictions; 
@@ -19,14 +20,16 @@ public class administrator {
 
 	public administrator() {}
 	
-	public administrator( String em ,String fn, String ln, String un, String pas, String pn, int res ) {
+	public administrator( String em ,String fn, String ln, String un, String pas, byte[] salt, String pn, int res ) {
 		
 		this.email=em ; 
 		this.first_name=fn;
 		this.last_name=ln;
 		this.username=un;
 		this.password=pas;
+		this.salt=salt;
 		this.phone_number=pn;
+		this.account = "AdminAccount";
 		this.restrictions=res ; 
 	}
 
@@ -75,10 +78,19 @@ public class administrator {
 	public String getPassword() {
 		return password;
 	}
+	
+	public byte[] getSalt() {
+		return salt;
+	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
+	}
+
 
 	public String getPhone_number() {
 		return phone_number;

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import config.PasswordEncryptionService;
 import register.ParentDTO;
 
 import java.util.Date;
@@ -22,6 +23,8 @@ public class ParentController {
 	@Autowired
 	private ParentRepository pRepository;
 
+	PasswordEncryptionService encryption_service  = new PasswordEncryptionService(); 
+
 	public parent createParent(String pem,String fn,
 			 String ln,  String un,
 			 String pas,  String pn,
@@ -31,7 +34,10 @@ public class ParentController {
 		if (pRepository.findOne(pem)!=null) 
 			return null;
 		else {
-			parent pa = new parent(pem, fn, ln, un, pas, pn, sname, snumber,pc,t, res);
+			byte[] salt = encryption_service.generateSalt();
+			String hash_pass = encryption_service.getEncryptedPassword(pas, salt);
+			
+			parent pa = new parent(pem, fn, ln, un, hash_pass, salt, pn, sname, snumber,pc,t, res);
 			pRepository.save(pa);
 			bucket b= new bucket(pa,0,0);
 			b.setPemail(pem);
@@ -91,8 +97,10 @@ public class ParentController {
 		
 		parent par= this.getΑParent(pem);
 		if (par != null) {
-			if (par.getPassword().equals(passw))
+			String encryptedPassword = par.getPassword();
+			if (/*org.getPassword().equals(passw)*/ encryption_service.authenticate(passw, encryptedPassword, par.getSalt())) {
 				return par;
+			}
 				
 		}
 		return null;

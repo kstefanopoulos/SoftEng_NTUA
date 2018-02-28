@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import config.PasswordEncryptionService;
+
 @Controller
 @RequestMapping(path = "/administrator")
 public class AdministratorController {
@@ -20,7 +22,9 @@ public class AdministratorController {
 	private OrganizerRepository oRepository ; 
 	@Autowired
 	private RestrictionRepository rRepository; 
-	
+
+	PasswordEncryptionService encryption_service  = new PasswordEncryptionService(); 
+
 	@GetMapping(path = "/add")
 	public @ResponseBody
 	String addNewAdmin(@RequestParam String aem, @RequestParam String fn,
@@ -30,7 +34,10 @@ public class AdministratorController {
 		if (aRepository.findOne(aem)!=null) 
 			return "Administrator with this Email already exists!";
 		else {
-			administrator na = new administrator(aem,fn, ln, un, pas, pn, res); 
+			
+			byte[] salt = encryption_service.generateSalt();
+			String hash_pass = encryption_service.getEncryptedPassword(pas, salt);
+			administrator na = new administrator(aem,fn, ln, un, pas, salt, pn,res); 
 			aRepository.save(na);
 			aRepository.save(na);
 			return "New Administrator Created";
@@ -102,17 +109,23 @@ public administrator getAdministratorByEmailAndPassw (String aem, String passw) 
 	
 	administrator adm  = this.getΑnAdmin(aem);
 	if (adm != null) {
-		if (adm.getPassword().equals(passw))
+		String encryptedPassword = adm.getPassword();
+		if (encryption_service.authenticate(passw, encryptedPassword, adm.getSalt()))
 			return adm;
 			
 	}
 	return null;
-}
+}	
 
 public administrator createNewAdmin(String email ,String fn, String ln, String un, String pas,String pn,int res) {
 
-		administrator newad = new administrator(email,fn,ln,un,pas,pn,res);
+		byte[] salt = encryption_service.generateSalt();
+		String hash_pass = encryption_service.getEncryptedPassword(pas, salt);
+		administrator newad = new administrator(email,fn,ln,un,hash_pass,salt,pn,res);
+		System.out.println("new admin ok");
+		//System.out.println(email + fn + ln +  un +  pas + pn);
 		aRepository.save(newad); 
+		System.out.println("Saved new admin ok");
 		return newad;
 	}
 

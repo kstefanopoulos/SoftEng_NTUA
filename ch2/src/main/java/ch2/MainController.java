@@ -68,6 +68,7 @@ import register.Row;
 import register.Rowlist;
 
 import java.util.Collections;
+import config.PasswordEncryptionService;
 
 
 @Controller
@@ -85,6 +86,9 @@ public class MainController {
 	@Autowired 
 	private UserController us ; 	
 	private Path path;
+	
+	PasswordEncryptionService encryption_service  = new PasswordEncryptionService(); 
+
     ParentDTO parentdto = new ParentDTO(); 
     OrganizerDTO organizerdto = new OrganizerDTO();
     AdministratorDTO administratordto = new AdministratorDTO(); 
@@ -132,7 +136,23 @@ public class MainController {
 				}
 			}
 		
+		}
+		
+		Iterable<administrator> Admins = ad.getAllAdministrators();
+		//System.out.println(Admins.isEmpty());
+		/*THIS  "IF" PART OF CODE MUST BE EXECUTED ONLY WHEN FIRST SET UP*/
+		if (! Admins.iterator().hasNext()) {
+			System.out.println("No admins");
+			administrator a = ad.createNewAdmin("i.telali@hotmail.com", "Little", "Cherries" , "littlecherries_first_admin",
+					"littlecherries","166",6) ; 
+			
+			//administrator a = ad.createNewAdmin(administratorDto.getEmail() , "", "", "", "", "",6);
+			if (a==null) {
+				System.out.println("Failed to create first admin");
+				return "redirect:/littlecherries/administrators/addnewadmin";
 			}
+			return "mainpage";  
+		}
 		
 		 List<event> list = new ArrayList<event>();
 		 List<event> final_list = new ArrayList<event>();
@@ -558,7 +578,7 @@ public class MainController {
 	    	return "UnsuccessfulRegistrationPage";
 	    redirectAttributes.addFlashAttribute("flashUser", registered);
 
-	    return "redirect:/littlecherries/organizers/registerSuccessful"; }
+	    return "redirect:/littlecherries/registerSuccessful"; }
 	    // rest of the implementation
 	}
 
@@ -758,8 +778,10 @@ public String ChangePassword(Model model, @ModelAttribute("changepsw") @Valid Ch
 	    	
 		  if (org != null && org.getOemail().equals(accountDto.getEmail())) {
 			  if (accountDto.getOld().equals(org.getPassword()) && accountDto.getFirst().equals(accountDto.getSecond())) {
+				  /*TODO  na dw an uelei kai ayto encryption*/
 				  userCredentials.setPassword(accountDto.getFirst());
-				  org.setPassword(accountDto.getFirst());
+				  String hash_pass = encryption_service.getEncryptedPassword(accountDto.getFirst(), org.getSalt());
+				  org.setPassword(hash_pass);
 			  	  oc.UpdateUser(org.getOemail());
 			  	  model.addAttribute("par",null);
 			  	  model.addAttribute("org",org);
@@ -1040,8 +1062,11 @@ public String ParentChangePassword(Model model, @ModelAttribute("changepsw") @Va
 	    	
 		  if (par!= null && par.getPemail().equals(accountDto.getEmail())) {
 			  if (accountDto.getOld().equals(par.getPassword()) && accountDto.getFirst().equals(accountDto.getSecond())) {
+				  /*TODO nadw an 8elei kai edv hash*/
 				  userCredentials.setPassword(accountDto.getFirst());
-				  par.setPassword(accountDto.getFirst());
+				  String hash_pass = encryption_service.getEncryptedPassword(accountDto.getFirst(), par.getSalt());
+				  par.setPassword(hash_pass);
+				  //par.setPassword(accountDto.getFirst());
 			  	  pr.UpdateUser(par.getPemail());
 			  	  model.addAttribute("par",par);
 			  	  model.addAttribute("org",null);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import register.OrganizerDTO;
+import config.PasswordEncryptionService;
 
 import java.util.Date;
 
@@ -25,6 +26,8 @@ public class OrganizerController {
 	@Autowired
 	private OrganizerRepository oRepository;
 	
+	PasswordEncryptionService encryption_service  = new PasswordEncryptionService(); 
+	
 	public organizer addNewOrganizer(String oem, String cn, String ba, String fn,
 			 String ln,  String un,
 			 String pas,  String pn,
@@ -34,7 +37,9 @@ public class OrganizerController {
 		if (oRepository.findOne(oem)!=null) 
 			return null;
 		else {
-			organizer no = new organizer(oem,cn, ba, fn, ln, un, pas, pn, sname, snumber,pc,t,afm,res);
+			byte[] salt = encryption_service.generateSalt();
+			String hash_pass = encryption_service.getEncryptedPassword(pas, salt);
+			organizer no = new organizer(oem,cn, ba, fn, ln, un, hash_pass, salt, pn, sname, snumber,pc,t,afm,res);
 			oRepository.save(no);
 			no.setEvents(null);
 			oRepository.save(no);
@@ -139,15 +144,18 @@ public class OrganizerController {
 	}
 	
 	public organizer getOrganizerByEmailAndPassw (String oem, String passw) {
-	
+
 		organizer org= this.getΑnOrganizer(oem);
 		if (org != null) {
-			if (org.getPassword().equals(passw))
+			String encryptedPassword = org.getPassword();
+			if (/*org.getPassword().equals(passw)*/ encryption_service.authenticate(passw, encryptedPassword, org.getSalt())) {
 				return org;
+			}
 				
 		}
 		return null;
 	}
+
 	
 	public organizer UpdateOrganizerRestrictions(String oem,int res){
 		
