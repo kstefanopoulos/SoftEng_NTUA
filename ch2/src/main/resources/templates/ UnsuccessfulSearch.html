@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Search failed</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+ 
+  
+  </head>
+
+<style> 
+
+.filterstyle{
+
+background-color:  #ffffff; 
+
+}
+
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background:  #d2b4de ; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 10px; /* Set a specific slider handle width */
+    height: 10px; /* Slider handle height */
+    background:  #fadbd8 ; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 15px; /* Set a specific slider handle width */
+    height: 15px; /* Slider handle height */
+    background:  #fadbd8 ; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+} 
+
+
+</style>
+
+
+  
+<body>
+
+
+
+<!-- Head Content. Logo - Company Name -->
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3">
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
+				
+	
+			</div>
+			<div class="col-sm-6">
+				
+			</div>
+			<div class="col-sm-3">
+				
+			</div>
+		</div> 
+</div>
+
+
+<!-- Navigation Menu --> 
+
+<!-- Navigation Menu --> 
+
+<nav class="navbar navbar-reversed  roz">
+  <div class="container-fluid roz">
+  
+    <ul class="nav navbar-nav roz">
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li class="active"><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="dropdown roz">
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
+			<div class="dropdown-content roz">
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
+			</div>
+		</li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
+    </ul>
+	<ul class="nav navbar-nav navbar-right roz">
+ 	 <div th:unless="${org==null}">
+      		<li><a th:utext="${org.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      		<li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    </div>
+    <div th:unless="${par==null}">
+      		<li><a th:utext="${par.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      		<li><a th:href="@{/littlecherries/parents/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+     </div>
+     <div th:if="${org==null}">
+     	<div th:if="${par==null}">
+         <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
+   </div> </div>
+   </div>
+    </ul>		
+  </div>
+</nav>
+
+
+
+
+<!-- Content of Each Page --> 
+
+
+
+
+<div class="col-sm-4"></div>
+<div class="col-sm-4">
+	<li><b>Λυπούμαστε, δεν μπρεσαμε να βρουμε εκδηλώσεις με αυτά τα φίλτρα αναζήτησης :-( </b></li>
+</div>
+<div class="col-sm-4"></div>
+
+
+<!-- FootNote -->
+
+
+<div class="container-fluid info "  align="center"> 
+ <footer>&copy; Copyright 2017 Little Cherries</footer>
+</div> 
+
+</body>
+
+
+</html>

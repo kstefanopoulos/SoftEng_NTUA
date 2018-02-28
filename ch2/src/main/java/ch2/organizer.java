@@ -134,7 +134,7 @@ public class organizer {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(float balance) {
 		this.balance = balance;
 	}
 

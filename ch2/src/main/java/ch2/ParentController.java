@@ -102,8 +102,9 @@ public class ParentController {
 	public parent UpdateParentRestrictions(String pem,int res){
 		
 		parent p=pRepository.findOne(pem);
-		p.setRestrictions(res);
 		if(p==null) return null ; 
+		p.setRestrictions(res);
+		
 		pRepository.save(p) ; 
 		return p ; 
 		

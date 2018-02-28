@@ -81,11 +81,12 @@ public class OrganizerController {
 	}
 	
 	public event createNewEvent(String oem, String en, int ec, String sname, int snumber,
-			String pc, String t, int sa, int ea, int d) {
+			String pc, String t, int sa, int ea, int d, String cat) {
 
-			event ne = new event(en,ec,sname, snumber,pc,t,sa,ea, d);
+			event ne = new event(en,ec,sname, snumber,pc,t,sa,ea, d,cat);
 			return ne;
 		}
+
 	
 	public event saveNewEvent(String oem, event e, Set<eventinfo> es) {
 		organizer org=oRepository.findOne(oem);

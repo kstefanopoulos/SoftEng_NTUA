@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Login</title>
+  <title>Add Admin Denied</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -9,11 +9,25 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
- 
-  
+
+<style>
+
+
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
+</style>
   
   </head>
 
+<script>
+ function sum(p1,p2) {
+	 return p1*p2
+ }
+</script>
   
 <body>
 
@@ -35,12 +49,13 @@
 </div>
 
 <!-- Navigation Menu --> 
+
 <nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
     <ul class="nav navbar-nav roz">
 		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
-		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="active"><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
 		<li class="dropdown roz">
 			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
 			<div class="dropdown-content roz">
@@ -51,31 +66,32 @@
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:href="@{/littlecherries/register}"><span class="glyphicon glyphicon-user"></span> Συνδεθείτε</a></li>
-    </ul>		
+<li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/administrators/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    </ul>	
   </div>
 </nav>
 
-<!-- Main Page -->
-<div class="col-sm-6 info" style="color:grey;font-size:46px;">
-			<form name="f" th:action="@{/littlecherries/login}" th:object="${organizer}" method="post">               
-            <fieldset>
-                <legend>Please Login</legend>
-                <label for="email">Email</label>
-                <input type="text" id="email" name="email"/>        
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password"/>    
-                <div class="form-actions">
-                    <button type="submit" class="btn">Log in</button>
-                </div>
-            </fieldset>
-        </form>
-</div>
+<div class="container info"  align="center">
 
-<div align="center"> 
+	      <h2>Δυστυχώς, δεν έχετε το δικαίωμα να προσθέσετε διαχειριστή.</h2>
+	      <h2>Παρακαλούμε επικοινωνήστε μαζί μας (littlecherries2@gmail.com) για περισσότερες πληροφορίες</h2>
+	
+
+</div>
+	
+<!-- FootNote -->
+
+
+<div class="container-fluid info"  align="center"> 
  <footer>&copy; Copyright 2017 Little Cherries</footer>
 </div> 
 
 </body>
-</html>
 
+
+
+
+
+</html>
+ 

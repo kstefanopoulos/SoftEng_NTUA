@@ -18,31 +18,30 @@ public class parent {
 	private String username;
 	private String password;
 	private String phone_number;
-	private int balance;
+	private float balance;
 	private Date last_transaction_date;
 	private String street_name;
 	private int street_number;
 	private String town;
 	private String postal_code;
 	private int restrictions; 
+
+
 	
-
-
 
 	@OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "bucketid")
 	private bucket parentbucket;
 	
-    @OneToMany(mappedBy = "aparent")
+    @OneToMany(mappedBy = "aparent", cascade = CascadeType.ALL)
 	private Set<willattend> willattend;
 	
-    @OneToMany(mappedBy = "aparent")
+    @OneToMany(mappedBy = "aparent", cascade = CascadeType.ALL)
     private Set<hasattended> hasattended;
-
-    
+	
 	public parent () {}
 
-	public parent(String pem, String fn, String ln, String un, String pas, String pn, String sname, int snumber, String t, String pc, int res ) {
+	public parent(String pem, String fn, String ln, String un, String pas, String pn, String sname, int snumber, String t, String pc, int res) {
 		
 			this.pemail=pem;
 			this.first_name = fn;
@@ -54,16 +53,7 @@ public class parent {
 			this.street_number = snumber;
 			this.town = t;
 			this.postal_code = pc;
-			this.restrictions = res; 
-		
-	}
-
-	public int getRestrictions() {
-		return restrictions;
-	}
-
-	public void setRestrictions(int restrictions) {
-		this.restrictions = restrictions;
+		    this.restrictions = res;
 	}
 
 	public String getPemail() {
@@ -118,11 +108,11 @@ public class parent {
 		return street_name;
 	}
 
-	public int getBalance() {
+	public float getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(float balance) {
 		this.balance = balance;
 	}
 
@@ -174,7 +164,7 @@ public class parent {
 		return willattend;
 	}
 
-	public void setWillttend(Set<willattend> willattend) {
+	public void setWillattend(Set<willattend> willattend) {
 		this.willattend = willattend;
 	}
 
@@ -184,6 +174,14 @@ public class parent {
 
 	public void setHasattended(Set<hasattended> hasattended) {
 		this.hasattended = hasattended;
+	}
+
+	public int getRestrictions() {
+		return restrictions;
+	}
+
+	public void setRestrictions(int restrictions) {
+		this.restrictions = restrictions;
 	}
 
   

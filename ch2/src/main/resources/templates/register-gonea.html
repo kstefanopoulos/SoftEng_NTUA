@@ -389,6 +389,9 @@ body {
 	<h2 class="sub-head">Sign Up</h2>
 		<div class="sub-main">	
 			<form th:action="@{/littlecherries/parents/register}" th:object="${parent}" method="POST" enctype="utf8">
+			    <input placeholder="Email" name="email" class="name" type="text" th:required="required"></input> 
+				<p th:each="error: ${#fields.errors('email')}"
+          		th:text="${error}">Validation error</p>
 				<input placeholder="Ονομα" name="firstname" class="name" type="text" th:required="required"></input> 
 				<p th:each="error: ${#fields.errors('firstname')}"
           		th:text="${error}">Validation error</p>

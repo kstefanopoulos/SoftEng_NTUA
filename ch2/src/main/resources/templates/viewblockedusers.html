@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Organizer Profile</title>
+  <title>Προβολή Μπλοκαρισμένων Χρηστών</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -9,7 +9,19 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+    
+  <style>
+
+.btn-primary{ 
+ background-color : #BA55D3; 
+ 
+ }
+ 
+
+</style>
   
+  
+    
     
 </head>
     
@@ -33,7 +45,6 @@
 
 
 <!-- Navigation Menu --> 
-
 <nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
@@ -53,7 +64,7 @@
  
      	<ul class="nav navbar-nav navbar-right roz">
       <li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
-      <li><a th:href="@{/littlecherries/administrators/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+      <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
     
     </ul>
    </div>
@@ -61,28 +72,51 @@
   </div>
 </nav>
 
-
 <div class = "container"> 
 <div class = "row" > 
-<div class = "col-sm-10"> 
+<div class = "col-sm-11"> 
 </div>
 <div class = "col-sm-1"> 
 
 <a th:href ="@{/littlecherries/administrators/showprofile}" type="button" class="btn btn-primary" > Πίσω </a>
 </div>
-<div class = "col-sm-1"> 
 
 </div>
 
+<div class ="container"> 
+    <h2> Μπλοκαρισμένοι Χρήστες </h2>
+		<table class="table table-striped"> 
+		    <tr> 
+		        <th> Εmail </th> 
+		        <th> Κατηγορία Χρήστη </th>
+		    </tr>
+			<tr th:each= "user : ${list}"> 
+			    <td th:text="${user.email}"></td>	
+			    <td th:text="${user.type }"></td>
+			</tr>
+		 </table>
+
 </div>
+</div> 
+
+<div id ="summ" > 
+<h2 align ="center "> Σύνοψη  </h2>
+  
+<h3 align="center"> Αριθμός Μπλοκαρισμένων Χρηστών :</h3> <td th:text="${blockeuser}"></td>	
+<h3 align="center"> Αριθμός Μπλοκαρισμένων Διοργανωτών :</h3> <td th:text="${blockedorganizers}"></td>	
+<h3 align="center"> Αριθμός Μπλοκαρισμένων Διαχειριστών :</h3><td th:text="${blockedadmins}"></td>	
+<h3 align="center"> Αριθμός Μπλοκαρισμένων Γονέων  :</h3>  <td th:text="${blockedparents}"></td>
+
+
+</div> 
 
 
 
-<h3 align = "center"> Restriction assigned successfuly to Organizer</h3>
+
+
 
 </body>
 </html>
-
 
 
 

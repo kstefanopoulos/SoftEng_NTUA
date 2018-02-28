@@ -1,13 +1,16 @@
 package ch2;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class willattend implements Serializable {
+public class willattend implements Serializable, Comparable<willattend>{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,18 +18,22 @@ public class willattend implements Serializable {
 	
 	@ManyToOne
     @JoinColumn(name = "pemail")
-	@JsonIgnore
 	public parent aparent;
 	
 	@ManyToOne
     @JoinColumn(name = "eventid")
+	@JsonIgnore
 	public event anevent;
 	
-	public willattend() {}
+	public Date date;
 	
-	public willattend(int id) {
-		this.id=id;
-	}
+	public Date time;
+	
+	public int valid;
+	
+	public int tickets;
+	
+	public willattend() {}
 
 	public int getId() {
 		return id;
@@ -53,5 +60,44 @@ public class willattend implements Serializable {
 		this.anevent = anevent;
 	}
 
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+	public int getValid() {
+		return valid;
+	}
+
+	public void setValid(int valid) {
+		this.valid = valid;
+	}
+
+	public int getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(int tickets) {
+		this.tickets = tickets;
+	}
+
+	public int compareTo(willattend o) {
+		// TODO Auto-generated method stub
+		return this.date.compareTo(o.date);
+
+	}
+
+	
 	
 }

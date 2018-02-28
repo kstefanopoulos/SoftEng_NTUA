@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Organizer Profile</title>
+  <title>My History</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -9,7 +10,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
-  
     
 </head>
     
@@ -33,7 +33,6 @@
 
 
 <!-- Navigation Menu --> 
-
 <nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
@@ -49,45 +48,32 @@
 		</li>
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
- 	 
- 
-     	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
-      <li><a th:href="@{/littlecherries/administrators/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
-    
-    </ul>
-   </div>
+	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/parents/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
     </ul>		
   </div>
 </nav>
+   
+<div class="container info"  align="center">
+<h2 align="center"> To Ιστορικό μου </h2> 
 
-
-<div class = "container"> 
-<div class = "row" > 
-<div class = "col-sm-10"> 
+<div class="row info">
+<div  class="col-sm-1 info">
+			</div> 
+			<th:block  th:each= "event : ${list}">
+				<div class="col-sm-2 info" style="color:grey;font-size:46px;">
+				
+				<img th:src="@{'/' + event_images + '/' + ${event.eventid} + .png}" width="140" height="140" />
+				<a th:text="${event.event_name}" th:href="@{/littlecherries/events/{eventid}(eventid=${event.eventid})}"></a>				
+				</div>
+			</th:block>
 </div>
-<div class = "col-sm-1"> 
 
-<a th:href ="@{/littlecherries/administrators/showprofile}" type="button" class="btn btn-primary" > Πίσω </a>
-</div>
-<div class = "col-sm-1"> 
-
-</div>
-
-</div>
-
-
-
-<h3 align = "center"> Restriction assigned successfuly to Organizer</h3>
+<div class="container-fluid info"  align="center"> 
+ <footer>&copy; Copyright 2017 Little Cherries</footer>
+</div> 
 
 </body>
-</html>
 
-
-
-
-
-
-
-
-   
+</html> 

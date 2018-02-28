@@ -13,6 +13,7 @@ public class consistsof implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	public int id;
+	
 	@ManyToOne
     @JoinColumn(name = "bucketid")
     @JsonIgnore
@@ -22,6 +23,8 @@ public class consistsof implements Serializable {
     @JoinColumn(name = "eventid")
 	@JsonIgnore
 	public event anevent;
+	
+	public int isfavourite;
 	
 	public consistsof() {}
 	
@@ -54,6 +57,15 @@ public class consistsof implements Serializable {
 	public void setAnevent(event anevent) {
 		this.anevent = anevent;
 	}
+
+	public int getIsfavourite() {
+		return isfavourite;
+	}
+
+	public void setIsfavourite(int isfavourite) {
+		this.isfavourite = isfavourite;
+	}
+	
 	
 	
 }

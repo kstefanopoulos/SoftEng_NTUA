@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Organizer Profile</title>
+  <title>Add Event Failed</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -9,13 +9,30 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+
+<style>
+
+
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: left;
+    padding: 5px;
+	}
+</style>
   
-    
-</head>
-    
-   <body>
-   
-   <!-- Head Content. Logo - Company Name -->
+  </head>
+
+<script>
+ function sum(p1,p2) {
+	 return p1*p2
+ }
+</script>
+  
+<body>
+
+
+<!-- Head Content. Logo - Company Name -->
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
@@ -31,7 +48,6 @@
 		</div> 
 </div>
 
-
 <!-- Navigation Menu --> 
 
 <nav class="navbar navbar-reversed  roz">
@@ -39,7 +55,7 @@
   
     <ul class="nav navbar-nav roz">
 		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
-		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li class="active"><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
 		<li class="dropdown roz">
 			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
 			<div class="dropdown-content roz">
@@ -49,45 +65,32 @@
 		</li>
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
- 	 
- 
-     	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
-      <li><a th:href="@{/littlecherries/administrators/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
-    
-    </ul>
-   </div>
-    </ul>		
+	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
+    </ul>	
   </div>
 </nav>
 
+<div class="container info"  align="center">
 
-<div class = "container"> 
-<div class = "row" > 
-<div class = "col-sm-10"> 
-</div>
-<div class = "col-sm-1"> 
-
-<a th:href ="@{/littlecherries/administrators/showprofile}" type="button" class="btn btn-primary" > Πίσω </a>
-</div>
-<div class = "col-sm-1"> 
+	      <h2>Δυστυχώς, δεν έχετε το δικαίωμα να δημιουργήσετε νέα εκδήλωση.</h2>
+	      <h2> Παρακαλούμε επικοινωνήστε μαζί μας (littlecherries2@gmail.com) για περισσότερες πληροφορίες</h2>
+	
 
 </div>
+	
+<!-- FootNote -->
 
-</div>
 
-
-
-<h3 align = "center"> Restriction assigned successfuly to Organizer</h3>
+<div class="container-fluid info"  align="center"> 
+ <footer>&copy; Copyright 2017 Little Cherries</footer>
+</div> 
 
 </body>
+
+
+
+
+
 </html>
-
-
-
-
-
-
-
-
-   
+ 

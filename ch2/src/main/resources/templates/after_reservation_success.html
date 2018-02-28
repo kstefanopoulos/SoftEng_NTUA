@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Organizer Profile</title>
+  <title>Reservation Success</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -9,13 +9,14 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
-  
     
 </head>
-    
-   <body>
-   
-   <!-- Head Content. Logo - Company Name -->
+
+  
+<body>
+
+
+<!-- Head Content. Logo - Company Name -->
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
@@ -31,9 +32,9 @@
 		</div> 
 </div>
 
-
 <!-- Navigation Menu --> 
 
+<!-- Navigation Menu --> 
 <nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
@@ -49,45 +50,28 @@
 		</li>
       <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
- 	 
- 
-     	<ul class="nav navbar-nav navbar-right roz">
-      <li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
-      <li><a th:href="@{/littlecherries/administrators/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
-    
-    </ul>
-   </div>
+	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/parents/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/parents/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
     </ul>		
   </div>
 </nav>
 
-
-<div class = "container"> 
-<div class = "row" > 
-<div class = "col-sm-10"> 
+<div class="col-sm-4"></div>
+<div class="col-sm-4">
+	<li><b>Η κράτηση ολοκληρώθηκε με επιτυχία!</b></li>
+	<p><a href="#" style="font-size:25px; position:relative; left:70px; bottom:-20px;">ticket.pdf</a></p>
 </div>
-<div class = "col-sm-1"> 
+<div class="col-sm-4"></div>
 
-<a th:href ="@{/littlecherries/administrators/showprofile}" type="button" class="btn btn-primary" > Πίσω </a>
-</div>
-<div class = "col-sm-1"> 
-
-</div>
-
-</div>
-
-
-
-<h3 align = "center"> Restriction assigned successfuly to Organizer</h3>
+<div class="container-fluid info"  align="center"> 
+ <footer>&copy; Copyright 2017 Little Cherries</footer>
+</div> 
 
 </body>
-</html>
 
 
 
 
 
-
-
-
-   
+</html> 
