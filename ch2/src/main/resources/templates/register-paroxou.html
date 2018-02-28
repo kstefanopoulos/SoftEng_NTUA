@@ -422,6 +422,9 @@ body {
           		<input placeholder="Τραπεζικός Λογαριασμός" name="bankacount" class="number" type="text" th:required="required"></input>	
 				<p th:each="error: ${#fields.errors('bankacount')}"
           		th:text="${error}">Validation error</p>	
+          		<input placeholder="Username" name="username" class="name" type="text" th:required="required"></input> 
+				<p th:each="error: ${#fields.errors('username')}"
+          		th:text="${error}">Validation error</p>
 				<input  placeholder="Password" name="password" class="pass" type="password" th:required="required"></input>
 				<p th:each="error: ${#fields.errors('password')}"
           		th:text="${error}">Validation error</p>
