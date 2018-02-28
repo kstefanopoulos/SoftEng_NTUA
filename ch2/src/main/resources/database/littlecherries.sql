@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `administrator` (
   `account` varchar(20)  COLLATE utf8_general_ci,
   `restrictions` int(2) NOT NULL DEFAULT '0', 
   PRIMARY KEY (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ;
 
 
 INSERT INTO `administrator` (`email`, `first_name`, `last_name`, `username`, `password`, `phone_number`, `account`) VALUES
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `parent` (
   `bucketId` int(5) DEFAULT NULL, 
   `restrictions` int(2) NOT NULL, 
    PRIMARY KEY(`pemail`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
 INSERT INTO `parent` (`pemail`, `first_name`, `last_name`, `username`, `password`, `phone_number`, `balance`, `last_transaction_date`, `street_name`, `street_number`, `town`, `postal_code`, `bucketId`, `restrictions`) VALUES
