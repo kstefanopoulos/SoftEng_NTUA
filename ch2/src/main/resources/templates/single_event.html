@@ -121,9 +121,11 @@ table, th, td{
 	</div>
 	</div>
 	
-	</div>
-	<div class="col-sm-4">
-	<img style="img2" th:src="@{/images/Insert-picture-here.jpg}" alt="event-picture" height="300px" width="300px">
+
+<div class="col-sm-4">
+		<a th:href="@{/littlecherries/{eventid}/pictureUpload(eventid=${event.eventid})}">
+			<img style="img2" th:src="@{/images/Insert-picture-here.jpg}"  alt="event-picture" height="300px" width="300px">
+		</a>
     </div>
 	
 	<div class="col-sm-4" th:unless="${org==null}">

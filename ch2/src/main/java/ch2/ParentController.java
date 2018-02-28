@@ -66,15 +66,15 @@ public class ParentController {
 		return pRepository.findOne(pem);
 	}
 	
-	@GetMapping(path = "/delete")
-	public @ResponseBody
-	String DeleteUser(@RequestParam String pem) {
+	
+	String DeleteUser(String pem) {
 		parent p = pRepository.findOne(pem);
 	    if (p==null) 
 			return "Parent not found!";
-	    int id=p.getParentbucket().bucketid;
+	    bucket b=p.getParentbucket();
+	    b.setMyparent(null);
 	    p.setParentbucket(null);
-	    pRepository.delete(pem);
+	    pRepository.delete(p);
 		return "Delete this";
 	}
 

@@ -59,7 +59,6 @@
        
        
    <div  class="container" align="center"> 
-     <h2>You have successfully logged in!</h2>
 	<div class="row info">
 		<div class="sidenav" style="color:grey;font-size:46px;">
 			<a th:href="@{/littlecherries/parents/showinfo}">Προσωπικά Στοιχεία</a>
@@ -80,7 +79,6 @@
 			<button><a th:href="@{/littlecherries/parents/loadcredits}" class="button2 text">Φόρτωση Πόντων</a></button>
 			
 			<form th:action="@{/littlecherries/parents/deleteprofile}">
-  					<input type="text" name="q" />
   					<input type="submit" value="Διαγραφή Προφίλ"
     				onclick="return confirm('Θελετε να διαγράψετε οριστικά το προφίλ σας?')"
     		/></form>

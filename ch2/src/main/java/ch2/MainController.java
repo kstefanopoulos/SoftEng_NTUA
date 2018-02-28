@@ -4,6 +4,10 @@ import java.net.URLConnection;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
@@ -34,6 +38,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,6 +50,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -77,6 +84,7 @@ public class MainController {
 	private RestrictionController rs ; 
 	@Autowired 
 	private UserController us ; 	
+	private Path path;
     ParentDTO parentdto = new ParentDTO(); 
     OrganizerDTO organizerdto = new OrganizerDTO();
     AdministratorDTO administratordto = new AdministratorDTO(); 
@@ -94,6 +102,7 @@ public class MainController {
     event ev;
     ReservForm rform;
     ratedto rdto;
+    FileHandler fl;
     
     List<String> categories = Arrays.asList("All", "Theater", "Cinema", "Games", "Music", "Dance", "Sport", "Workshop");
     List<String> startages = Arrays.asList("1","2","3","4","5","6","7","8","9","10");
@@ -570,17 +579,17 @@ public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Val
       BindingResult result, WebRequest request, Errors errors, final RedirectAttributes redirectAttributes) {    
        parent registered = new parent(); 
     //System.out.print("enter registerUserAccount");
-    if (result.hasErrors()) {
+    /* if (result.hasErrors()) {
     	model.addAttribute("parent", parentdto);
     	return "register-gonea";
-    }
-    else {
+    }*/
+   
         registered = pr.createParentAccount(accountDto, result);
      
     if (registered==null)
     	return "UnsuccessfulRegistrationPage";
     redirectAttributes.addFlashAttribute("flashUser", registered);
-    return "redirect:/littlecherries/registerSuccessful"; }
+    return "redirect:/littlecherries/registerSuccessful"; 
 }
 
 	
@@ -1662,7 +1671,85 @@ public String AdminSetsRestrictions(Model model) {
 			
 		}
         
-} 
+}
+
+//Picture Upload
+
+
+@Bean(name = "multipartResolver")
+public CommonsMultipartResolver multipartResolver() {
+  CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+  multipartResolver.setMaxUploadSize(100000);
+  return multipartResolver;
+}
+
+@RequestMapping(value = "/littlecherries/{eventid}/pictureUpload", method= RequestMethod.GET)
+public String showUploadForm (Model model, @ModelAttribute("eventid") int eventid) {
+/*	if (userCredentials == null)
+		return "registration";
+	parent par= pr.getΑParent(userCredentials.getEmail());
+	if (par != null) {
+		model.addAttribute("user",par);
+		List<event> myevents = new ArrayList<event> ();
+		Set<willattend> wa = par.getWillattend();
+		for (willattend i : wa) {
+			if (i.getValid() == 1)
+				myevents.add(i.getAnevent());
+		}
+		model.addAttribute("list",myevents);
+		return "view_events_to_go"; }
+*/
+	 event e= null;
+	 organizer myorg=null;
+	 Iterable<organizer> Organizers=oc.getAllOrganizers();
+		for (organizer o: Organizers) {
+			e = oc.getAnEvent(o.getOemail(), eventid);
+			if (e != null)  {
+				myorg=o;
+				break; }
+		}
+	 if (e== null)
+		 return "redirect:/littlecherries/events";
+	 
+	 fl = new FileHandler();
+	
+	 model.addAttribute("event",e);
+	
+	model.addAttribute("fl", fl);
+	return "uploadForm";
+	}
+
+@RequestMapping(value = "/littlecherries/{eventid}/pictureUpload", method= RequestMethod.POST)
+public String uploadPicture (Model model, @ModelAttribute("eventid") int eventid, @ModelAttribute("fl") FileHandler fl) throws IOException {
+	
+	//MultipartFile Image = img.getImage();
+	
+	if(fl==null) return "BULO";
+	if (fl.getImage() == null) return "nullfoto";
+
+	// change any provided image type to png
+	// path = Paths.get(rootDirectory + "/WEB-INF/resources/images" +
+	// product.getProductId() + ".png");
+	path = Paths.get("C:\\Users\\ftstr\\git\\cherries\\ch2\\src\\main\\resources\\static\\images\\event_images\\"
+			+ eventid + ".png");
+
+	// check whether image exists or not
+	//if (Image != null && !Image.isEmpty()) {
+		try {
+			// convert the image type to png
+				fl.getImage().transferTo(new File(path.toString()));
+				//return "registration";
+		} catch (IllegalStateException e) {
+			// oops! something did not work as expected
+			//e.printStackTrace();
+			throw new RuntimeException("Saving User image was not successful", e);
+			
+		}
+	
+	//if(Image != null) return "geiaa";
+	return "registration";
+	
+}
 
 }
 

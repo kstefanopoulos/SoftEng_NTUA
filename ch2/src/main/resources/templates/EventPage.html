@@ -199,7 +199,7 @@ background-color:  #ffffff;
 			<th:block  th:each= "event : ${events}">
 				<div class="col-sm-2 info" style="color:grey;font-size:46px;">
 				
-				<img th:src="@{'/' + event_images + '/' + ${event.eventid} + .png}" width="140" height="140" />
+				<img th:src="@{'.' + '.' + '/' + 'images' '/' + event_images + '/' + ${event.eventid} + .png}" width="140" height="140" />
 				<a th:text="${event.event_name}" th:href="@{/littlecherries/events/{eventid}(eventid=${event.eventid})}"></a>				
 				</div>
 			</th:block>
