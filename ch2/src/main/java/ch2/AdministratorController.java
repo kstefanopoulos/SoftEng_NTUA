@@ -122,10 +122,7 @@ public administrator createNewAdmin(String email ,String fn, String ln, String u
 		byte[] salt = encryption_service.generateSalt();
 		String hash_pass = encryption_service.getEncryptedPassword(pas, salt);
 		administrator newad = new administrator(email,fn,ln,un,hash_pass,salt,pn,res);
-		System.out.println("new admin ok");
-		//System.out.println(email + fn + ln +  un +  pas + pn);
 		aRepository.save(newad); 
-		System.out.println("Saved new admin ok");
 		return newad;
 	}
 

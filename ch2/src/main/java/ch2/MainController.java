@@ -143,7 +143,7 @@ public class MainController {
 		/*THIS  "IF" PART OF CODE MUST BE EXECUTED ONLY WHEN FIRST SET UP*/
 		if (! Admins.iterator().hasNext()) {
 			System.out.println("No admins");
-			administrator a = ad.createNewAdmin("i.telali@hotmail.com", "Little", "Cherries" , "littlecherries_first_admin",
+			administrator a = ad.createNewAdmin("i.telali@hotmail.com", "Little", "Cherries" , "cherries_admin",
 					"littlecherries","166",6) ; 
 			
 			//administrator a = ad.createNewAdmin(administratorDto.getEmail() , "", "", "", "", "",6);
