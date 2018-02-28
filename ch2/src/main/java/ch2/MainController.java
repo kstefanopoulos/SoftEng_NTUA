@@ -1,6 +1,9 @@
 package ch2;
 
-import java.nio.file.Path;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +32,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.parser.Path;
+import com.itextpdf.text.pdf.parser.clipper.Paths;
 
 import register.AdministratorDTO;
 import register.BlockedDTO;
@@ -502,15 +516,28 @@ public class MainController {
  
  /// PDF ///
  @RequestMapping(value = "/littlecherries/pdfservice")
-	public String viewpdfservice(Model model) {
+	public String viewpdfservice(Model model) throws DocumentException, MalformedURLException, IOException {
 	 
 	 
+	 String File = "C:\\SPB_Data\\git\\LittleCherries\\ch2\\Tickets\\littlecherries.pdf" ; 
+	 String imagepath = "C:\\SPB_Data\\git\\LittleCherries\\ch2\\src\\main\\resources\\static\\images\\logo.png"; 
 	 
+	 //Path path = Paths.get(ClassLoader.getSystemResource(imagepath).toURI());
+	 // Image img = Image.getInstance(path.toAbsolutePath().toString());
 	 
-	 
-	 
-	 
-	 
+	
+     Image image = Image.getInstance(imagepath);
+   
+	 Document document = new Document();
+	 PdfWriter.getInstance(document, new FileOutputStream(File));
+		 
+		document.open();
+		Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+		Chunk chunk = new Chunk("Hello World", font);
+		document.add(image);
+		document.add(chunk);
+		document.close();	
+	
 	 return "pdfservice";
 }
 
@@ -1167,6 +1194,9 @@ public String ParentBuyTicketsSecond(Model model, @ModelAttribute("eventid") int
 				break;
 			}
 		}
+		
+		
+		
 		if (sel==null)
 			return "redirect:/littlecherries/parents/{eventid}/buyticket";
 		model.addAttribute("par",par);
@@ -1181,7 +1211,7 @@ public String ParentBuyTicketsSecond(Model model, @ModelAttribute("eventid") int
 
 @RequestMapping(value = "/littlecherries/parents/{eventid}/buyticket/{infoid}", method = RequestMethod.POST)
 public String ParentBuyTc(Model model, @ModelAttribute("eventid") int eventid,@ModelAttribute("infoid") int infoid, @ModelAttribute("rform") ReservForm rform,
-	      BindingResult result, WebRequest request, Errors errors) throws ParseException {
+	      BindingResult result, WebRequest request, Errors errors) throws ParseException, DocumentException, MalformedURLException, IOException {
 	
 	if (userCredentials == null)
 		return "registration";
@@ -1217,7 +1247,7 @@ public String ParentBuyTc(Model model, @ModelAttribute("eventid") int eventid,@M
 	
 	/*******************************************************/
 	willattend wa= new willattend();
-	wa.setAnevent(e);
+	wa.setAnevent(e);   
 	wa.setAparent(par);
 	wa.setDate(sel.getEventdate());
 	wa.setTime(sel.getStarttime());
@@ -1242,6 +1272,56 @@ public String ParentBuyTc(Model model, @ModelAttribute("eventid") int eventid,@M
 	float d = (float)(or.getBalance() + totalcost * 0.9);
 	or.setBalance(d);
 	oc.UpdateUser(or.getOemail());
+	
+	// Create Ticket // 
+	
+	
+	String eventTitle = e.getEvent_name(); 
+	eventTitle = "Όνομα Εκδήλωσης : " + eventTitle ; 
+	String eventdate = "Ημερομηνία Εκδήλωσης : " + (sel.getEventdate()).toString();  
+	String tickets = "Εισητήρια που αγοράστηκαν : " + rform.getNumberoftickets(); 
+	String ttlcost = "Συνολικό Κόστος :" +  d + "" ; 
+	String filename = "tickets" + infoid ; 
+	String prosf = "Αγαπητε/η, " + par.getFirst_name() + " " + par.getLast_name() ; 
+	String apof = "Σας ευχαριστούμε για την προτίμησή σας"; 
+	String File = "C:\\SPB_Data\\git\\LittleCherries\\ch2\\Tickets\\" + filename ;
+	String imagepath = "C:\\SPB_Data\\git\\LittleCherries\\ch2\\src\\main\\resources\\static\\images\\logo.png"; 
+	Document document = new Document();
+	PdfWriter.getInstance(document, new FileOutputStream(File));
+    Image image = Image.getInstance(imagepath); 
+	
+    Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+    document.open();
+    document.add(image);
+   
+    Chunk chunk1 = new Chunk(prosf, font);
+    Chunk chunk2 = new Chunk("Το παρόν αποτελεί το εισητήριό σου με το οποίο θα παρευρεθείς στην εκδήλωση", font); 
+    Chunk chunk3 = new Chunk("Στοιχεία :", font);
+    Chunk chunk4 = new Chunk(eventTitle , font);
+    Chunk chunk5 = new Chunk(eventdate , font);
+    Chunk chunk6 = new Chunk(ttlcost , font);
+    Chunk chunk7 = new Chunk(apof , font);
+    
+    document.add( chunk1 );
+	document.add( Chunk.NEWLINE );
+	document.add( chunk2 );
+	document.add(Chunk.NEWLINE  );
+	document.add( chunk3);
+	document.add( Chunk.NEWLINE );
+	document.add( chunk4 );
+	document.add(  Chunk.NEWLINE);
+	document.add(chunk5 );
+	document.add( Chunk.NEWLINE );
+	document.add(chunk6 );
+	document.add( Chunk.NEWLINE );
+	document.add(chunk7 );
+	
+	
+	document.close();	
+	
+    /// END OF PDF /// 
+	
+	
 	model.addAttribute("user",par);
 	model.addAttribute("event",e);
 	model.addAttribute("date",sel.getEventdate());
