@@ -68,8 +68,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `createdat` date DEFAULT NULL,
   PRIMARY KEY (`eventid`)
   
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=10;
 
 --
 INSERT INTO `event` (`eventid`, `oemail`, `organizer_name`, `event_name`, `event_cost`, `street_name`, `street_number`, `town`, `postal_code`, `event_class`, `event_description`, `evaluation`, `isdone`, `longitude`, `latitude`, `startage`, `endage`, `duration`, `tickets`, `createdat`) VALUES
