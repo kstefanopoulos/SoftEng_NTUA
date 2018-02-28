@@ -394,7 +394,26 @@ body {
 
 
 <div class = "container"> 
-<div class = "row" > 
+
+<div class="col-sm-6"> 
+<div class ="container"> 
+    <h2 allign="center"> Περιορισμοί </h2>
+		<table class="table table-striped"> 
+		    <tr> 
+		        <th> Περιγραφή </th> 
+		        <th> Id </th>	
+		    </tr>
+			<tr th:each= "restricted : ${restrict}">
+			    <td th:text="${restricted.description}"></td>
+				<td th:text="${restricted.renum}"></td>
+			   
+			</tr>
+		 </table>
+</div>
+
+</div>
+
+<div class = "col" > 
 <div class = "col-sm-10"> 
 </div>
 <div class = "col-sm-1"> 
@@ -412,8 +431,7 @@ body {
 <div class="row"> 
 <div class ="col-sm-6"> 
 <div class="main-agileits">
-	<h3 class="sub-head">Περιορισμός Χρήστη</h3>
-		<div class="sub-main">	
+	<h4 class="sub-head">Περιορισμός Χρήστη</h4>
 			<form th:action="@{/littlecherries/administrators/adminrights}" th:object="${blocked}" method="POST" enctype="utf8">
 			    <input placeholder="Email" name="Email" class="name" type="text2" th:required="required"></input> 
 				<p th:each="error: ${#fields.errors('Email')}"
@@ -425,28 +443,10 @@ body {
 				
 				<input type="submit" value="Υποβολή"></input> 
 			</form>
-		</div>
 		<div class="clear"></div>
 </div>
 </div>
-<div class="col-sm-6"> 
-<div class ="container"> 
-    <h2 allign="center"> Περιορισμοί </h2>
-		<table class="table table-striped"> 
-		    <tr> 
-		        <th> Περιγραφή </th> 
-		        <th> Id </th>	
-		    </tr>
-			<tr th:each= "res : ${restrictions}">
-			    <td th:text="${res.description}"></td>
-				<td th:text="${res.renum}"></td>
-			   
-			</tr>
-		 </table>
 
-</div>
-
-</div>
 </div>
 
 </body> 

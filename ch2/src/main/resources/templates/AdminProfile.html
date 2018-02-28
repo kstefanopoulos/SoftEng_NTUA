@@ -1,15 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Little Cherries</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <title>Admin Profile</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'>
-  <link rel="stylesheet" href="style.css"> 
-    
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
+ 
+   <style> 
+   
+   #adminprof{
+   
+   background-color: white; 
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+   }
+   
+   #admininfo{
+   
+   background-color: #ffdbdb ; 
+   width : 200px; 
+   
+   }
+   
+   h4{
+   
+   color: gray
+   
+   }
+   
+   @charset "UTF-8";
+/* Some stylesheet reset */
+#cssmenu > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  line-height: 1;
+}
+/* The container */
+#cssmenu > ul {
+  display: block;
+  position: relative;
+  width: 160px;
+  /* The list elements which contain the links */
+
+}
+#cssmenu > ul li {
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+/* General link styling */
+#cssmenu > ul li a {
+  /* Layout */
+
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: 11px 20px;
+  /* Typography */
+
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: rgb(51, 51, 51);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 300;
+  /* Background & effects */
+
+  background: rgb(250, 235, 215);
+}
+/* Rounded corners for the first link of the menu/submenus */
+#cssmenu > ul li:first-child > a {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-top: 0;
+}
+/* Rounded corners for the last link of the menu/submenus */
+#cssmenu > ul li:last-child > a {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom: 0;
+}
+/* The hover state of the menu/submenu links */
+#cssmenu > ul li > a:hover,
+#cssmenu > ul li:hover > a {
+  color: #ffffff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  background: #fdf2e9;
+  border-color: transparent;
+}
+/* The arrow indicating a submenu */
+#cssmenu > ul .has-sub > a::after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  right: 10px;
+  width: 0px;
+  height: 0px;
+  /* Creating the arrow using borders */
+
+  border: 4px solid transparent;
+  border-left: 4px solid #d8d8d8;
+}
+/* The same arrow, but with a darker color, to create the shadow effect */
+#cssmenu > ul .has-sub > a::before {
+  content: "";
+  position: absolute;
+  top: 17px;
+  right: 10px;
+  width: 0px;
+  height: 0px;
+  /* Creating the arrow using borders */
+
+  border: 4px solid transparent;
+  border-left: 4px solid #000;
+}
+/* Changing the color of the arrow on hover */
+#cssmenu > ul li > a:hover::after,
+#cssmenu > ul li:hover > a::after {
+  border-left: 4px solid #ffffff;
+}
+#cssmenu > ul li > a:hover::before,
+#cssmenu > ul li:hover > a::before {
+  border-left: 4px solid rgba(0, 0, 0, 0.3);
+}
+/* THE SUBMENUS */
+#cssmenu > ul ul {
+  position: absolute;
+  left: 100%;
+  top: -9999px;
+  padding-left: 5px;
+  opacity: 0;
+  width: 140px;
+  /* The fade effect, created using an opacity transition */
+
+  -webkit-transition: opacity 0.3s ease-in;
+  -moz-transition: opacity 0.3s ease-in;
+  transition: opacity 0.3s ease-in;
+}
+/* Showing the submenu when the user is hovering the parent link */
+#cssmenu > ul li:hover > ul {
+  top: 0px;
+  opacity: 1;
+}
+   
+   
+   
+   </style> 
+   
   
   </head>
 
@@ -18,11 +161,10 @@
 
 
 <!-- Head Content. Logo - Company Name -->
-
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
-				<img src= "logo.png"  width="200" height="100" >
+				<img th:src= "@{/images/logo.png}"  width="200" height="100" ></img>
 	
 			</div>
 			<div class="col-sm-6">
@@ -33,69 +175,71 @@
 			</div>
 		</div> 
 </div>
-
 <!-- Navigation Menu --> 
 
-
-<nav class="navbar navbar-reversed roz ">
+<nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
     <ul class="nav navbar-nav roz">
-		<li ><a href="#">Αρχική</a></li>
-		<li><a href="#file:///.\EventPage.html">Εκδηλώσεις</a></li>
+		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
+		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
 		<li class="dropdown roz">
-			<a href="javascript:void(0)" class="dropbtn">H Εταιρία μας</a>
+			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
 			<div class="dropdown-content roz">
-				<a href="#file:///.\OurCompanyPage.html">Ποιοί Είμαστε</a>
-				<a href="#file:///.\OurCompanyPage.html">Το Οραμά μας</a>
+				<a th:href="@{/littlecherries/aboutus}">Ποιοί Είμαστε</a>
+				<a th:href="@{/littlecherries/aboutus}">Το Οραμά μας</a>
 			</div>
 		</li>
-      <li><a href="#file:///.\CommunicationPage.html">Επικοινωνία</a></li>
+      <li><a th:href="@{/littlecherries/contactus}">Επικοινωνία</a></li>
     </ul>
-	<ul class="nav navbar-nav navbar-right roz">
-      <li><a href="#file:///.\SignUp.html"><span class="glyphicon glyphicon-user"></span> kostef</a></li>
+ 	 
+ 
+     	<ul class="nav navbar-nav navbar-right roz">
+      <li><a th:utext="${user.username}" th:href="@{/littlecherries/administrators/showprofile}" class="glyphicon glyphicon-user"></a></li>
+      <li><a th:href="@{/littlecherries/organizers/logout}"><span class="glyphicon glyphicon-user"></span> Αποσύνδεση</a></li>
+    
     </ul>
-		
+   </div>
+    </ul>		
   </div>
 </nav>
 
+
 <!-- Content of Each Page --> 
 
-<div class="container-fluid  info"  align="center">
-	<div class= "row"> 
-		<div class = "col-sm-4"> 
-			<h3 color ="black"> Προσωπικά Στοιχεία </h3> 
+<div class= "container-fluid" id='adminprof'> 
+<div class="row"> 
+<div class="col-sm-2"> 
+<div id="cssmenu">
+
+<h3> Dashboard </h3>
+
+
+<ul>
+   <li class='active has-sub roz'><a href='#'><span>Χρήστες</span></a> 
+      <ul>
+       <li class='last'><a th:href="@{/littlecherries/administrators/viewparents}">Γονείς</a></li> 
+         <li class='last'><a th:href="@{/littlecherries/administrators/vieworganizers}">Διοργανωτές</a></li>
+		 <li class='last'><a th:href="@{/littlecherries/administrators/viewadministrators}">Διαχειριστές</a></li>  
+		 
+      </ul> </li>
+  <li class='last'><a th:href="@{/littlecherries/administrators/viewevents}">Εκδηλώσεις</a> </li>
+  <li class='last'><a th:href="@{/littlecherries/administrators/viewrestrictions}">Περιορισμοί</a> </li> 
+  <li class='last'><a th:href="@{/littlecherries/administrators/adminrights}">Διαχείριση Δικαιωμάτων</a> </li>
+</ul>
+</div> 
+</div>
+<div class="col-sm-10" align="center"> 
+<div id ="adminnfo">   
+   <h3 color ="black"> Προσωπικά Στοιχεία </h3> 
 			 
-			<h4 color ="gray"> Όνομα : Κοσμάς </h4>
-	
-			 
-			<h4 color ="gray"> Επίθετο : Στεφανόπουλος </h4>
-						 
-			<h4 color ="gray"> Τηλέφωνο : 6978874512 </h4> 
-			
-			 
-			<h4 color ="gray"> Email : admin@littlecherries.gr </h4>
-			 
-			
-			
-			
-			
-		</div>
-		<div class="col-sm-6" > 
-		    <h2> Διαχείριση Ιστοσελίδας </h2> 
-			<div class="container">    
-			<button type="button" class="btn btn-primary">Γονείς</button>
-			</div>
-			<div class="container">    
-			<button type="button" class="btn btn-primary">Πάροχοι</button>
-			</div>
-			<div class="container">    
-			<button type="button" class="btn btn-primary">Εκδηλώσεις</button>
-			</div>
-			<div class="container">    
-			<button type="button" class="btn btn-primary">Διαχειριστές</button>
-			</div>
-		</div>
+			<h4 th:utext="${user.first_name}"> </h4>
+			<h4 th:utext="${user.last_name}"> </h4>	 
+			<h4  th:utext="${user.phone_number}"></h4>
+			<h4  th:utext="${user.email}"> </h4>
+</div> 
+
+</div>
 		
 		
 		
@@ -116,10 +260,6 @@
 
 <!-- FootNote -->
 
-
-<div class="container-fluid info "  align="center"> 
- <footer>&copy; Copyright 2017 Little Cherries</footer>
-</div> 
 
 </body>
 

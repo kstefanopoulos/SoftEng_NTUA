@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Organizer Profile</title>
+  <title>View Restrictions</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -45,6 +45,7 @@
 
 
 <!-- Navigation Menu --> 
+  <nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
     <ul class="nav navbar-nav roz">
@@ -90,16 +91,16 @@
 		        <th> Περιγραφή </th> 
 		        <th> Id </th>	
 		    </tr>
-			<tr th:each= "res :${restrictions}">
-			    <td th:text="${res.description}"></td>
-				<td th:text="${res.renum}"></td>
+			<tr th:each= "restricted : ${restrict}">
+			    <td th:text="${restricted.description}"></td>
+				<td th:text="${restricted.renum}"></td>
 			   
 			</tr>
 		 </table>
 
 </div>
 </div> 
-
+</div>
 
 </body>
 </html>

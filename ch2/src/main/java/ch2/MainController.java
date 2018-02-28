@@ -118,7 +118,7 @@ public class MainController {
 				else{ 
 					
 					if(adm != null )
-						model.addAttribute("user",adm);
+						model.addAttribute("adm",adm);
 					
 				}
 			}
@@ -161,7 +161,7 @@ public class MainController {
 				else{ 
 					
 					if(adm != null )
-						model.addAttribute("user",adm);
+						model.addAttribute("adm",adm);
 					
 				}
 			}
@@ -186,7 +186,7 @@ public class MainController {
 			else{ 
 				
 				if(adm != null )
-					model.addAttribute("user",adm);
+					model.addAttribute("adm",adm);
 				
 			}
 		}
@@ -236,7 +236,7 @@ public class MainController {
 			else{ 
 				
 				if(adm != null )
-					model.addAttribute("user",adm);
+					model.addAttribute("adm",adm);
 				
 			}
 		}
@@ -264,7 +264,7 @@ public class MainController {
 				else{ 
 					
 					if(adm != null )
-						model.addAttribute("user",adm);
+						model.addAttribute("adm",adm);
 					
 				}
 			}
@@ -416,7 +416,7 @@ public class MainController {
 				else{ 
 					
 					if(adm != null )
-						model.addAttribute("user",adm);
+						model.addAttribute("adm",adm);
 					
 				}
 			}
@@ -499,7 +499,7 @@ public class MainController {
 				else{ 
 					
 					if(adm != null )
-						model.addAttribute("user",adm);
+						model.addAttribute("adm",adm);
 					
 				}
 			} 
@@ -608,11 +608,16 @@ public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential")
 	parent par = pr.getParentByEmailAndPassw(myuserCredentials.getEmail(), myuserCredentials.getPassword());
 	administrator adm = ad.getAdministratorByEmailAndPassw(myuserCredentials.getEmail(), myuserCredentials.getPassword());
 	 if(org!= null){
-		redirectAttributes.addFlashAttribute("user", org);
-		userCredentials=myuserCredentials;
-		userCredentials.setType(0);
-		return "redirect:/littlecherries/organizers/showprofile";
+		if (org.getRestrictions() != 7) {
+			redirectAttributes.addFlashAttribute("user", org);
+			userCredentials=myuserCredentials;
+			userCredentials.setType(0);
+			return "redirect:/littlecherries/organizers/showprofile";
+		}
+		return "UserLocked";
 	}else if(par!=null){
+		if (par.getRestrictions() == 7)
+			return "UserLocked";
 		Set<willattend> toremove = new HashSet<willattend>();
 		Set<willattend> wa= par.getWillattend();
 	    Set<hasattended> ha= par.getHasattended();
@@ -639,10 +644,12 @@ public String loginSuccess(Model model, @Valid @ModelAttribute("userCredential")
 		userCredentials.setType(1);
 		return "redirect:/littlecherries/parents/showprofile";
 		}else if(adm!=null){
-				redirectAttributes.addFlashAttribute("user", adm);
-				userCredentials=myuserCredentials;
-				userCredentials.setType(2);
-				return "redirect:/littlecherries/administrators/showprofile";
+			if (adm.getRestrictions() == 7)
+				return "UserLocked";
+			redirectAttributes.addFlashAttribute("user", adm);
+			userCredentials=myuserCredentials;
+			userCredentials.setType(2);
+			return "redirect:/littlecherries/administrators/showprofile";
 		}
 	
 		return "registration";
@@ -778,9 +785,11 @@ public String OrganizerAddsEvent(Model model) {
 	if (org==null)
 		return "registration";
 	else {
+		model.addAttribute("user",org);
+		if (org.getRestrictions() == 4)
+			return "cannotCreateEvents";
 		model.addAttribute("categories",categories);
 		model.addAttribute("event", eventdto);
-		model.addAttribute("user",org);
 		return "event_creation";
 	}
 }
@@ -1046,6 +1055,8 @@ public String ParentLoadCreditsGetPage(Model model){
 	parent par= pr.getΑParent(userCredentials.getEmail());
 	if (par != null) {
 		model.addAttribute("user",par);
+		if (par.getRestrictions() == 2 || par.getRestrictions() == 3)
+			return "cannotLoadCreditsRes";
 		model.addAttribute("card",crform);
 		return "load_credits";
 	}
@@ -1091,6 +1102,8 @@ public String ParentBuyTicketsFirst(Model model, @ModelAttribute("eventid") int 
 	parent par= pr.getΑParent(userCredentials.getEmail());
 	if (par != null) {
 		model.addAttribute("par",par);
+		if (par.getRestrictions() == 1 || par.getRestrictions() == 3)
+			return "cannotbuyRes";
 		event e= null;
 		Iterable<organizer> Organizers=oc.getAllOrganizers();
 		for (organizer o: Organizers) {
@@ -1399,7 +1412,7 @@ public String showProfileAdmins(Model model) {
 	administrator adm = ad.getAdministratorByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
 	if (adm != null) {
 		model.addAttribute("user",adm);
-		return "profile-admin";
+		return "AdminProfile";
 	}else{
 	return "login";
 }}	
@@ -1486,8 +1499,11 @@ public String AdministratorViewRestriction(Model model){
 			if (adm!=null){
 				model.addAttribute("user",adm);
 				Iterable<restrictions> R = rs.getAllRestrictions(); 
-				model.addAttribute("restrictions", R); 
-				return "login" ; 
+				List<restrictions> rlist = new ArrayList<restrictions>();
+				for (restrictions r: R)
+					rlist.add(r);
+				model.addAttribute("restrict", rlist); 
+				return "viewrestrictions"; 
 		
 			}else{
 				
@@ -1547,9 +1563,10 @@ public String AdminAddsAdmin(Model model) {
 	if (adm==null)
 		return "registration";
 	else {
-	
-		model.addAttribute("admin", administratordto);
 		model.addAttribute("user",adm);
+		if (adm.getRestrictions() == 6)
+			return "cannotAddAdmin";
+		model.addAttribute("admin", administratordto);
 		return "createadmin";
 	}
 }
@@ -1586,11 +1603,12 @@ public String AdminSetsRestrictions(Model model) {
 	if (adm==null )
 		return "registration";
 	else {
-		
-		model.addAttribute("blocked", blockeddto);
 		model.addAttribute("user",adm);
+		if (adm.getRestrictions() == 5)
+			return "cannotAddAdmin";
+		model.addAttribute("blocked", blockeddto);
 		Iterable<restrictions> R = rs.getAllRestrictions(); 
-		model.addAttribute("restrictions", R); 
+		model.addAttribute("restrict", R); 
 		return "assignrestrictions";
 	}
 }
