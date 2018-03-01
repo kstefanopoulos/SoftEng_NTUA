@@ -80,14 +80,14 @@ table, th, td{
 
 <div  class="container"> 
 	<div class="row info">
-	<div class="col-sm-4">
+	<div class="col-sm-3">
 		<li>Τίτλος: <span th:utext="${event.event_name}">..</span></li>
 		<li>Οδός: <span th:utext="${event.street_name}">..</span></li>
 		<li>Αριθμός: <span th:utext="${event.street_number}">..</span></li>
 		<li>Πόλη: <span th:utext="${event.town}">..</span></li>
 		<li>Από: <span th:utext="${event.startage}">..</span></li>
 		<li>Eώς: <span th:utext="${event.endage}">..</span></li>
-		<li>Περιγραφή Εκδήλωσης <span th:utext="${event.event_description}">..</span></li>
+		<li>Περιγραφή Εκδήλωσης: <span th:utext="${event.event_description}">..</span></li>
 		<li>Αξιολόγηση: <span th:utext="${event.evaluation}">..</span></li>
 		
 	</div>
@@ -122,13 +122,24 @@ table, th, td{
 	</div>
 	
 
-<div class="col-sm-4">
-		<a th:href="@{/littlecherries/{eventid}/pictureUpload(eventid=${event.eventid})}">
-			<img style="img2" th:src="@{/images/Insert-picture-here.jpg}"  alt="event-picture" height="300px" width="300px">
-		</a>
-    </div>
+	<div class="col-sm-4">
+
+		<div th:unless="${event.hasfoto==0}">
+			<img th:src="@{'/' + images + '/' + eventimages + '/' + ${event.eventid} + .png}" width="140" height="140" />
+		</div>
+		
+	    <div th:if="${event.hasfoto==0}">
+	    	<div th:unless="${org==null}">
+	    		<div th:if="${org==myorg}">
+					<a th:href="@{/littlecherries/{eventid}/pictureUpload(eventid=${event.eventid})}">
+						<img style="img2" th:src="@{/images/Insert-picture-here.jpg}"  alt="event-picture" height="300px" width="300px">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>	
 	
-	<div class="col-sm-4" th:unless="${org==null}">
+	<div class="col-sm-3" th:unless="${org==null}">
 		<div th:if="${org==myorg}">
 			<li>Αριθμός Εισητηρίων που έχουν πουληθεί: <span th:utext="${ticketssold}">..</span></li>
 			<li>Αριθμός Φορών που Αποθηκεύτηκε από κάποιον χρήστη: <span th:utext="${timessaved}">..</span></li>
@@ -136,7 +147,7 @@ table, th, td{
 	</div>
 	
 	
-	<div>
+	<div class="col-sm-3">
         <table class="table table-striped">
 			<thead>
 				<th>Ημερομηνία</th>
@@ -145,12 +156,13 @@ table, th, td{
 			</thead>
 			<tbody>	
 			<tr th:each= "eventinfo : ${event.eventinfos}">
-				<td th:text="${eventinfo.eventdate}"></td>
+				<td th:text="${#dates.format(eventinfo.eventdate, 'dd-MM-yyyy')}"></td>
 				<td th:text ="${eventinfo.availabletickets}"></td>
-				<td th:text="${eventinfo.starttime}"></td> 				
+				<td th:text="${#dates.format(eventinfo.starttime, 'HH:mm')}"></td> 				
 			</tr>
 			</tbody>
 	  </table>
+	</div>
 	</div>
 	</div>
 	
@@ -160,12 +172,12 @@ table, th, td{
 	<div class="col-sm-6">
 		<div th:unless="${par==null}">
 	
-			<p><button><a th:href="@{/littlecherries/parents/{eventid}/buyticket(eventid=${event.eventid})}" type="button" class="btn btn-primary">Κράτηση</a></button></p>
+			<p><a th:href="@{/littlecherries/parents/{eventid}/buyticket(eventid=${event.eventid})}" type="button" class="btn btn-primary">Κράτηση</a></p>
 			<div th:if="${sav==null}">
-				<button><a th:href="@{/littlecherries/parents/{eventid}/save(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στο Καλάθι</a></button>
+				<p><a th:href="@{/littlecherries/parents/{eventid}/save(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στο Καλάθι</a></p>
 			</div>
 			<div th:if="${fav==null}">
-				<p><button><a th:href="@{/littlecherries/parents/{eventid}/saveasfav(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στα Αγαπημένα</a></button></p>
+				<p><a th:href="@{/littlecherries/parents/{eventid}/saveasfav(eventid=${event.eventid})}" type="button" class="btn btn-primary">Προσθήκη στα Αγαπημένα</a></p>
 		    </div>
 		</div>
 	</div>

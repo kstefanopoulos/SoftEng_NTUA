@@ -60,29 +60,52 @@
        
    <div  class="container" align="center"> 
 	<div class="row info">
-		<div class="sidenav" style="color:grey;font-size:46px;">
-			<a th:href="@{/littlecherries/parents/showinfo}">Προσωπικά Στοιχεία</a>
-		    <a th:href="@{/littlecherries/parents/events_gone}">Ιστορικό Αγορών</a>
-		    <a th:href="@{/littlecherries/parents/events_saved}">Το Καλάθι μου</a>
-		    <a th:href="@{/littlecherries/parents/events_togo}">Το Εισητήρια μου</a>
-		    
-		    		
+		<div class="col-sm-4 info" style="color:grey;font-size:30px;">
+			<ul>
+			<a th:href="@{/littlecherries/parents/showinfo}" class="btntext">Προσωπικά Στοιχεία</a>
+			</ul>
+			<ul>
+		    <a th:href="@{/littlecherries/parents/events_gone}" class="btntext">Ιστορικό Αγορών</a>
+		    </ul>
+			<ul>
+		    <a th:href="@{/littlecherries/parents/events_saved}" class="btntext">Το Καλάθι μου</a>
+		    </ul>
+			<ul>
+		    <a th:href="@{/littlecherries/parents/events_togo}" class="btntext">Τα Εισιτήρια μου</a>
+		    </ul>		
 		</div>
-		<div class="col-sm-8 info" style="color:grey;font-size:46px;">
-		</div>
-		<div class="col-sm-4 info" style="color:grey;">
-			<img style="img2" th:src= "@{/images/Insert-picture-here.jpg}" alt="Insert photo here" height="300px" width="300px"></img> 
-			<!--  <p><a href="#" style="font-size:20px;">Upload Photo</a></p>
-			<p><a href="#" style="font-size:20px;">Remove Photo</a></p> -->
-			<button><a th:href="@{/littlecherries/parents/editprofile}" class="button2 text">Επεξεργασία Προφίλ</a></button>
-			<button><a th:href="@{/littlecherries/parents/changepassword}" class="button2 text">Αλλαγή Password</a></button>
-			<button><a th:href="@{/littlecherries/parents/loadcredits}" class="button2 text">Φόρτωση Πόντων</a></button>
+		
+		<div class="col-sm-4 info" style="color:grey;font-size:46px;">
+			<div th:unless="${user.hasfoto==0}">
+			<img th:src="@{'/' + images + '/' + parentimages + '/' + ${user.username} + .png}" width="140" height="140" />
 			
-			<form th:action="@{/littlecherries/parents/deleteprofile}">
+			</div>
+		
+    		<div th:if="${user.hasfoto==0}">
+    	
+				<a th:href="@{/littlecherries/parents/pictureUpload}">
+					<img style="img2" th:src="@{/images/Insert-picture-here.jpg}"  alt="event-picture" height="300px" width="300px">
+				</a>
+			</div>
+		</div>
+		
+		<div class="col-sm-4 info" style="color:grey; font-size:30px;">
+			<ul>
+			<a th:href="@{/littlecherries/parents/editprofile}" class="btntext">Επεξεργασία Προφίλ</a>
+			</ul>
+			<ul>
+			<a th:href="@{/littlecherries/parents/changepassword}" class="btntext">Αλλαγή Password</a>
+			</ul>
+			<ul>
+			<a th:href="@{/littlecherries/parents/loadcredits}" class="btntext">Φόρτωση Πόντων</a>
+			</ul>
+			<ul>
+			
+			<form th:action="@{/littlecherries/parents/deleteprofile}" style="font-size:20px; color:black;">
   					<input type="submit" value="Διαγραφή Προφίλ"
     				onclick="return confirm('Θελετε να διαγράψετε οριστικά το προφίλ σας?')"
     		/></form>
-			
+    		</ul>
 		</div>
 	</div>
 </div>
@@ -90,7 +113,7 @@
       <!-- FootNote -->
 
 
-	<div class="container-fluid"  align="center"> 
+	<div class="container-fluid"  align="center" id="footer"> 
  		<footer>&copy; Copyright 2017 Little Cherries</footer>
 	</div> 
       

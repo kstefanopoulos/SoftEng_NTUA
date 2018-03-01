@@ -6,7 +6,7 @@ public class OrganizerToUpdate {
 	  private String lastname ;
 	  private String streetname;
 	  private String town;
-	  private int streetnumber;
+	  private String streetnumber;
 	  private String postalcode;
 	  private String phonenumber;
 	  
@@ -34,10 +34,10 @@ public class OrganizerToUpdate {
 	public void setTown(String town) {
 		this.town = town;
 	}
-	public int getStreetnumber() {
+	public String getStreetnumber() {
 		return streetnumber;
 	}
-	public void setStreetnumber(int streetnumber) {
+	public void setStreetnumber(String streetnumber) {
 		this.streetnumber = streetnumber;
 	}
 	public String getPostalcode() {

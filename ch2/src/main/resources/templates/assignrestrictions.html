@@ -397,7 +397,7 @@ body {
 
 <div class="col-sm-6"> 
 <div class ="container"> 
-    <h2 allign="center"> Περιορισμοί </h2>
+    <h4 allign="center"> Περιορισμοί </h4>
 		<table class="table table-striped"> 
 		    <tr> 
 		        <th> Περιγραφή </th> 
@@ -431,7 +431,7 @@ body {
 <div class="row"> 
 <div class ="col-sm-6"> 
 <div class="main-agileits">
-	<h4 class="sub-head">Περιορισμός Χρήστη</h4>
+	<h2>Περιορισμός Χρήστη</h2>
 			<form th:action="@{/littlecherries/administrators/adminrights}" th:object="${blocked}" method="POST" enctype="utf8">
 			    <input placeholder="Email" name="Email" class="name" type="text2" th:required="required"></input> 
 				<p th:each="error: ${#fields.errors('Email')}"

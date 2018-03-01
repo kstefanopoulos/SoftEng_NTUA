@@ -27,6 +27,10 @@ public class organizer {
 	private Date registration_date;
 	private int evaluation; //starts from 0
 	private int restrictions; 
+	private int hasfoto;
+	private byte[] salt;
+
+
 
 
 	//private int proffoto;
@@ -36,7 +40,7 @@ public class organizer {
 	
 	public organizer() {}
 	
-	public organizer(String oem, String cn, String ba, String fn, String ln, String u, String p, String pn, String sname, int snumber, String pc, String t, String afm, int res) {
+	public organizer(String oem, String cn, String ba, String fn, String ln, String u, String p, byte[] salt,String pn, String sname, int snumber, String pc, String t, String afm, int res) {
 		
 		this.oemail=oem;
 		this.company_name=cn;
@@ -55,7 +59,8 @@ public class organizer {
 		this.registration_date=new Date();
 		this.evaluation=0;
 		this.restrictions=res;
-		//this.proffoto=foto;
+		this.hasfoto=0;
+		this.salt = salt;
 	}
 	
 	public String getOemail() {
@@ -202,6 +207,24 @@ public class organizer {
 	public void setRestrictions(int restrictions) {
 		this.restrictions = restrictions;
 	}
+
+	public int getHasfoto() {
+		return hasfoto;
+	}
+
+	public void setHasfoto(int hasfoto) {
+		this.hasfoto = hasfoto;
+	}
+
+	public byte[] getSalt() {
+		return salt;
+	}
+
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
+	}
+	
+	
 	
 	
 	

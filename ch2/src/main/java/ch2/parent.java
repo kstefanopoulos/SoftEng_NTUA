@@ -25,9 +25,10 @@ public class parent {
 	private String town;
 	private String postal_code;
 	private int restrictions; 
+	private int hasfoto;	
+	private byte[] salt;
 
 
-	
 
 	@OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "bucketid")
@@ -41,7 +42,7 @@ public class parent {
 	
 	public parent () {}
 
-	public parent(String pem, String fn, String ln, String un, String pas, String pn, String sname, int snumber, String t, String pc, int res) {
+	public parent(String pem, String fn, String ln, String un, String pas, byte[] salt, String pn, String sname, int snumber, String t, String pc, int res) {
 		
 			this.pemail=pem;
 			this.first_name = fn;
@@ -54,6 +55,8 @@ public class parent {
 			this.town = t;
 			this.postal_code = pc;
 		    this.restrictions = res;
+		    this.hasfoto=0;
+		    this.salt=salt;
 	}
 
 	public String getPemail() {
@@ -182,6 +185,22 @@ public class parent {
 
 	public void setRestrictions(int restrictions) {
 		this.restrictions = restrictions;
+	}
+
+	public int getHasfoto() {
+		return hasfoto;
+	}
+
+	public void setHasfoto(int hasfoto) {
+		this.hasfoto = hasfoto;
+	}
+
+	public byte[] getSalt() {
+		return salt;
+	}
+
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
 	}
 
   

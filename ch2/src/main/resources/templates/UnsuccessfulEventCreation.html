@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Locked</title>
+  <title>Unsuccessfully Registered</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -10,10 +9,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'  type='text/css'></link>
   <link rel="stylesheet" th:href="@{/css/style.css}"> </link>
-    
+ 
+  
 </head>
-
-<!-- Head Content. Logo - Company Name -->
+    
+   <body>
+   
+   <!-- Head Content. Logo - Company Name -->
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
@@ -29,14 +31,14 @@
 		</div> 
 </div>
 
-<!-- Navigation Menu --> 
 
+<!-- Navigation Menu --> 
 <nav class="navbar navbar-reversed  roz">
   <div class="container-fluid roz">
   
     <ul class="nav navbar-nav roz">
 		<li><a th:href="@{/littlecherries}">Αρχική</a></li>
-		<li class="active"><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
+		<li><a th:href="@{/littlecherries/events}">Εκδηλώσεις</a></li>
 		<li class="dropdown roz">
 			<a href="javascript:void(0)" class="dropbtn" >H Εταιρία μας</a>
 			<div class="dropdown-content roz">
@@ -48,30 +50,22 @@
     </ul>
 	<ul class="nav navbar-nav navbar-right roz">
       <li><a th:utext="${user.username}" th:href="@{/littlecherries/organizers/showprofile}" class="glyphicon glyphicon-user"></a></li>
-    </ul>	
+    </ul>		
   </div>
 </nav>
+   
+    
+      <!-- Include _menu.html -->
+       
+      <h2>Δυστυχώς, υπάρχει εκδήλωση με αυτό το όνομα. Δοκιμάστε Ξανά. </h2>
+      
+      <!-- FootNote -->
 
 
-<body>
-
-	<div th:if="${message}">
-		<h2 th:text="${message}"/>
-	</div>
-
-	<div>
-		<form th:action="@{/littlecherries/{eventid}/pictureUpload(eventid=${event.eventid})}" th:object="${fl}" method="POST" enctype="multipart/form-data">
-			<table>
-				<tr><td>File to upload:</td><td><input type="file" name="image"/></td></tr>
-				<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-			</table>
-		</form>
-	</div>
-
-<div class="container-fluid info"  align="center"> 
- <footer>&copy; Copyright 2017 Little Cherries</footer>
-</div> 
-
-</body>
-
+	<div class="container-fluid"  align="center"> 
+ 		<footer>&copy; Copyright 2017 Little Cherries</footer>
+	</div> 
+      
+       
+   </body>
 </html>

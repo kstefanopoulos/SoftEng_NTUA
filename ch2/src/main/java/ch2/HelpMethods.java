@@ -6,6 +6,7 @@ public class HelpMethods {
 	
 	public HelpMethods () {};
 	
+	
 	public void check_and_remove(Set<willattend> rem, parent par, Set<willattend> wa, Set<hasattended> ha, OrganizerController oc) {
 		
 		for (willattend i : rem) {

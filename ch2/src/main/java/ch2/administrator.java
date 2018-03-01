@@ -15,11 +15,13 @@ public class administrator {
 	private String phone_number;
 	private String account;
 	private int restrictions; 
+	byte[] salt;
+
 
 
 	public administrator() {}
 	
-	public administrator( String em ,String fn, String ln, String un, String pas, String pn, int res ) {
+	public administrator( String em ,String fn, String ln, String un, String pas, byte[] salt,String pn, int res ) {
 		
 		this.email=em ; 
 		this.first_name=fn;
@@ -28,6 +30,7 @@ public class administrator {
 		this.password=pas;
 		this.phone_number=pn;
 		this.restrictions=res ; 
+		this.salt=salt;
 	}
 
 	
@@ -96,5 +99,14 @@ public class administrator {
 		this.account = account;
 	}
 	
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
+	}
+	
+	public byte[] getSalt() {
+		return salt;
+	}
+
+
 	
 }

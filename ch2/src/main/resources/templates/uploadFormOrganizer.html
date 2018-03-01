@@ -60,7 +60,7 @@
 	</div>
 
 	<div>
-		<form th:action="@{/littlecherries/{eventid}/pictureUpload(eventid=${event.eventid})}" th:object="${fl}" method="POST" enctype="multipart/form-data">
+		<form th:action="@{/littlecherries/organizers/pictureUpload}" th:object="${fl}" method="POST" enctype="multipart/form-data">
 			<table>
 				<tr><td>File to upload:</td><td><input type="file" name="image"/></td></tr>
 				<tr><td></td><td><input type="submit" value="Upload" /></td></tr>

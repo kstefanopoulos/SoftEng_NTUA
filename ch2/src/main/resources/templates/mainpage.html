@@ -80,9 +80,13 @@
 
 <div class="container"  align="center">
 
-<p><h2> Είπαν για εμάς... </h2></p>
-<p><h3><i>"blablablablablablabla"</i></h3></p>
+<div class="container"  align="center">
 
+<p><h4><i> Είπαν για εμάς... </h3></p></i>
+<p><h4><i>"Ευφυές, διασκεδαστικό και βολικό. Όλα όσα πρέπει να γνωρίζουν οι γονείς ένα κλικ μακριά." - Η Καθημερινή</i></h4></p>
+<p><h4><i>"Ο τέλειος οδηγός για κάθε γονέα. Συνδυάζει φαντασία, μεράκι και άψογη εξυπηρέτηση. Θα το λατρέψετε." - lifo.gr</i></h4></p>
+<p><h4><i>"Η ιδανική εφαρμογή για μεγάλους που τους αρέσει να οργανώνουν, και μικρούς που τους αρέσει να απολαμβάνουν." - alfavita.gr</i></h4></p>
+</div> 
 
 </div> 
 
@@ -91,10 +95,15 @@
 <p><h2> 
 	<th:block  th:each= "event : ${events}">
 		<div class="col-sm-4 info">
-			<img style="img2" th:src="@{'/' + event_images + '/' + ${event.eventid} + .png}" height="300px" width="300px"></img>
-    		<a th:text="${event.event_name}" th:href="@{/littlecherries/events/{eventid}(eventid=${event.eventid})}"></a>
+
+				<div th:unless="${event.hasfoto==0}">
+					<img th:src="@{'/' + images + '/' + eventimages + '/' + ${event.eventid} + .png}" width="140" height="140" />
+				</div>    		
+				<a th:text="${event.event_name}" th:href="@{/littlecherries/events/{eventid}(eventid=${event.eventid})}"></a>
     	</div>
  </h2></p> 
+ 
+ 
 	
 </div> 
 

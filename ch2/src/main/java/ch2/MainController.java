@@ -1,5 +1,6 @@
 package ch2;
 
+import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -7,6 +8,8 @@ import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
@@ -18,7 +21,8 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import javax.xml.xpath.XPathConstants;
 
-import org.w3c.dom.Document;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 
 import java.util.Date;
 import java.text.DateFormat;
@@ -33,12 +37,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,6 +63,14 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import config.PasswordEncryptionService;
 import register.AdministratorDTO;
 import register.BlockedDTO;
 import register.CreditsForm;
@@ -84,7 +100,11 @@ public class MainController {
 	private RestrictionController rs ; 
 	@Autowired 
 	private UserController us ; 	
-	private Path path;
+	@Autowired
+	public JavaMailSender mailSender;
+	@Autowired
+	public EmailServiceImpl emailService; 
+
     ParentDTO parentdto = new ParentDTO(); 
     OrganizerDTO organizerdto = new OrganizerDTO();
     AdministratorDTO administratordto = new AdministratorDTO(); 
@@ -103,16 +123,44 @@ public class MainController {
     ReservForm rform;
     ratedto rdto;
     FileHandler fl;
+    MultipartFile event_image;
+	private Path path;
+	Watermark wm;
+
+	PasswordEncryptionService encryption_service  = new PasswordEncryptionService(); 
+
+
     
-    List<String> categories = Arrays.asList("All", "Theater", "Cinema", "Games", "Music", "Dance", "Sport", "Workshop");
+    List<String> categories = Arrays.asList("Όλες", "Θέατρο", "Σινεμά", "Παιχνίδι", "Μουσική", "Χορός", "Αθλήματα");
     List<String> startages = Arrays.asList("1","2","3","4","5","6","7","8","9","10");
     List<String> endages = Arrays.asList("15","14","13","12","11","10","9","8","7","6","5","4","3","2");
     List<String> maxcosts = Arrays.asList("60","50","40","30","20","10","5");
     List<String> distances = Arrays.asList("20","15","10","5","2");
 
+    
+    
+    /************** Email and Pdf *******************/
+    
+ // email // 
 
+ 
+ @RequestMapping(value = "/littlecherries/emailit")
+	public String viewemailservice(Model model) throws MessagingException {
+	 
+	 MimeMessage message = mailSender.createMimeMessage();
+     
+	  MimeMessageHelper helper = new MimeMessageHelper(message, true);
+	  
+	 emailService.sendMail( message, helper , "tassvasiliki@gmail.com", "Send from Java","Hello Little Cherry!!!" );  
+	 return "emailservice";
+}
+
+    
+  
     @RequestMapping(value="/littlecherries")
 	public String mainindex(Model model) {
+    	
+    	   	
 		if (userCredentials == null)
 			model.addAttribute("user",null);
 		else {
@@ -134,6 +182,23 @@ public class MainController {
 		
 			}
 		
+		Iterable<administrator> Admins = ad.getAllAdministrators();
+		//System.out.println(Admins.isEmpty());
+		/*THIS  "IF" PART OF CODE MUST BE EXECUTED ONLY WHEN FIRST SET UP*/
+		if (! Admins.iterator().hasNext()) {
+			System.out.println("No admins");
+			administrator a = ad.createNewAdmin("i.telali@hotmail.com", "Little", "Cherries" , "cherries_admin",
+					"littlecherries","166",6) ; 
+			
+			//administrator a = ad.createNewAdmin(administratorDto.getEmail() , "", "", "", "", "",6);
+			if (a==null) {
+				System.out.println("Failed to create first admin");
+				return "redirect:/littlecherries/administrators/addnewadmin";
+			}
+			return "mainpage";  
+		}
+
+				
 		 List<event> list = new ArrayList<event>();
 		 List<event> final_list = new ArrayList<event>();
 
@@ -204,6 +269,19 @@ public class MainController {
     return "OurCompanyPage";
   }
  
+  public int check_for_passed_events(event e) {
+	  int f=0;
+	  Date today = new Date();
+	  Set<eventinfo> ei = e.getEventinfos();
+	  for (eventinfo i: ei)
+		  if (i.getEventdate().after(today)) {
+			  f=1;
+			  break;
+		  }
+	  return f;
+  }
+
+ 
  @RequestMapping(value = "/littlecherries/events", method= RequestMethod.GET)
  public String eventsindex(Model model) {
 	 
@@ -215,11 +293,15 @@ public class MainController {
 	for (organizer o: Organizers) {
 		Set<event> ev=o.getEvents();
 		for (event e: ev) {
-			list.add(e);
-			lat_list.add(e.getLatitude());
-			long_list.add(e.getLongitude());
+			if (check_for_passed_events(e) == 1) {
+				list.add(e);
+				lat_list.add(e.getLatitude());
+				long_list.add(e.getLongitude());
 			}
+		}
 	}
+	
+	
 	model.addAttribute("categories",categories);
 	model.addAttribute("startages",startages);
 	model.addAttribute("endages",endages);
@@ -288,7 +370,8 @@ public class MainController {
 		for (organizer o: Organizers) {
 			Set<event> ev=o.getEvents();
 			for (event e: ev) {
-				list.add(e);
+				if (check_for_passed_events(e) == 1) 
+						list.add(e);
 			}
 		}
 	 
@@ -298,11 +381,12 @@ public class MainController {
 		
 	/* category */
 	if (!sdto.getCategory().equals("All")) {
-		for (event e: list) 
-			if (e.getEvent_class().equals(sdto.getCategory()))
-				filteredlist.add(e);
-		list = filteredlist;
-		
+		if (list.size() > 0) {
+			for (event e: list) 
+				if (e.getEvent_class().equals(sdto.getCategory()))
+					filteredlist.add(e);
+			list = filteredlist;
+		}
 	}
 	
 	/*ages*/
@@ -554,12 +638,14 @@ public class MainController {
 	    else {
 	        registered = oc.createOrganizerAccount(accountDto, result);
 	     
-	    if (registered==null)
+	   if (registered==null)
 	    	return "UnsuccessfulRegistrationPage";
-	    redirectAttributes.addFlashAttribute("flashUser", registered);
-
-	    return "redirect:/littlecherries/organizers/registerSuccessful"; }
-	    // rest of the implementation
+	   redirectAttributes.addFlashAttribute("flashUser", registered);
+	   
+	   UserCredentials myuserCredentials = new UserCredentials(accountDto.getEmail(),accountDto.getPassword());
+	   userCredentials=myuserCredentials;
+	   userCredentials.setType(0);
+	   return "redirect:/littlecherries/organizers/showprofile"; }
 	}
 
 
@@ -579,17 +665,19 @@ public String registerUserAccount(Model model, @ModelAttribute("parentdto") @Val
       BindingResult result, WebRequest request, Errors errors, final RedirectAttributes redirectAttributes) {    
        parent registered = new parent(); 
     //System.out.print("enter registerUserAccount");
-    /* if (result.hasErrors()) {
+    if (result.hasErrors()) {
     	model.addAttribute("parent", parentdto);
     	return "register-gonea";
-    }*/
+    }
    
         registered = pr.createParentAccount(accountDto, result);
      
     if (registered==null)
     	return "UnsuccessfulRegistrationPage";
-    redirectAttributes.addFlashAttribute("flashUser", registered);
-    return "redirect:/littlecherries/registerSuccessful"; 
+    UserCredentials myuserCredentials = new UserCredentials(accountDto.getEmail(),accountDto.getPassword());
+    userCredentials=myuserCredentials;
+	userCredentials.setType(1);
+	return "redirect:/littlecherries/parents/showprofile"; 
 }
 
 	
@@ -725,7 +813,7 @@ public organizer CheckAndUpdate (organizer org, OrganizerToUpdate Dto) {
 	if (Dto.getFirstname() != "") org.setFirst_name(Dto.getFirstname());
 	if (Dto.getLastname() != "") org.setLast_name(Dto.getLastname());
 	if (Dto.getStreetname() != "") org.setStreet_name(Dto.getStreetname());
-	//if (Dto.getStreetnumber() != -1) org.setStreet_number(Dto.getStreetnumber()); ???
+	if (Dto.getStreetnumber() != "") org.setStreet_number(Integer.parseInt(Dto.getStreetnumber())); 
 	if (Dto.getTown() != "") org.setTown(Dto.getTown());
 	if (Dto.getPostalcode() != "") org.setPostal_code(Dto.getPostalcode());
 	if (Dto.getPhonenumber() != "") org.setPhone_number(Dto.getPhonenumber());
@@ -759,7 +847,9 @@ public String ChangePassword(Model model, @ModelAttribute("changepsw") @Valid Ch
 		  if (org != null && org.getOemail().equals(accountDto.getEmail())) {
 			  if (accountDto.getOld().equals(org.getPassword()) && accountDto.getFirst().equals(accountDto.getSecond())) {
 				  userCredentials.setPassword(accountDto.getFirst());
-				  org.setPassword(accountDto.getFirst());
+
+				  String hash_pass = encryption_service.getEncryptedPassword(accountDto.getFirst(), org.getSalt());
+				  org.setPassword(hash_pass);
 			  	  oc.UpdateUser(org.getOemail());
 			  	  model.addAttribute("par",null);
 			  	  model.addAttribute("org",org);
@@ -817,11 +907,29 @@ public String OrganizerCreatesEvent(Model model, @ModelAttribute("eventdto") @Va
 		if (org==null)
 			return "registration";
    
+		int ability = 1;
+		Iterable<organizer> Organizers=oc.getAllOrganizers();
+		 for (organizer o: Organizers) {
+				Set<event> ev=o.getEvents();
+				for (event e: ev) {
+					if (e.getEvent_name().equals(eventDto.getTitle())) {
+						ability=0;
+						break;
+					}
+						
+				}
+		}
+		if (ability==0) {
+			model.addAttribute("user",org);
+			return "UnsuccessfulEventCreation";
+		}
 		event e = oc.createNewEvent(org.getOemail(), eventDto.getTitle(), eventDto.getPrice(), eventDto.getStreetname(),
 				eventDto.getStreetnumber(), eventDto.getPostalcode(), eventDto.getTown(), eventDto.getStartage(),
 				eventDto.getEndage(),eventDto.getDuration(),eventDto.getCategory());
+	
 		if (e==null)
 			return "redirect:/littlecherries/organizers/addevent";
+		e.setEvent_description(eventDto.getDescription());
 	    ev=e;
 	    String postcode = eventDto.getStreetname() + ' ' +  eventDto.getStreetnumber() + ' ' + eventDto.getTown() + ' ' + eventDto.getPostalcode() ;
 	    FindLocation fg = new FindLocation();
@@ -1007,7 +1115,7 @@ public parent ParentCheckAndUpdate (parent par, ParentToUpdate Dto) {
 	if (Dto.getFirstname() != "") par.setFirst_name(Dto.getFirstname());
 	if (Dto.getLastname() != "") par.setLast_name(Dto.getLastname());
 	if (Dto.getStreetname() != "") par.setStreet_name(Dto.getStreetname());
-	//if (Dto.getStreetnumber() != -1) org.setStreet_number(Dto.getStreetnumber()); ???
+	if (Dto.getStreetnumber() != "") par.setStreet_number(Integer.parseInt(Dto.getStreetnumber())); 
 	if (Dto.getTown() != "") par.setTown(Dto.getTown());
 	if (Dto.getPostalcode() != "") par.setPostal_code(Dto.getPostalcode());
 	if (Dto.getPhonenumber() != "") par.setPhone_number(Dto.getPhonenumber());
@@ -1039,9 +1147,12 @@ public String ParentChangePassword(Model model, @ModelAttribute("changepsw") @Va
 		  parent par = pr.getΑParent(userCredentials.getEmail());
 	    	
 		  if (par!= null && par.getPemail().equals(accountDto.getEmail())) {
-			  if (accountDto.getOld().equals(par.getPassword()) && accountDto.getFirst().equals(accountDto.getSecond())) {
+			  String old_hash_pass = encryption_service.getEncryptedPassword(accountDto.getOld(), par.getSalt());
+
+			  if (old_hash_pass.equals(par.getPassword()) && accountDto.getFirst().equals(accountDto.getSecond())) {
 				  userCredentials.setPassword(accountDto.getFirst());
-				  par.setPassword(accountDto.getFirst());
+				  String hash_pass = encryption_service.getEncryptedPassword(accountDto.getFirst(), par.getSalt());
+				  par.setPassword(hash_pass);
 			  	  pr.UpdateUser(par.getPemail());
 			  	  model.addAttribute("par",par);
 			  	  model.addAttribute("org",null);
@@ -1085,6 +1196,9 @@ public String ParentLoadCreditsPost(Model model, @ModelAttribute("crform") @Vali
 	    	SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String mydate = localDateFormat.format(new Date());
 			Date tdate = (Date)localDateFormat.parse(mydate);
+			Date today = new Date();
+			if (today.after(crform.getExpdate()))
+				return "redirect:/littlecherries/parents/loadcredits";
 	    	par.setLast_transaction_date(tdate);
 		  	pr.UpdateUser(par.getPemail());
 	    	model.addAttribute("user",par);
@@ -1124,9 +1238,10 @@ public String ParentBuyTicketsFirst(Model model, @ModelAttribute("eventid") int 
 			 return "redirect:/littlecherries/events";
 		Set<eventinfo> ei = e.getEventinfos();
 		List<eventinfo> eil = new ArrayList<eventinfo>();
+		Date today = new Date();
 		for (eventinfo i: ei) {
-			i.setActive(false);
-			eil.add(i);
+			if (i.getAvailabletickets() > 0 && today.before(i.getEventdate()))
+				eil.add(i);
 		}
 		rform= new ReservForm();
 		rform.setEi_list(eil);
@@ -1177,7 +1292,7 @@ public String ParentBuyTicketsSecond(Model model, @ModelAttribute("eventid") int
 
 @RequestMapping(value = "/littlecherries/parents/{eventid}/buyticket/{infoid}", method = RequestMethod.POST)
 public String ParentBuyTc(Model model, @ModelAttribute("eventid") int eventid,@ModelAttribute("infoid") int infoid, @ModelAttribute("rform") ReservForm rform,
-	      BindingResult result, WebRequest request, Errors errors) throws ParseException {
+	      BindingResult result, WebRequest request, Errors errors) throws ParseException, DocumentException, MalformedURLException, IOException {
 	
 	if (userCredentials == null)
 		return "registration";
@@ -1210,6 +1325,11 @@ public String ParentBuyTc(Model model, @ModelAttribute("eventid") int eventid,@M
 	}
 	if (sel==null)
 		return "redirect:/littlecherries/parents/{eventid}/buyticket";
+	if (sel.getAvailabletickets()-rform.getNumberoftickets() > 0)
+		sel.setAvailabletickets(sel.getAvailabletickets()-rform.getNumberoftickets());
+	else 
+		return "redirect:/littlecherries/parents/{eventid}/buyticket";
+	
 	
 	/*******************************************************/
 	willattend wa= new willattend();
@@ -1229,7 +1349,6 @@ public String ParentBuyTc(Model model, @ModelAttribute("eventid") int eventid,@M
 	Date tdate = (Date)localDateFormat.parse(mydate);
 	par.setLast_transaction_date(tdate);
 	pr.UpdateUser(par.getPemail());
-	sel.setAvailabletickets(sel.getAvailabletickets()-rform.getNumberoftickets());
 	/******************************************************/
 	Set<willattend> ewa = e.getWillbeattented();
 	ewa.add(wa);
@@ -1238,6 +1357,56 @@ public String ParentBuyTc(Model model, @ModelAttribute("eventid") int eventid,@M
 	float d = (float)(or.getBalance() + totalcost * 0.9);
 	or.setBalance(d);
 	oc.UpdateUser(or.getOemail());
+	/****************************************************/
+	
+	// Create Ticket // 
+	
+	
+		String eventTitle = e.getEvent_name(); 
+		eventTitle = "Όνομα Εκδήλωσης : " + eventTitle ; 
+		String eventdate = "Ημερομηνία Εκδήλωσης : " + (sel.getEventdate()).toString();  
+		String tickets = "Εισητήρια που αγοράστηκαν : " + rform.getNumberoftickets(); 
+		String ttlcost = "Συνολικό Κόστος :" +  d + "" ; 
+		String filename = "tickets" + infoid ; 
+		String prosf = "Αγαπητε/η, " + par.getFirst_name() + " " + par.getLast_name() ; 
+		String apof = "Σας ευχαριστούμε για την προτίμησή σας"; 
+		String File = "C:\\Users\\ftstr\\git\\cherries\\ch2\\Tickets\\" + filename + ".pdf" ;
+		String imagepath = "C:\\Users\\ftstr\\git\\cherries\\ch2\\src\\main\\resources\\static\\images\\logo.png"; 
+		Document document = new Document();
+		PdfWriter.getInstance(document, new FileOutputStream(File));
+	    Image image = Image.getInstance(imagepath); 
+		
+	    Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+	    document.open();
+	    document.add(image);
+	   
+	    Chunk chunk1 = new Chunk(prosf, font);
+	    Chunk chunk2 = new Chunk("Το παρόν αποτελεί το εισητήριό σου με το οποίο θα παρευρεθείς στην εκδήλωση", font); 
+	    Chunk chunk3 = new Chunk("Στοιχεία :", font);
+	    Chunk chunk4 = new Chunk(eventTitle , font);
+	    Chunk chunk5 = new Chunk(eventdate , font);
+	    Chunk chunk6 = new Chunk(ttlcost , font);
+	    Chunk chunk7 = new Chunk(apof , font);
+	    
+	    document.add( chunk1 );
+		document.add( Chunk.NEWLINE );
+		document.add( chunk2 );
+		document.add(Chunk.NEWLINE  );
+		document.add( chunk3);
+		document.add( Chunk.NEWLINE );
+		document.add( chunk4 );
+		document.add(  Chunk.NEWLINE);
+		document.add(chunk5 );
+		document.add( Chunk.NEWLINE );
+		document.add(chunk6 );
+		document.add( Chunk.NEWLINE );
+		document.add(chunk7 );
+		
+		document.close();	
+		
+	    /// END OF PDF /// 
+
+	
 	model.addAttribute("user",par);
 	model.addAttribute("event",e);
 	model.addAttribute("date",sel.getEventdate());
@@ -1628,11 +1797,12 @@ public String AdminSetsRestrictions(Model model) {
 	
 		if (userCredentials == null)
 			return "registration";
-		//if (result.hasErrors())return "login"; 
 		administrator adm = ad.getΑnAdmin(userCredentials.getEmail());
 		if (adm==null)
 			return "registration";
-		else{
+		model.addAttribute("user",adm);
+		//if (result.hasErrors())return "login"; 
+		
 			
 		    String usermail = blockedDto.getEmail(); 
 		    int res = blockedDto.getRenum(); 
@@ -1671,7 +1841,7 @@ public String AdminSetsRestrictions(Model model) {
 			
 		}
         
-}
+
 
 //Picture Upload
 
@@ -1684,72 +1854,164 @@ public CommonsMultipartResolver multipartResolver() {
 }
 
 @RequestMapping(value = "/littlecherries/{eventid}/pictureUpload", method= RequestMethod.GET)
-public String showUploadForm (Model model, @ModelAttribute("eventid") int eventid) {
-/*	if (userCredentials == null)
+public String showEventUploadForm (Model model, @ModelAttribute("eventid") int eventid) {
+	if (userCredentials == null)
 		return "registration";
-	parent par= pr.getΑParent(userCredentials.getEmail());
-	if (par != null) {
-		model.addAttribute("user",par);
-		List<event> myevents = new ArrayList<event> ();
-		Set<willattend> wa = par.getWillattend();
-		for (willattend i : wa) {
-			if (i.getValid() == 1)
-				myevents.add(i.getAnevent());
-		}
-		model.addAttribute("list",myevents);
-		return "view_events_to_go"; }
-*/
-	 event e= null;
-	 organizer myorg=null;
-	 Iterable<organizer> Organizers=oc.getAllOrganizers();
-		for (organizer o: Organizers) {
-			e = oc.getAnEvent(o.getOemail(), eventid);
-			if (e != null)  {
-				myorg=o;
-				break; }
-		}
-	 if (e== null)
-		 return "redirect:/littlecherries/events";
-	 
-	 fl = new FileHandler();
-	
-	 model.addAttribute("event",e);
-	
-	model.addAttribute("fl", fl);
-	return "uploadForm";
+
+	organizer org = oc.getΑnOrganizer(userCredentials.getEmail());
+	if (org != null) {
+	event e= null;
+		 for (event ev: org.getEvents()) {
+			 if (eventid == ev.getEventId()) {
+				 e=ev;
+				 break;
+			 }
+		 }
+		 if (e== null)
+			 return "redirect:/littlecherries/events";
+		 
+		 fl = new FileHandler();
+	    model.addAttribute("user",org);
+		model.addAttribute("event",e);
+		model.addAttribute("fl", fl);
+		return "uploadForm";
+	}
+	else 
+		return "registration";
 	}
 
 @RequestMapping(value = "/littlecherries/{eventid}/pictureUpload", method= RequestMethod.POST)
-public String uploadPicture (Model model, @ModelAttribute("eventid") int eventid, @ModelAttribute("fl") FileHandler fl) throws IOException {
+public String EventUploadFotoPost (Model model, @ModelAttribute("eventid") int eventid, @ModelAttribute("fl") FileHandler fl) throws IOException {
 	
-	//MultipartFile Image = img.getImage();
 	
-	if(fl==null) return "BULO";
-	if (fl.getImage() == null) return "nullfoto";
-
-	// change any provided image type to png
-	// path = Paths.get(rootDirectory + "/WEB-INF/resources/images" +
-	// product.getProductId() + ".png");
-	path = Paths.get("C:\\Users\\ftstr\\git\\cherries\\ch2\\src\\main\\resources\\static\\images\\event_images\\"
-			+ eventid + ".png");
-
-	// check whether image exists or not
-	//if (Image != null && !Image.isEmpty()) {
-		try {
-			// convert the image type to png
-				fl.getImage().transferTo(new File(path.toString()));
-				//return "registration";
-		} catch (IllegalStateException e) {
-			// oops! something did not work as expected
-			//e.printStackTrace();
-			throw new RuntimeException("Saving User image was not successful", e);
+	organizer org = oc.getΑnOrganizer(userCredentials.getEmail());
+	if (org != null) {
+		event evi= null;
+			 for (event ev: org.getEvents()) {
+				 if (eventid == ev.getEventId()) {
+					 evi=ev;
+					 break;
+				 }
+			 }
+	 
+		if (evi== null)
+				 return "redirect:/littlecherries/events";
+		if (fl==null)
+			return ""; //what?
+		else {
 			
+			path = Paths.get("C:\\Users\\ftstr\\git\\cherries\\ch2\\src\\main\\resources\\static\\images\\eventimages\\"
+					+ eventid + ".png");
+			try {
+						fl.getImage().transferTo(new File(path.toString()));
+				} catch (IllegalStateException e) {
+					
+					throw new RuntimeException("Saving User image was not successful", e);
+					
+				}
+			
+			File src = new File(path.toString());
+		    File dst = new File(path.toString());
+		    
+		    wm = new Watermark();
+		    wm.addTextWatermark("littlecherries", src, dst);
+			evi.setHasFoto(1);
+			oc.UpdateUser(org.getOemail());
+			return "redirect:/littlecherries/events/{eventid}";
 		}
-	
-	//if(Image != null) return "geiaa";
+	}
 	return "registration";
-	
 }
+
+@RequestMapping(value = "/littlecherries/parents/pictureUpload", method= RequestMethod.GET)
+public String ParentUploadFoto(Model model) {
+	if (userCredentials == null)
+		return "registration";
+	parent par = pr.getParentByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+	if (par!= null) {	    
+		model.addAttribute("user",par);
+		fl = new FileHandler();
+		model.addAttribute("fl", fl);
+		return "uploadFormParent";
+	}
+	return "registration";
+}
+
+@RequestMapping(value = "/littlecherries/parents/pictureUpload", method= RequestMethod.POST)
+public String ParentUploadFotoPost (Model model,@ModelAttribute("fl") FileHandler fl) throws IOException {
+	
+		if (fl==null)
+			return ""; //what?
+		else {
+			if (userCredentials == null)
+				return "registration";
+			parent par = pr.getParentByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+			
+			path = Paths.get("C:\\Users\\ftstr\\git\\cherries\\ch2\\src\\main\\resources\\static\\images\\parentimages\\"
+					+ par.getUsername() + ".png");
+			try {
+						fl.getImage().transferTo(new File(path.toString()));
+				} catch (IllegalStateException e) {
+					
+					throw new RuntimeException("Saving User image was not successful", e);
+					
+				}
+			
+			File src = new File(path.toString());
+		    File dst = new File(path.toString());
+		    
+		    wm = new Watermark();
+		    wm.addTextWatermark("littlecherries", src, dst);
+			par.setHasfoto(1);
+			pr.UpdateUser(par.getPemail());
+			return "redirect:/littlecherries/parents/showprofile";
+		}
+	} 
+
+
+@RequestMapping(value = "/littlecherries/organizers/pictureUpload", method= RequestMethod.GET)
+public String OrganizerUploadFoto(Model model) {
+	if (userCredentials == null)
+		return "registration";
+	organizer org = oc.getOrganizerByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+	if (org!= null) {	    
+		model.addAttribute("user",org);
+		fl = new FileHandler();
+		model.addAttribute("fl", fl);
+		return "uploadFormOrganizer";
+	}
+	return "registration";
+}
+
+@RequestMapping(value = "/littlecherries/organizers/pictureUpload", method= RequestMethod.POST)
+public String OrganizerUploadFotoPost (Model model,@ModelAttribute("fl") FileHandler fl) throws IOException {
+	
+		if (fl==null)
+			return ""; //what?
+		else {
+			if (userCredentials == null)
+				return "registration";
+			organizer org = oc.getOrganizerByEmailAndPassw(userCredentials.getEmail(), userCredentials.getPassword());
+			path = Paths.get("C:\\Users\\ftstr\\git\\cherries\\ch2\\src\\main\\resources\\static\\images\\organizerimages\\"
+					+ org.getUsername() + ".png");
+			try {
+						fl.getImage().transferTo(new File(path.toString()));
+				} catch (IllegalStateException e) {
+					
+					throw new RuntimeException("Saving User image was not successful", e);
+					
+				}
+			
+		    File src = new File(path.toString());
+		    File dst = new File(path.toString());
+		    
+		    wm = new Watermark();
+		    wm.addTextWatermark("littlecherries", src, dst);
+			org.setHasfoto(1);
+			oc.UpdateUser(org.getOemail());
+			return "redirect:/littlecherries/organizers/showprofile";
+		}
+	}
 
 }
 

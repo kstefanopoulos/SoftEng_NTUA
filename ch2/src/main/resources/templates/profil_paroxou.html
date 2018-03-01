@@ -61,21 +61,40 @@
        
    <div  class="container" align="center"> 
 	<div class="row info">
-		<div class="sidenav" style="color:grey;font-size:46px;">
-			<a th:href="@{/littlecherries/organizers/showinfo}">Προσωπικά Στοιχεία</a>
-			<a th:href="@{/littlecherries/organizers/viewmyevents}">Ιστορικό Events</a>
-			<a th:href="@{/littlecherries/organizers/viewstatistics}">Στατιστικά Events</a>
+		<div class="col-sm-4 info" style="color:grey;font-size:30px;">
+			<ul>
+			<a th:href="@{/littlecherries/organizers/showinfo}" class="btntext">Προσωπικά Στοιχεία</a>
+			</ul>
+			<ul>
+			<a th:href="@{/littlecherries/organizers/viewmyevents}" class="btntext">Ιστορικό Events</a>
+			</ul>
+			<ul>
+			<a th:href="@{/littlecherries/organizers/viewstatistics}" class="btntext">Στατιστικά Events</a>
+			</ul>
+		</div>
+		<div class="col-sm-4 info" style="color:grey;font-size:46px;">
+			<div th:unless="${user.hasfoto==0}">
+			<img th:src="@{'/' + images + '/' + organizerimages + '/' + ${user.username} + .png}" width="140" height="140" />
 			
+			</div>
+		
+    		<div th:if="${user.hasfoto==0}">
+				<a th:href="@{/littlecherries/organizers/pictureUpload}">
+					<img style="img2" th:src="@{/images/Insert-picture-here.jpg}"  alt="event-picture" height="300px" width="300px">
+				</a>
+			</div>
 		</div>
-		<div class="col-sm-8 info" style="color:grey;font-size:46px;">
-		</div>
-		<div class="col-sm-4 info" style="color:grey;">
-			<img style="img2" th:src= "@{/images/Insert-picture-here.jpg}" alt="Insert photo here" height="300px" width="300px"></img> 
-			<!--  <p><a href="#" style="font-size:20px;">Upload Photo</a></p>
-			<p><a href="#" style="font-size:20px;">Remove Photo</a></p> -->
-			<button><a th:href="@{/littlecherries/organizers/addevent}" class="button2 text">Δημιουργία Event</a></button>
-			<button><a th:href="@{/littlecherries/organizers/editprofile}" class="button2 text">Επεξεργασία Προφίλ</a></button>
-			<button><a th:href="@{/littlecherries/organizers/changepassword}" class="button2 text">Αλλαγή Password</a></button>
+		<div class="col-sm-4 info" style="color:grey; font-size:30px">
+			<ul>			
+			<a th:href="@{/littlecherries/organizers/addevent}" class="btntext">Δημιουργία Event</a>
+			</ul>
+			<ul>
+			<a th:href="@{/littlecherries/organizers/editprofile}" class="btntext">Επεξεργασία Προφίλ</a>
+			</ul>
+			<ul>
+			<a th:href="@{/littlecherries/organizers/changepassword}" class="btntext">Αλλαγή Password</a>
+			</ul>
+			
 			
 			
 		</div>
@@ -85,7 +104,7 @@
       <!-- FootNote -->
 
 
-	<div class="container-fluid"  align="center"> 
+	<div class="container-fluid"  align="center" id="footer"> 
  		<footer>&copy; Copyright 2017 Little Cherries</footer>
 	</div> 
       

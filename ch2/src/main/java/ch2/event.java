@@ -49,6 +49,7 @@ public class event implements Comparable<event> {
 	public int duration;
 	public int tickets;
 	public Date createdat;
+	public int hasfoto;
 	
     @OneToMany(mappedBy = "anevent")
     @JsonIgnore
@@ -81,6 +82,7 @@ public class event implements Comparable<event> {
 		this.duration=d;
 		this.tickets=0;
 		this.event_class = cat;
+		this.hasfoto=0;
 	}
 
 	public int getEventId() {
@@ -280,6 +282,14 @@ public class event implements Comparable<event> {
 	public int compareTo(event o) {
 		// TODO Auto-generated method stub
 		return this.createdat.compareTo(o.createdat);
+	}
+
+	public int getHasFoto() {
+		return hasfoto;
+	}
+
+	public void setHasFoto(int hasFoto) {
+		this.hasfoto = hasFoto;
 	}
 	
 	

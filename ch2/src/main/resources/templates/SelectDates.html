@@ -108,9 +108,9 @@ table, th, td{
 			</thead>
 			<tbody>	
 			<tr th:each= "row : ${list}">
-				<td th:text="${row.date}"></td>
-				<td th:text="${row.tickets}"></td>
-				<td th:text="${row.time}"></td>
+				<td th:text="${#dates.format(row.date, 'dd-MM-yyyy')}"></td>
+				<td th:text ="${row.tickets}"></td>
+				<td th:text="${#dates.format(row.time, 'HH:mm')}"></td> 		
 			</tr>
 			</tbody>
 	  </table>
@@ -122,12 +122,12 @@ table, th, td{
 		<table class="table table-striped">
 			<thead>
 				<th>Ημερομηνία</th>
-				<th>Διαθέσιμα Εισιτήρια</th>
+				<th>Εισιτήρια</th>
 				<th>Ώρα Έναρξης</th>			
 			</thead>
 			<tbody>	
 				<td><input class="date" name="date" th:type="date"  th:required="required" class="form-control"></td>
-				<td><input class="text2" name="tickets" th:type="number" th:required="required"></td>
+				<td><input class="text" name="tickets" th:type="number" th:required="required"></td>
 				<td><input class="time" name="time" th:type="time" th:required="required" class="form-control"></td>
 		</tbody>
 		</table>

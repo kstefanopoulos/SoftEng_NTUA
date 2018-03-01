@@ -9,6 +9,17 @@ body {
 }
 
 
+ #footer {  
+   bottom : 0px;  
+   height : 40px;  
+   margin-top : 40px;  
+   text-align: center;  
+   vertical-align: middle; 
+   position:fixed;
+   width:100%;
+}
+
+
 .roz{
 	
 background-color:#fdf2e9;
@@ -20,16 +31,20 @@ background-color:  #ffffff;
   
 }
 
+.footer{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    }
 
 
 
-
-img1 {
+img {
     border-radius: 50%;
 }
 
 img2{
-	border-radius: 15px;
+	
 }
 
 
@@ -97,34 +112,11 @@ li.dropdown {
 	padding: 10px 24px;
 }
 
+
 .button2:hover {
     background-color: pink;
     color: white;
 }
-
-.button3 {
-	background-color: white; 
-    color: grey; 
-    border: 2px solid #008CBA;
-	-webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    width:30%;
-}
-
-.button3:hover {
-    background-color: pink;
-    color: white;
-}
-
-.button4 {
-	background-color: light grey; 
-    color: grey; 
-    border: 2px solid #008CBA;
-	-webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-
 
 .button1 {
     background-color: blue;
@@ -137,13 +129,25 @@ li.dropdown {
 }
 
 .text{
-	height: 80px;
+	height: 0px;
 	font-size:25px;
 	width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     border: 1px solid #ccc;
     box-sizing: border-box;
+}
+
+.btntext{
+	height: 20px;
+	font-size:20px;
+	width: 80%;
+    padding: 12px 20px;
+    margin: 0px 0;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: #d851b1;
+    color: white;
 }
 
 .text2{
@@ -155,21 +159,6 @@ li.dropdown {
     border: 1px solid #ccc;
     box-sizing: border-box;
 	margin-left:0;
-}
-
-.text3{
-	height: 10px;
-	font-size:25px;
-	width: 30%;
-    padding: 12px 2px;
-    margin: 2px 0;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-	margin-left:0;
-}
-
-.tr1{
-	background-color: #dddddd;
 }
 
 
@@ -207,6 +196,10 @@ li.dropdown {
     display: block;
 	height: 100%;
     width: 200px;
+<<<<<<< HEAD
+    position: left;
+	background-color: white;
+=======
 }
 
 
@@ -254,6 +247,7 @@ li.dropdown {
    -webkit-transform: rotate(35deg);
    -ms-transform:     rotate(35deg);
    -o-transform:      rotate(35deg);
+>>>>>>> branch 'branch2' of https://gitlab.com/LittleCherries/LittleCherries.git
 }
 
 .star-five:before {

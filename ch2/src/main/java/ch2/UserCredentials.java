@@ -14,6 +14,14 @@ public class UserCredentials {
 
 	private int type;				//parent=0; organizer=1; admin=2;
 	
+	
+	public UserCredentials() {}
+	
+	public UserCredentials(String email, String password) {
+		this.email = email;
+		this.password = password;
+	}
+
 	public String getEmail() {
 		return email;
 	}

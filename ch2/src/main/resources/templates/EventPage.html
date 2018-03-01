@@ -141,72 +141,70 @@ background-color:  #ffffff;
 <h2 align="center"> Οι Εκδηλώσεις μας </h2> 
 
 <div class="row info">
-<form th:action="@{/littlecherries/events}" th:object="${searchform}" method="POST" enctype="utf8">	
-<div class="col-sm-4" style="color:grey; font-size:20px" align="left">
-		<h3><u>Όροι Αναζήτησης</u></h3>
+
+	<div class="col-sm-4" style="color:grey; font-size:15px" align="left">
+		<form th:action="@{/littlecherries/events}" th:object="${searchform}" method="POST" enctype="utf8">	
+			<h3><u>Όροι Αναζήτησης</u></h3>
 		
-		<p><b> Ηλικίες: </b>
-		Από
-		<select name= "startage">
-			<option th:each="str : ${startages}" th:value="${str}" th:text="${str}"  th:selected="(${str} == ${sage})"></option>
-		</select> 
-		έως
-		<select name = "endage">
-			<option th:each="str : ${endages}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${eage})"></option>
-		</select></p>
-		<p><b> Κατηγορία: </b>
-		<select name="category">
-			<option th:each="str : ${categories}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${cat})"></option>			
-		</select></p>
-		<p><b> Κόστος: </b> 
-		Eώς
-		<select name="maxcost">
-			<option th:each="str : ${maxcosts}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${cost})"></option>
-		</select></p>
-		<p>
-		<div th:if="${filters==null}">
+			<p><b> Ηλικίες: </b>
+			Από
+			<select name= "startage">
+				<option th:each="str : ${startages}" th:value="${str}" th:text="${str}"  th:selected="(${str} == ${sage})"></option>
+			</select> 
+			έως
+			<select name = "endage">
+				<option th:each="str : ${endages}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${eage})"></option>
+			</select></p>
+			<p><b> Κατηγορία: </b>
+			<select name="category">
+				<option th:each="str : ${categories}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${cat})"></option>			
+			</select></p>
+			<p><b> Κόστος: </b> 
+			Eώς
+			<select name="maxcost">
+				<option th:each="str : ${maxcosts}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${cost})"></option>
+			</select></p>
+			<p><div th:if="${filters==null}">
 		
-			<b> Περιοχή: </b>
-				<h3 align="left"> Οδός</h3>
-				<input class="text2" name="streetname"> </input>
-				
-				<h3 align="left"> Αριθμός</h3>
-				<input class="text2" name="streetnumber"></input>
-				
-				<h3 align="left"> Πόλη</h3>
-				<input class="text2" name="town"></input>
-		</div>
-		<div th:unless="${filters==null}">
+			<b> Περιοχή: </b><br>
+				Οδός: <input type="text" name="streetname" size="35"><br>
+				Αριθμός: <input type="text" name="streetnumber" size="35"><br>
+				Πόλη: <input type="text" name="town" size="35"><br>
+			</div>
+			<div th:unless="${filters==null}">
 				<div th:unless="${addr==null}">
 		
 			<li>Διεύθυνση: <span th:utext="${addr}">..</span></li>
-			</div>
-		</div>
-		</p>
-		<p><b> Απόσταση έως: </b>
-		<select name="width">
-		    <option th:each="str : ${distances}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${w})"></option>
-		</select> 
-		km </p>
-		<div th:if="${filters==null}">
-		<button class="button1 text align-bottom" style="font-size:25px; bottom:-250px; width:50%">Αναζήτηση</button>		
-	    </div>
-	</div>
-</form>
-
-<div  class="col-sm-1 info">
-			</div> 
-			<th:block  th:each= "event : ${events}">
-				<div class="col-sm-2 info" style="color:grey;font-size:46px;">
-				
-				
-				
-				<img th:src="@{'/' + images + '/' + eventimages + '/' + ${event.eventid} + .png}" width="140" height="140" />
-				<a th:text="${event.event_name}" th:href="@{/littlecherries/events/{eventid}(eventid=${event.eventid})}"></a>				
 				</div>
-			</th:block>
+			</div>
+			</p>
+			<p><b> Απόσταση έως: </b>
+			<select name="width">
+			    <option th:each="str : ${distances}" th:value="${str}" th:text="${str}" th:selected="(${str} == ${w})"></option>
+			</select> 
+			km </p>
+			<div th:if="${filters==null}">
+			<p><button class="button1 text align-bottom" style=" font-size:25px; bottom:-250px; width:50%; height:100%;">Αναζήτηση</button></p>		
+		    </div>
+	
+		</form>
+	</div>
+
+	<div  class="col-sm-1 info">
+	</div> 
+	<th:block  th:each= "event : ${events}">
+		<div class="col-sm-2 info" style="color:grey;font-size:46px;">
+		
+		<div th:unless="${event.hasfoto==0}">
+			<img th:src="@{'/' + images + '/' + eventimages + '/' + ${event.eventid} + .png}" width="140" height="140" />
+		</div>
+		<a style="font-size:15px;" th:text="${event.event_name}" th:href="@{/littlecherries/events/{eventid}(eventid=${event.eventid})}"></a>				
+		
+		</div>
+	</th:block>
 		
 
+</div>
 </div>
 
 <!--
@@ -219,69 +217,70 @@ background-color:  #ffffff;
             </tr>
       </table> -->
      <div th:unless="${filters==null}">
-     	<button><a th:href="@{/littlecherries/events}" class="button2 text">Reset Φίλτρων</a></button>
+     	<a th:href="@{/littlecherries/events}" class="button2 text">Reset Φίλτρων</a>
 	 </div>
-</div>
 
-<div class="col-sm-6">
-	<div class="info" align="center">
-		<div id = "map" class ="info" style="width:350px;height:350px;background-color:#ffffff;border-radius: 10px;"> </div>
-	</div>		
+<p><div class="container info"  style="position:absolute; top:650px;"  >
+<div class="row info">
+	<div class="col-sm-6">
+		<div class="info" align="center">
+			<div id = "map" class ="info" style="width:350px;height:350px;background-color:#ffffff;border-radius: 10px;"> </div>
+		</div></p>		
 
-	<script th:inline="javascript">
-	/*<![CDATA[*/
-	//var markerLat=[], markerLong=[];
-	var markerLat = [[${lat}]];
-	var markerLong = [[${longi}]];
-
-	//for (i=0; i<k.length i++) {
-		//markerLat.push(k[i]);
-	//}
-	//var l = [[${longi}]];
-	/*]]>*/
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+		//var markerLat=[], markerLong=[];
+		var markerLat = [[${lat}]];
+		var markerLong = [[${longi}]];
 	
+		//for (i=0; i<k.length i++) {
+			//markerLat.push(k[i]);
+		//}
+		//var l = [[${longi}]];
+		/*]]>*/
+		
 	
-	function aMap() {
-		var map;
-        var initlatlng = new google.maps.LatLng(37.965748, 23.708142);
-	    var mapOptions = {
-	        center: new google.maps.LatLng(37.965748, 23.708142), zoom: 10, mapTypeId: google.maps.MapTypeId.ROADMAP
-
-	    };
-	    map = new google.maps.Map(document.getElementById("map"), mapOptions);
-	    var infowindow = new google.maps.InfoWindow(); 
-        var marker, i;
-        
-     
-        for (i = 0; i < markerLat.length; i++) {
-           marker = new google.maps.Marker({
-                position: new google.maps.LatLng(markerLat[i], markerLong[i]),
-                map: map
-            });
-        
-        	google.maps.event.addListener(marker, 'click', (function(marker, i) {
-            	return function() {
-                	infowindow.setContent(markers[i]);
-                	infowindow.open(map, marker);
-            	}
-        		})	(marker, i));
-
-	   }
+		function aMap() {
+			var map;
+	        var initlatlng = new google.maps.LatLng(37.965748, 23.708142);
+		    var mapOptions = {
+		        center: new google.maps.LatLng(37.965748, 23.708142), zoom: 10, mapTypeId: google.maps.MapTypeId.ROADMAP
 	
-	}
-    google.maps.event.addDomListener(window, 'load', aMap);
+		    };
+		    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+		    var infowindow = new google.maps.InfoWindow(); 
+	        var marker, i;
+	        
+	     
+	        for (i = 0; i < markerLat.length; i++) {
+	           marker = new google.maps.Marker({
+	                position: new google.maps.LatLng(markerLat[i], markerLong[i]),
+	                map: map
+	            });
+	        
+	        	google.maps.event.addListener(marker, 'click', (function(marker, i) {
+	            	return function() {
+	                	infowindow.setContent(markers[i]);
+	                	infowindow.open(map, marker);
+	            	}
+	        		})	(marker, i));
+	
+		   }
+	
+		}
+	    google.maps.event.addDomListener(window, 'load', aMap);
 
 
-	</script>
+		</script>
 
-	<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDibDFjaaziuvvd85YGCJa3JK-2aV1gfz4&callback=aMap"></script>
+		<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDibDFjaaziuvvd85YGCJa3JK-2aV1gfz4&callback=aMap"></script>
 	
 
     
 	
 	</div> 
 	</div>
-	</div>
+	</div></p>
 
 
 <!-- FootNote -->
@@ -294,7 +293,7 @@ background-color:  #ffffff;
 
 
 
-<div class="container-fluid info "  align="center"> 
+<div class="container-fluid info "  align="center" id="footer"> 
  <footer>&copy; Copyright 2017 Little Cherries</footer>
 </div> 
 
